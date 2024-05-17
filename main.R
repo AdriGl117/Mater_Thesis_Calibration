@@ -1,23 +1,45 @@
 library(mlr3)
 library(mlr3pipelines)
+library(mlr3misc)
+library(paradox)
 library(mlr3verse)
 library(R6)
-library(tidymodels)
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+
 source("R/PipeOpCalibrationLogistic.R")
+source("R/Functions.R")
 
-data(cells)
-cells$case <- NULL
-dim(cells)
+df <- read.csv("Data/cs-training.csv", header = TRUE, sep = ',', dec = ".")
+df <- df[-1]
+task = as_task_regr(df, target = "SeriousDlqin2yrs", id = "Task")
+splits = partition(task)
+task_train = task$clone()$filter(splits$train)
+task_test = task$clone()$filter(splits$test)
 
-task <- as_task_classif(cells, target = "class", id = "Task")
-learner_uncal <- lrn("classif.ranger")
+po = po("imputehist")
 
-learner_cal = learner_uncal %>>%  lrn("classif.log_reg", predict_type = "prob")
+learner_uncal <- as_learner(po %>>% lrn("regr.xgboost"))
 
-lrns <- c(learner_normal, learner_cal)
+# Create the pipeline
+learner_cal <- as_learner(PipeOpLogisticCalibration$new(learner = learner_uncal, calibration_ratio = 0.2))
 
-rsmp = rsmps("cv", folds = 5)
-design = benchmark_grid(task, learner, rsmp)
-bmr = benchmark(design)
-acc = bmr$aggregate(msr("classif.acc"))
-acc[, .(task_id, learner_id, classif.acc)]
+# Train the pipeline
+learner_uncal$train(task_train)
+learner_cal$train(task_train)
+
+# Predict with the pipelines
+preds_uncal = learner_uncal$predict(task_test)
+preds_cal = learner_cal$predict(task_test)
+
+# Calibration Plot: Uncalibrated Model
+plot_uncal <- calibrationPlot(preds_uncal, bins = 11) +
+  labs(title = "Uncalibrated Model") +
+  theme(plot.title = element_text(hjust = 0.5))
+# Calibration Plot: Calibrated Model
+plot_cal <- calibrationPlot(preds_cal, bins = 11) + 
+  labs(title = "Calibrated Model") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+ggarrange(plot_uncal, plot_cal, ncol = 1)
