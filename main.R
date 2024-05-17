@@ -23,7 +23,8 @@ po = po("imputehist")
 learner_uncal <- as_learner(po %>>% lrn("regr.xgboost"))
 
 # Create the pipeline
-learner_cal <- as_learner(PipeOpLogisticCalibration$new(learner = learner_uncal, calibration_ratio = 0.2))
+learner_cal <- as_learner(PipeOpLogisticCalibration$new(learner = learner_uncal,
+                                                    calibration_ratio = 0.2))
 
 # Train the pipeline
 learner_uncal$train(task_train)
