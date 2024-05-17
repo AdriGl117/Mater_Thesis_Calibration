@@ -1,58 +1,57 @@
 library(mlr3)
 library(mlr3pipelines)
-library(mlr3learners)
+library(mlr3misc)
+library(paradox)
+library(R6)
 
-PipeOpCalibrationLogistic <- R6Class("PipeOpCalibrationLogistic",
-  inherit = PipeOp,
+PipeOpLogisticCalibration <- R6Class(
+  "PipeOpLogisticCalibration",
+  inherit = mlr3pipelines::PipeOp,
+  
   public = list(
-    learner = NULL,
-    
-    initialize = function(id = "CalibrationLogistic") {
-      ps = ps(
-        split = p_dbl(lower = 0.01, upper = 0.99, tags = "train")
-      )
-      ps$values$split = 0.7
-      super$initialize(id#,
-        #input = data.table::data.table(name = "input"),
-        #output = data.table::data.table(name = "output")
-        )
-      self$learner = learner
-      self$state = list(model = NULL, calibrator = NULL)
-    }),
+    initialize = function(id = "logistic_calibration") {
+      ps <- ParamSet$new(params = list(
+        ParamDbl$new("calibration_ratio", lower = 0.01, upper = 0.99, default = 0.3)
+      ))
+      super$initialize(id, param_set = ps,
+                       input = data.table(name = "input", train = "NULL", predict = "PredictionRegr"),
+                       output = data.table(name = "output", train = "NULL", predict = "PredictionRegr"))
+    }
+  ),
   
   private = list(
+    calibrator = NULL,
     
-    .train = function(task) {
-      # Teile die Daten in Trainings- und Kalibrierungssets
-      split = task$split(inst = ps$values$split)
-      task_train = task$filter(split$train)
-      task_calibrate = task$filter(split$test)
+    .train = function() {
+      # Learner aus vorherigem Pipeline Schritt anziehen
+      calibration_task = self$calibation_task
+      learner = self$base_learner
       
-      # Trainiere das Basismodell auf dem Trainingsset
-      self$learner$train(task_train)
+      preds = learner$predict(calibration_task)
       
-      # Kalibriere das Modell auf dem Kalibrierungsset
-      preds = self$learner$predict(task_calibrate)
-      calibrator = stats::glm(preds$truth ~ preds$response,
-                              family = binomial(link = "logit"))
-      
-      # Speichere das Basismodell und den Kalibrator
-      self$state$model = self$learner
-      self$state$calibrator = calibrator
+      # Train the calibrator
+      self$calibrator = glm(truth ~ response, data = preds, family = binomial)
     },
     
-    .predict = function(task) {
-      # Vorhersage des Basismodells
-      base_preds = self$state$model$predict(task)
+    .predict = function(inputs) {
+      preds = inputs[[1]]
+      pred = preds$response
       
-      # Anwendung der Kalibrierung
-      calibrated_preds = stats::predict(self$state$calibrator, newdata = base_preds,
-                                         type = "response")
-    }
-    
-    .predict_newdata = function(newdata) {
+      # Calibrate the predictions
+      calibrated_response = predict(self$calibrator, newdata = data.frame(pred = pred), type = "response")
+      
+      # Create a new PredictionRegr object with calibrated predictions
+      pred_calibrated = preds$clone()
+      pred_calibrated$response = calibrated_response
+      
+      return(list(pred_calibrated))
     }
   )
 )
 
-mlr_pipeops$add("CalibrationLogistic", PipeOpCalibrationLogistic)
+# Register the new PipeOp
+mlr_pipeops$add("logistic_calibration", PipeOpLogisticCalibration)
+
+
+
+
