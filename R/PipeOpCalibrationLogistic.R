@@ -1,9 +1,3 @@
-library(mlr3)
-library(mlr3pipelines)
-library(mlr3verse)
-library(R6)
-library(data.table)
-
 PipeOpLogisticCalibration <- R6Class(
   "PipeOpLogisticCalibration",
   inherit = mlr3pipelines::PipeOp,
