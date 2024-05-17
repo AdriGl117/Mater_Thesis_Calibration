@@ -24,7 +24,7 @@ task_cal <- as_task_regr(cal_data, target = "SeriousDlqin2yrs", id = "Task_cal")
 task_test <- as_task_regr(test_data, target = "SeriousDlqin2yrs", id = "Task_test")
 
 # Uncalibrated Model
-learner_uncal <- lrn("regr.xgboost")
+learner_uncal <- lrn("regr.ranger")
 imp <- po("imputehist")
 learner_uncal <- as_learner(imp %>>% learner_uncal)
 learner_uncal$train(task_train)

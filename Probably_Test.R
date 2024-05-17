@@ -23,7 +23,7 @@ bayes_wflow <-
   add_formula(class ~ .) %>%
   add_model(naive_Bayes())
 
-cls_met <- metric_set(roc_auc, brier_class)
+cls_met <- metric_set(roc_auc)
 
 ctrl <- control_resamples(save_pred = TRUE)
 
@@ -61,3 +61,38 @@ collect_predictions(iso_val) %>%
   filter(.type == "calibrated") %>%
   cal_plot_windowed(truth = class, estimate = .pred_PS, step_size = 0.025) +
   ggtitle("Isotonic regression calibration")
+
+
+################################################################################
+library(tidymodels)
+library(ranger)
+library(probably)
+
+# Daten laden und vorbereiten
+data(iris)
+iris$Species <- as.factor(iris$Species)
+
+# Aufteilung in Trainings- und Testdaten
+set.seed(123)
+data_split <- initial_split(iris, prop = 0.75)
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+# Modellspezifikation
+ranger_spec <- rand_forest(trees = 500) %>% 
+  set_engine("ranger") %>% 
+  set_mode("classification")
+
+# Workflow
+ranger_wf <- workflow() %>%
+  add_model(ranger_spec) %>%
+  add_formula(Species ~ .)
+
+ranger_fit <- fit(ranger_wf, data = train_data)
+
+# Vorhersagen für die Testdaten
+predictions <- predict(ranger_fit, test_data, type = "prob")
+
+met <- metric_set(roc_auc)
+logit_cal <- cal_estimate_logistic(predictions, metrics = met,
+                                   save_pred = TRUE)
