@@ -43,7 +43,6 @@ PipeOpCalibrationLogistic <- R6Class(
       self$calibrator = glm(truth ~ response, data = calibration_data, 
                             family = binomial)
 
-      # PipeOp train method should return a list even if output is NULL
       return(list(NULL)) 
     },
 
@@ -58,10 +57,10 @@ PipeOpCalibrationLogistic <- R6Class(
       calibrated_response = predict(self$calibrator, 
         newdata = data.frame(response = pred_data$response), type = "response")
 
-      # Create a new PredictionRegr object with calibrated predictions
+      # PredictionRegr object
       pred_calibrated = PredictionRegr$new(task = task, 
                                            response = calibrated_response)
-
+      
       return(list(pred_calibrated))
     }
   )
