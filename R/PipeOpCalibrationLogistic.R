@@ -1,5 +1,5 @@
-PipeOpLogisticCalibration <- R6Class(
-  "PipeOpLogisticCalibration",
+PipeOpCalibrationLogistic <- R6Class(
+  "PipeOpCalibrationLogistic",
   inherit = mlr3pipelines::PipeOp,
 
   public = list(
@@ -7,7 +7,7 @@ PipeOpLogisticCalibration <- R6Class(
     calibrator = NULL,
     calibration_ratio = NULL,
 
-    initialize = function(id = "logistic_calibration", learner, 
+    initialize = function(id = "calibration_logistic", learner, 
                           calibration_ratio = 0.2) {
       self$learner = learner
       self$calibration_ratio = calibration_ratio
@@ -68,6 +68,4 @@ PipeOpLogisticCalibration <- R6Class(
 )
 
 # Register the new PipeOp
-mlr_pipeops$add("logistic_calibration", PipeOpLogisticCalibration)
-
-
+mlr_pipeops$add("calibration_logistic", PipeOpCalibrationLogistic)

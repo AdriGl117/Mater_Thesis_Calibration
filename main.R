@@ -26,7 +26,7 @@ po = po("imputemean")
 learner_uncal <- as_learner(po %>>% lrn("regr.xgboost"))
 
 # Calibrated Learner
-learner_cal <- as_learner(PipeOpLogisticCalibration$new(learner = learner_uncal,
+learner_cal <- as_learner(PipeOpCalibrationLogistic$new(learner = learner_uncal,
                                                     calibration_ratio = 0.2))
 
 # Train the learners
@@ -38,8 +38,8 @@ preds_uncal = learner_uncal$predict(task_test)
 preds_cal = learner_cal$predict(task_test)
 
 # RMSEs
-rmse_uncal = preds_uncal$score(msr("regr.rmse"))
-rmse_cal = preds_cal$score(msr("regr.rmse"))
+mse_uncal = preds_uncal$score(msr("regr.mse"))
+mse_cal = preds_cal$score(msr("regr.mse"))
 
 # Calibration Plot: Uncalibrated Model
 plot_uncal <- calibrationPlot(preds_uncal, bins = 11) +
