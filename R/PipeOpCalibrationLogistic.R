@@ -9,7 +9,7 @@ PipeOpCalibrationLogistic <- R6Class(
 
     initialize = function(id = "calibration_logistic", learner, 
                           calibration_ratio = 0.2) {
-      self$learner = learner
+      self$learner = learner$clone()
       self$calibration_ratio = calibration_ratio
       super$initialize(id, param_set = ParamSet$new(),
                        input = data.table(name = "input", train = "Task", 
@@ -24,6 +24,7 @@ PipeOpCalibrationLogistic <- R6Class(
     .train = function(inputs) {
       # Initialize the Task
       task = inputs[[1]]
+      positive = task$positive
       # Split Task in Train and Calibration Task
       split = partition(task, ratio = 1 - self$calibration_ratio)
       train_task = task$clone()$filter(split$train)
@@ -36,12 +37,12 @@ PipeOpCalibrationLogistic <- R6Class(
       preds = self$learner$predict(calibration_task)
       pred_data = as.data.table(preds)
       calibration_data = data.table(truth = calibration_task$truth(), 
-                                    response = pred_data[,4])
+        response = with(pred_data, get(paste0("prob.", positive))))
       
       colnames(calibration_data) = c("truth", "response")
       calibration_data$response = as.numeric(calibration_data$response)
       task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
-                                            positive = "1", id = "Task_cal")
+                                            positive = positive, id = "Task_cal")
     
       # Train Calibrator on the Predictions from the base learner 
       # on the Calibration Task
@@ -53,16 +54,16 @@ PipeOpCalibrationLogistic <- R6Class(
 
     .predict = function(inputs) {
       task = inputs[[1]]
-
+      positive = task$positive
       # Get predictions from the learner
       preds = self$learner$predict(task)
       pred_data = as.data.table(preds)
       calibration_data = data.table(truth = task$truth(), 
-                                    response = pred_data[,4])
+        response = with(pred_data, get(paste0("prob.", positive))))
       colnames(calibration_data) = c("truth", "response")
       calibration_data$response = as.numeric(calibration_data$response)
       task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
-                             positive = "1", id = "Task_cal")
+                             positive = positive, id = "Task_cal")
 
       # Get calibrated predictions
       pred_calibrated = self$calibrator$predict(task_for_calibrator)

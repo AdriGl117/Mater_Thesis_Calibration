@@ -23,26 +23,23 @@ task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
 po = po("imputemean")
-learner_uncal <- as_learner(po %>>% lrn("classif.ranger",
-                                        mtry = to_tune(1,5),
+learner_uncal <- as_learner(po %>>% lrn("classif.xgboost",
                                         predict_type = "prob"))
 
+# create auto tuner
+#learner_uncal = auto_tuner(
+#  tuner = tnr("random_search"),
+#  learner = as_learner(po %>>% lrn("classif.xgboost",
+#                        nrounds = to_tune(100, 200),
+#                        eta = to_tune(0.01, 0.3),
+#                        predict_type = "prob")),
+#  resampling = rsmp ("holdout"),
+#  measure = msr("classif.bbrier"),
+#  term_evals = 20)
+
 # Calibrated Learner
-learner_cal <- as_learner(PipeOpCalibrationLogistic$new(learner = learner_uncal,
-                                                    calibration_ratio = 0.2))
-
-# Run tuning
-instance = tune(
-  tuner = tnr("random_search", batch_size = 2),
-  task = task_train,
-  learner = learner_cal,
-  resampling = rsmp ("holdout"),
-  measures = msr("classif.bbrier"),
-  terminator = trm("evals", n_evals = 4)
-)
-
-# Set optimal hyperparameter configuration to learner
-#learner_cal$param_set$values = instance$result_learner_param_vals
+learner_cal <- as_learner(po("calibration_logistic", learner = learner_uncal, 
+                             calibration_ratio = 0.2))
 
 # Train the learners
 learner_uncal$train(task_train)
