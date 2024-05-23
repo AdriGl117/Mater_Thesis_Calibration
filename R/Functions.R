@@ -1,6 +1,7 @@
 calibrationPlot <- function(preds, bins = 11, add = FALSE){
-  res = as.vector(preds$response)
-  truth = as.vector(preds$truth)
+  res = preds$prob[,1]
+  res = as.vector(res)
+  truth = as.vector(as.numeric(as.character(preds$truth)))
   data = as.data.frame(cbind(res, truth))
   data <- data[order(data$res),]
   data$bin <- cut(data$res, breaks = seq(0, 1, length.out = bins), include.lowest = TRUE)

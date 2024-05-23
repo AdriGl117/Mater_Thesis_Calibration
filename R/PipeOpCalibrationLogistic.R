@@ -15,7 +15,7 @@ PipeOpCalibrationLogistic <- R6Class(
                        input = data.table(name = "input", train = "Task", 
                                            predict = "Task"),
                        output = data.table(name = "output", train = "NULL", 
-                                           predict = "PredictionRegr")
+                                           predict = "PredictionClassif"),
       )
     }
   ),
@@ -36,12 +36,17 @@ PipeOpCalibrationLogistic <- R6Class(
       preds = self$learner$predict(calibration_task)
       pred_data = as.data.table(preds)
       calibration_data = data.table(truth = calibration_task$truth(), 
-                                    response = pred_data$response)
+                                    response = pred_data[,4])
       
+      colnames(calibration_data) = c("truth", "response")
+      calibration_data$response = as.numeric(calibration_data$response)
+      task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
+                                            positive = "1", id = "Task_cal")
+    
       # Train Calibrator on the Predictions from the base learner 
       # on the Calibration Task
-      self$calibrator = glm(truth ~ response, data = calibration_data, 
-                            family = binomial)
+      self$calibrator = lrn("classif.log_reg", predict_type = "prob")
+      self$calibrator$train(task_for_calibrator)
 
       return(list(NULL)) 
     },
@@ -52,16 +57,20 @@ PipeOpCalibrationLogistic <- R6Class(
       # Get predictions from the learner
       preds = self$learner$predict(task)
       pred_data = as.data.table(preds)
+      calibration_data = data.table(truth = task$truth(), 
+                                    response = pred_data[,4])
+      colnames(calibration_data) = c("truth", "response")
+      calibration_data$response = as.numeric(calibration_data$response)
+      task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
+                             positive = "1", id = "Task_cal")
 
-      # Calibrate the predictions
-      calibrated_response = predict(self$calibrator, 
-        newdata = data.frame(response = pred_data$response), type = "response")
-
-      # PredictionRegr object
-      pred_calibrated = PredictionRegr$new(task = task, 
-                                           response = calibrated_response)
-      
+      # Get calibrated predictions
+      pred_calibrated = self$calibrator$predict(task_for_calibrator)
       return(list(pred_calibrated))
+    },
+    
+    .additional_phash_input = function() {
+      list(self$learner$hash, self$calibration_ratio)
     }
   )
 )
