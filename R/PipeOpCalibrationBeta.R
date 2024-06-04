@@ -1,4 +1,4 @@
-PipeOpCalibrationLBeta <- R6Class(
+PipeOpCalibrationBeta <- R6Class(
   "PipeOpCalibrationBeta",
   inherit = mlr3pipelines::PipeOp,
   
@@ -7,15 +7,15 @@ PipeOpCalibrationLBeta <- R6Class(
     calibrator = NULL,
     calibration_ratio = NULL,
     
-    initialize = function(id = "calibration_beta", learner, 
+    initialize = function(id = paste0(self$learner$id, ".calibrated_beta"), learner, 
                           calibration_ratio = 0.2) {
-      self$learner = learner
+      self$learner = learner$clone()
       self$calibration_ratio = calibration_ratio
       super$initialize(id, param_set = ParamSet$new(),
                        input = data.table(name = "input", train = "Task", 
                                           predict = "Task"),
                        output = data.table(name = "output", train = "NULL", 
-                                           predict = "PredictionRegr")
+                                           predict = "PredictionClassif"),
       )
     }
   ),
@@ -24,6 +24,7 @@ PipeOpCalibrationLBeta <- R6Class(
     .train = function(inputs) {
       # Initialize the Task
       task = inputs[[1]]
+      positive = task$positive
       # Split Task in Train and Calibration Task
       split = partition(task, ratio = 1 - self$calibration_ratio)
       train_task = task$clone()$filter(split$train)
@@ -36,31 +37,44 @@ PipeOpCalibrationLBeta <- R6Class(
       preds = self$learner$predict(calibration_task)
       pred_data = as.data.table(preds)
       calibration_data = data.table(truth = calibration_task$truth(), 
-                                    response = pred_data$response)
+        response = with(pred_data, get(paste0("prob.", positive))))
       
-      # TODO: Beta Calibration
+      colnames(calibration_data) = c("truth", "response")
+      calibration_data$truth <- ifelse(calibration_data$truth == positive, 0.9999, 0.0001)
       
-      # PipeOp train method should return a list
+      formula = as.formula("truth ~ response")
+      self$calibrator = betareg::betareg(formula, data = calibration_data, link = "logit")
+      
       return(list(NULL)) 
     },
     
     .predict = function(inputs) {
       task = inputs[[1]]
-      
+      positive = task$positive
       # Get predictions from the learner
       preds = self$learner$predict(task)
       pred_data = as.data.table(preds)
+      calibration_data = data.table(truth = task$truth(), 
+        response = with(pred_data, get(paste0("prob.", positive))))
       
-      # TODO: Calibrate the predictions
-      
-      # PredictionRegr object
-      pred_calibrated = PredictionRegr$new(task = task, 
-                                           response = calibrated_response)
-      
+      pred_calibrated = predict(self$calibrator, newdata = calibration_data, type = "response")
+      prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
+      colnames(prob) = c(task$positive, task$negative)
+      pred_calibrated = PredictionClassif$new(
+        task = task,
+        row_ids = preds$row_ids,
+        truth = preds$truth,
+        prob = prob,
+        response = preds$response
+      )
       return(list(pred_calibrated))
+    },
+    
+    .additional_phash_input = function() {
+      list(self$learner$hash, self$calibration_ratio)
     }
   )
 )
 
 # Register the new PipeOp
-mlr_pipeops$add("calibration_logistic", PipeOpCalibrationLogistic)
+mlr_pipeops$add("calibration_beta", PipeOpCalibrationBeta)

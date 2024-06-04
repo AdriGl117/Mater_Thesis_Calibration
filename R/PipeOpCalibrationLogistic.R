@@ -7,7 +7,7 @@ PipeOpCalibrationLogistic <- R6Class(
     calibrator = NULL,
     calibration_ratio = NULL,
 
-    initialize = function(id = "calibration_logistic", learner, 
+    initialize = function(id = paste0(self$learner$id, ".calibrated_logistic"), learner, 
                           calibration_ratio = 0.2) {
       self$learner = learner$clone()
       self$calibration_ratio = calibration_ratio
