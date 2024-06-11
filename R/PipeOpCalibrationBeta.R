@@ -40,7 +40,7 @@ PipeOpCalibrationBeta <- R6Class(
         response = with(pred_data, get(paste0("prob.", positive))))
       
       colnames(calibration_data) = c("truth", "response")
-      calibration_data$truth <- ifelse(calibration_data$truth == positive, 0.9999, 0.0001)
+      calibration_data$truth <- ifelse(calibration_data$truth == positive, 0.99, 0.01)
       
       formula = as.formula("truth ~ response")
       self$calibrator = betareg::betareg(formula, data = calibration_data, link = "logit")

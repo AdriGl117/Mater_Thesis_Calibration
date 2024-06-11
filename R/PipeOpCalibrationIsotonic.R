@@ -42,7 +42,8 @@ PipeOpCalibrationIsotonic <- R6Class(
       colnames(calibration_data) = c("truth", "response")
       calibration_data$truth <- ifelse(calibration_data$truth == positive, 1, 0)
       
-      self$calibrator = as.stepfun(stats::isoreg(x = calibration_data$response, y = calibration_data$truth))
+      self$calibrator = as.stepfun(stats::isoreg(x = calibration_data$response, 
+                                                 y = calibration_data$truth))
       
       return(list(NULL)) 
     },
