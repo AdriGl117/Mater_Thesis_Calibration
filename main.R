@@ -17,25 +17,17 @@ source("R/Functions.R")
 
 set.seed(123)
 
-# Load and split the Data
-df <- read.csv("Data/cs-training.csv", header = TRUE, sep = ',', dec = ".")
-df <- df[-1]
-task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1", id = "Task")
-
 #Load the OML Task
-#odata = odt(id = 37)
-#backend = as_data_backend(odata)
-#task = as_task_classif(backend, target = "class", positive = "tested_positive")
+odata = odt(id = 50)
+backend = as_data_backend(odata)
+task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
 task_train = task$clone()$filter(splits$train)
 task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
 po = po("imputemean")
-learner_uncal <- as_learner(po %>>% lrn("classif.xgboost",
-                                        nrounds = 500,
-                                        eta = 0.1,
-                                        max_depth = 10,
+learner_uncal <- as_learner(po %>>% lrn("classif.ranger",
                                         predict_type = "prob"))
 
 # create auto tuner
@@ -50,12 +42,12 @@ learner_uncal <- as_learner(po %>>% lrn("classif.xgboost",
 #  term_evals = 20)
 
 # Calibrated Learner
-learner_log_cal <- as_learner(po("calibration_logistic", learner = learner_uncal, 
-                             calibration_ratio = 0.1))
-learner_beta_cal <- as_learner(po("calibration_beta", learner = learner_uncal, 
-                             calibration_ratio = 0.1))
-learner_iso_cal <- as_learner(po("calibration_isotonic", learner = learner_uncal, 
-                             calibration_ratio = 0.1))
+learner_log_cal <- as_learner(po("calibration_logistic", learner = learner_uncal,
+                                 calibration_ratio = 0.2))
+learner_beta_cal <- as_learner(po("calibration_beta", learner = learner_uncal,
+                                  calibration_ratio = 0.2))
+learner_iso_cal <- as_learner(po("calibration_isotonic", learner = learner_uncal,
+                                 calibration_ratio = 0.2))
 # Train the learners
 learner_uncal$train(task_train)
 learner_log_cal$train(task_train)
@@ -68,13 +60,13 @@ preds_log_cal = learner_log_cal$predict(task_test)
 preds_beta_cal = learner_beta_cal$predict(task_test)
 preds_iso_cal = learner_iso_cal$predict(task_test)
 
-learners = list(learner_uncal, learner_log_cal, learner_iso_cal)
-
 # RMSEs
 brier_uncal = preds_uncal$score(msr("classif.bbrier"))
 brier_log_cal = preds_log_cal$score(msr("classif.bbrier"))
 brier_beta_cal = preds_beta_cal$score(msr("classif.bbrier"))
 brier_iso_cal = preds_iso_cal$score(msr("classif.bbrier"))
+
+learners = list(learner_uncal, learner_iso_cal, learner_log_cal)
 
 calibrationplot(learners, task_test, bins = 11, smooth = TRUE)
 
