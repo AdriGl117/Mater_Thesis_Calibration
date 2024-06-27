@@ -1,7 +1,8 @@
 library(ggplot2)
 library(dplyr)
 
-calibrationplot <- function(learners, task, bins = 11, smooth = FALSE, CI = FALSE) {
+calibrationplot <- function(learners, task, bins = 11, 
+                            smooth = FALSE, CI = FALSE, rug = FALSE) {
   
   all_data <- data.frame()
   positive = task$positive
@@ -17,10 +18,13 @@ calibrationplot <- function(learners, task, bins = 11, smooth = FALSE, CI = FALS
     all_data <- rbind(all_data, data)
   }
   
-  all_data$learner_id <- ifelse(grepl("logistic", all_data$learner_id), "Logistic Calibration",
-                         ifelse(grepl("beta", all_data$learner_id), "Beta Calibration",
-                         ifelse(grepl("isotonic", all_data$learner_id), "Isotonic Calibration",
-                         "Uncalibrated")))
+  all_data$learner_id <- ifelse(grepl("calibrated_logistic", all_data$learner_id), "Logistic Calibration",
+                         ifelse(grepl("calibrated_beta", all_data$learner_id), "Beta Calibration",
+                         ifelse(grepl("calibrated_isotonic", all_data$learner_id), "Isotonic Calibration",
+                         ifelse(grepl("cv_platt", all_data$learner_id), "CV-Calibration: Logistic",
+                         ifelse(grepl("cv_isotonic", all_data$learner_id), "CV-Calibration: Isotonic",
+                         ifelse(grepl("cv_beta", all_data$learner_id), "CV-Calibration: Beta",
+                         "Uncalibrated"))))))
   
   
   p <- ggplot(all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
@@ -28,7 +32,7 @@ calibrationplot <- function(learners, task, bins = 11, smooth = FALSE, CI = FALS
     theme_minimal() +
     xlim(0, 1) +
     ylim(0, 1) +
-    labs(x = "Prediction", y = "Truth", color = "Learner") +
+    labs(x = "Mean Prediction", y = "Mean Truth", color = "Learner") +
     theme(legend.position = c(0.85, 0.25)) +
     # Legende umranden
     theme(legend.background = element_rect(color = "black", size = 0.5)) +
@@ -41,6 +45,10 @@ calibrationplot <- function(learners, task, bins = 11, smooth = FALSE, CI = FALS
   } else {
     p <- p + geom_line() + geom_point()
   }
+  
+  #if (rug) {
+  #  p <- p + geom_rug()
+  #}
   
   return(p)
 }

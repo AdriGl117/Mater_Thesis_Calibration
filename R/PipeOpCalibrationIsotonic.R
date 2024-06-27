@@ -62,8 +62,8 @@ PipeOpCalibrationIsotonic <- R6Class(
       colnames(prob) = c(task$positive, task$negative)
       pred_calibrated = PredictionClassif$new(
         task = task,
-        row_ids = preds$row_ids,
-        truth = preds$truth,
+        row_ids = task$row_ids,
+        truth = task$truth(),
         prob = prob,
         response = preds$response
       )
