@@ -16,7 +16,7 @@ source("R/PipeOpCalibrationIsotonic.R")
 source("R/PipeOpCalibrationCV.R")
 source("R/Functions.R")
 
-set.seed(12)
+set.seed(123)
 df = read.csv("Data/cs-training.csv")
 df = df[,-1]
 task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
@@ -30,8 +30,7 @@ task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
 po = po("imputemean")
-learner_uncal <- as_learner(po %>>% lrn("classif.xgboost", nrounds = 1,
-                                        predict_type = "prob"))
+learner_uncal <- as_learner(po %>>% lrn("classif.naive_bayes", predict_type = "prob"))
 
 # Calibrated Learner
 learner_log_cal <- as_learner(po("calibration_logistic", learner = learner_uncal,

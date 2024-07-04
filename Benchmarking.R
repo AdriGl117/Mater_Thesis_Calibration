@@ -16,8 +16,8 @@ source("R/PipeOpCalibrationBeta.R")
 source("R/PipeOpCalibrationIsotonic.R")
 
 tasks = list_oml_data(
-  number_features = 10,
-  number_instances = c(100, 10000),
+  number_features = c(10, 20),
+  number_instances = c(100000, 1000000),
   number_missing_values = 0,
   number_classes = 2
 )

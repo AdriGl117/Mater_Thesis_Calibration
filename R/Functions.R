@@ -34,14 +34,13 @@ calibrationplot <- function(learners, task, bins = 11,
     ylim(0, 1) +
     labs(x = "Mean Prediction", y = "Mean Truth", color = "Learner") +
     theme(legend.position = c(0.85, 0.25)) +
-    # Legende umranden
     theme(legend.background = element_rect(color = "black", size = 0.5)) +
     ggtitle("Reliability Curve") +
     theme(plot.title = element_text(hjust = 0.5, size = 20))
 
   
   if (smooth) {
-    p <- p + geom_smooth(method = "loess", se = CI)
+    p <- p + geom_smooth(method = "loess", se = CI) + geom_point()
   } else {
     p <- p + geom_line() + geom_point()
   }
