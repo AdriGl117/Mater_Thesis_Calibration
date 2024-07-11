@@ -8,15 +8,26 @@ PipeOpCalibrationIsotonic <- R6Class(
     calibration_ratio = NULL,
     
     initialize = function(id = paste0(self$learner$id, ".calibrated_isotonic"), learner, 
-                          calibration_ratio = 0.2) {
+                          calibration_ratio = 0.2, param_vals = list()) {
       self$learner = learner$clone()
       self$calibration_ratio = calibration_ratio
-      super$initialize(id, param_set = ParamSet$new(),
+      super$initialize(id,
+                       param_set = alist(self$learner$param_set),
+                       param_vals = param_vals,
                        input = data.table(name = "input", train = "Task", 
                                           predict = "Task"),
                        output = data.table(name = "output", train = "NULL", 
                                            predict = "PredictionClassif"),
       )
+    }
+  ),
+  active = list(
+    predict_type = function(val) {
+      if (!missing(val)) {
+        assert_subset(val, names(mlr_reflections$learner_predict_types[[self$learner$task_type]]))
+        self$learner$predict_type = val
+      }
+      self$learner$predict_type
     }
   ),
   

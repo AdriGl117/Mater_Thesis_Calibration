@@ -30,7 +30,7 @@ task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
 po = po("imputemean")
-learner_uncal <- as_learner(po %>>% lrn("classif.naive_bayes", predict_type = "prob"))
+learner_uncal <- as_learner(po %>>% lrn("classif.xgboost", predict_type = "prob"))
 
 # Calibrated Learner
 learner_log_cal <- as_learner(po("calibration_logistic", learner = learner_uncal,

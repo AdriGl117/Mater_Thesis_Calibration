@@ -10,14 +10,15 @@ PipeOpCalibrationCV <- R6Class(
     calibrators = NULL,
     
     initialize = function(id = paste0(self$learner$id, ".calibrated_cv_", method),
-                          learner, method = "platt", folds = 5) {
-      self$learner = learner$clone()
+                          learner, method = "platt", folds = 5, param_vals = list()) {
+      self$learner = learner
       self$method = method
       self$folds = folds
       self$learners = list()
       self$calibrators = list()
       super$initialize(id, 
-                       param_set = ParamSet$new(),
+                       param_set = alist(self$learner$param_set),
+                       param_vals = param_vals,
                        input = data.table(name = "input", train = "Task", 
                                           predict = "Task"),
                        output = data.table(name = "output", train = "NULL", 
@@ -25,7 +26,15 @@ PipeOpCalibrationCV <- R6Class(
       )
     }
   ),
-  
+  active = list(
+    predict_type = function(val) {
+      if (!missing(val)) {
+        assert_subset(val, names(mlr_reflections$learner_predict_types[[self$learner$task_type]]))
+        self$learner$predict_type = val
+      }
+      self$learner$predict_type
+    }
+  ),
   private = list(
     .train = function(inputs) {
       # Initialize the Task
