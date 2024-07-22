@@ -49,12 +49,11 @@ PipeOpCalibrationBeta <- R6Class(
       pred_data = as.data.table(preds)
       calibration_data = data.table(truth = calibration_task$truth(), 
         response = with(pred_data, get(paste0("prob.", positive))))
-      
       colnames(calibration_data) = c("truth", "response")
-      calibration_data$truth <- ifelse(calibration_data$truth == positive, 0.99, 0.01)
-      
-      formula = as.formula("truth ~ response")
-      self$calibrator = betareg::betareg(formula, data = calibration_data, link = "logit")
+      calibration_data$truth = ifelse(calibration_data$truth == task$positive, 1, 0)
+      self$calibrator = betacal::beta_calibration(p = calibration_data$response, 
+                                                  y = calibration_data$truth,
+                                                  parameter = "ab")
       
       return(list(NULL)) 
     },
@@ -65,16 +64,16 @@ PipeOpCalibrationBeta <- R6Class(
       # Get predictions from the learner
       preds = self$learner$predict(task)
       pred_data = as.data.table(preds)
-      calibration_data = data.table(truth = task$truth(), 
+      calibration_data = data.table( 
         response = with(pred_data, get(paste0("prob.", positive))))
-      
-      pred_calibrated = predict(self$calibrator, newdata = calibration_data, type = "response")
+      colnames(calibration_data) = c("response")
+      pred_calibrated = beta_predict(calibration_data$response, self$calibrator)
       prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
       colnames(prob) = c(task$positive, task$negative)
       pred_calibrated = PredictionClassif$new(
         task = task,
-        row_ids = preds$row_ids,
-        truth = preds$truth,
+        row_ids = task$row_ids,
+        truth = task$truth(),
         prob = prob,
         response = preds$response
       )

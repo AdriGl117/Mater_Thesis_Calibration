@@ -1,0 +1,24 @@
+library(mlr3)
+library(mlr3pipelines)
+library(mlr3misc)
+library(paradox)
+library(mlr3verse)
+library(R6)
+library(ggplot2)
+library(ggpubr)
+library(dplyr)
+library(mlr3tuning)
+library(mlr3mbo)
+library(mlr3oml)
+library(iml)
+
+sourceDir <- function(path, trace = TRUE, ...) {
+  op <- options(); on.exit(options(op)) # to reset after each
+  for (nm in list.files(path, pattern = "[.][RrSsQq]$")) {
+    if(trace) cat(nm,":")
+    source(file.path(path, nm), ...)
+    if(trace) cat("\n")
+    options(op)
+  }
+}
+sourceDir("R")

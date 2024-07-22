@@ -37,6 +37,8 @@ PipeOpCalibrationCV <- R6Class(
   ),
   private = list(
     .train = function(inputs) {
+      #ToDo: rr wird trainiert übergeben
+      
       # Initialize the Task
       task = inputs[[1]]
       positive = task$positive
@@ -68,13 +70,20 @@ PipeOpCalibrationCV <- R6Class(
         } else if (self$method == "isotonic") {
           calibration_data$truth <- ifelse(calibration_data$truth == positive, 1, 0)
           calibrator = as.stepfun(stats::isoreg(x = calibration_data$response, 
-                                               y = calibration_data$truth))
+                                                y = calibration_data$truth))
           self$calibrators[[length(self$calibrators) + 1]] = calibrator
         } else if (self$method == "beta") {
-          calibration_data$truth <- ifelse(calibration_data$truth == positive, 0.99, 0.01)
-          
-          formula = as.formula("truth ~ response")
-          calibrator = betareg::betareg(formula, data = calibration_data, link = "logit")
+          calibration_data$truth <- ifelse(calibration_data$truth == positive, 1, 0)
+          calibrator = betacal::beta_calibration(p = calibration_data$response, 
+                                                 y = calibration_data$truth,
+                                                 parameter = "ab")
+          self$calibrators[[length(self$calibrators) + 1]] = calibrator
+        } else if(self$method == "gam") {
+          task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
+                                                positive = positive, id = "Task_cal")
+          calibrator = lrn("classif.gam", predict_type = "prob")
+          # ToDo: Monotonie
+          calibrator$train(task_for_calibrator)
           self$calibrators[[length(self$calibrators) + 1]] = calibrator
         }
       }
@@ -88,7 +97,7 @@ PipeOpCalibrationCV <- R6Class(
       # Loop over learners using their indices
       for (learner_index in seq_along(self$learners)) {
         learner = self$learners[[learner_index]]
-        pred = learner$predict(task_test)
+        pred = learner$predict(task)
         pred_data = as.data.table(pred)
         calibration_data = data.table(truth = task$truth(), 
                                       response = with(pred_data, get(paste0("prob.", positive))))
@@ -111,8 +120,8 @@ PipeOpCalibrationCV <- R6Class(
             response = pred$response
           )
         } else if (self$method == "beta") {
-          pred_calibrated = predict(self$calibrators[[learner_index]], 
-                                    newdata = calibration_data, type = "response")
+          pred_calibrated = betacal::beta_predict(calibration_data$response, 
+                                         self$calibrators[[learner_index]])
           prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
           colnames(prob) = c(task$positive, task$negative)
           pred_calibrated = PredictionClassif$new(
@@ -122,6 +131,10 @@ PipeOpCalibrationCV <- R6Class(
             prob = prob,
             response = pred$response
           )
+        } else if(self$method == "gam") {
+          task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
+                                                positive = positive, id = "Task_cal")
+          pred_calibrated = self$calibrators[[learner_index]]$predict(task_for_calibrator)
         }
         predictions[[length(predictions) + 1]] = as.data.table(pred_calibrated)
       }

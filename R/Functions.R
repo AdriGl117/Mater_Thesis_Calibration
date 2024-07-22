@@ -21,10 +21,12 @@ calibrationplot <- function(learners, task, bins = 11,
   all_data$learner_id <- ifelse(grepl("calibrated_logistic", all_data$learner_id), "Logistic Calibration",
                          ifelse(grepl("calibrated_beta", all_data$learner_id), "Beta Calibration",
                          ifelse(grepl("calibrated_isotonic", all_data$learner_id), "Isotonic Calibration",
+                         ifelse(grepl("calibrated_gam", all_data$learner_id), "GAM Calibration",
                          ifelse(grepl("cv_platt", all_data$learner_id), "CV-Calibration: Logistic",
                          ifelse(grepl("cv_isotonic", all_data$learner_id), "CV-Calibration: Isotonic",
                          ifelse(grepl("cv_beta", all_data$learner_id), "CV-Calibration: Beta",
-                         "Uncalibrated"))))))
+                         ifelse(grepl("cv_gam", all_data$learner_id), "CV-Calibration: GAM",
+                         "Uncalibrated"))))))))
   
   
   p <- ggplot(all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
