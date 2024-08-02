@@ -7,14 +7,14 @@ PipeOpCalibrationLogistic <- R6Class(
     calibrator = NULL,
     calibration_ratio = NULL,
 
-    initialize = function(id = paste0(self$learner$id, ".calibrated_logistic"),
+    initialize = function(id = self$learner$base_learner()$id,
                           learner, 
                           calibration_ratio = 0.2,
                           param_vals = list()) {
       self$learner = learner$clone()
       self$calibration_ratio = calibration_ratio
       super$initialize(id,
-                       param_set = alist(self$learner$param_set),
+                       param_set = alist(self$learner$base_learner()$param_set),
                        param_vals = param_vals,
                        input = data.table(name = "input", train = "Task", 
                                            predict = "Task"),
@@ -30,7 +30,10 @@ PipeOpCalibrationLogistic <- R6Class(
         self$learner$predict_type = val
       }
       self$learner$predict_type
-    }
+    }#,
+    #id = function() {
+    #  paste0(self$learner$id, ".calibrated_logistic")
+    #}
   ),
 
   private = list(

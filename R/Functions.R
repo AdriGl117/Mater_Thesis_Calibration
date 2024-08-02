@@ -5,7 +5,7 @@ calibrationplot <- function(learners, task, bins = 11,
                             smooth = FALSE, CI = FALSE, rug = FALSE) {
   
   all_data <- data.frame()
-  positive = task$positive
+  positive <- task$positive
   
   for (learner in learners) {
     prediction <- learner$predict(task)
@@ -18,38 +18,30 @@ calibrationplot <- function(learners, task, bins = 11,
     all_data <- rbind(all_data, data)
   }
   
-  all_data$learner_id <- ifelse(grepl("calibrated_logistic", all_data$learner_id), "Logistic Calibration",
-                         ifelse(grepl("calibrated_beta", all_data$learner_id), "Beta Calibration",
-                         ifelse(grepl("calibrated_isotonic", all_data$learner_id), "Isotonic Calibration",
-                         ifelse(grepl("calibrated_gam", all_data$learner_id), "GAM Calibration",
-                         ifelse(grepl("cv_platt", all_data$learner_id), "CV-Calibration: Logistic",
-                         ifelse(grepl("cv_isotonic", all_data$learner_id), "CV-Calibration: Isotonic",
-                         ifelse(grepl("cv_beta", all_data$learner_id), "CV-Calibration: Beta",
-                         ifelse(grepl("cv_gam", all_data$learner_id), "CV-Calibration: GAM",
-                         "Uncalibrated"))))))))
+  dummy_line <- data.frame(mean_res = c(0, 1), mean_truth = c(0, 1), learner_id = "Perfectly Calibrated")
   
-  
-  p <- ggplot(all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
-    geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "black") +
+  p <- ggplot() +
+    #geom_point(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
+    #geom_line(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
+    geom_line(data = dummy_line, aes(x = mean_res, y = mean_truth, color = learner_id), linetype = "dashed", show.legend = TRUE) +
     theme_minimal() +
     xlim(0, 1) +
     ylim(0, 1) +
     labs(x = "Mean Prediction", y = "Mean Truth", color = "Learner") +
+    scale_color_manual(values = c("Perfectly Calibrated" = "black", setNames(scales::hue_pal()(length(unique(all_data$learner_id))), unique(all_data$learner_id)))) +
     theme(legend.position = c(0.85, 0.25)) +
     theme(legend.background = element_rect(color = "black", size = 0.5)) +
     ggtitle("Reliability Curve") +
     theme(plot.title = element_text(hjust = 0.5, size = 20))
-
   
   if (smooth) {
-    p <- p + geom_smooth(method = "loess", se = CI) + geom_point()
+    p <- p + geom_point(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
+             geom_smooth(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id), method = "loess", se = CI) 
+             
   } else {
-    p <- p + geom_line() + geom_point()
+    p <- p + geom_point(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
+             geom_line(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) 
   }
-  
-  #if (rug) {
-  #  p <- p + geom_rug()
-  #}
   
   return(p)
 }

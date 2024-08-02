@@ -5,19 +5,40 @@ PipeOpCalibrationCV <- R6Class(
   public = list(
     learner = NULL,
     method = NULL,
-    folds = NULL,
+    rsmp = NULL,
     learners = NULL,
     calibrators = NULL,
+    rr = NULL,
     
-    initialize = function(id = paste0(self$learner$id, ".calibrated_cv_", method),
-                          learner, method = "platt", folds = 5, param_vals = list()) {
-      self$learner = learner
+    initialize = function(id = "Calibrated",
+                          learner = NULL, 
+                          method = "platt", 
+                          rsmp = NULL,
+                          rr = NULL,
+                          param_vals = list()) {
+      
+      if (is.null(learner) && is.null(rr)) {
+        stop("Either learner or resampling object must be provided.")
+      }
+      if (!is.null(rr)) {
+        self$rr = rr
+      }
+      if (!is.null(learner)) {
+        self$learner = learner$clone()
+        id = self$learner$base_learner()$id
+      }else{
+        self$learner = self$rr$learners[[1]]$clone()
+      }
+      if (!is.null(rsmp)) {
+        self$rsmp = rsmp
+      }else if (is.null(rsmp) && is.null(rr)){
+        self$rsmp = rsmp("cv", folds = 5)
+      }
       self$method = method
-      self$folds = folds
       self$learners = list()
       self$calibrators = list()
-      super$initialize(id, 
-                       param_set = alist(self$learner$param_set),
+      super$initialize(id,
+                       param_set = alist(self$learner$base_learner()$param_set),
                        param_vals = param_vals,
                        input = data.table(name = "input", train = "Task", 
                                           predict = "Task"),
@@ -28,25 +49,26 @@ PipeOpCalibrationCV <- R6Class(
   ),
   active = list(
     predict_type = function(val) {
-      if (!missing(val)) {
-        assert_subset(val, names(mlr_reflections$learner_predict_types[[self$learner$task_type]]))
-        self$learner$predict_type = val
-      }
-      self$learner$predict_type
+      "prob"
     }
   ),
   private = list(
     .train = function(inputs) {
-      #ToDo: rr wird trainiert übergeben
+      on.exit(lgr::get_logger("mlr3")$set_threshold("info"))
+      
+      lgr::get_logger("mlr3")$set_threshold("warn")
       
       # Initialize the Task
       task = inputs[[1]]
       positive = task$positive
-      # ToDo: Stratified Cross-Validation
-      resampling = rsmp("cv", folds = self$folds)
       
       # Perform cross-validation
-      rr = resample(task, self$learner, resampling, store_models = TRUE)
+      if(is.null(self$rr)){
+        rr = resample(task, self$learner, self$rsmp, store_models = TRUE)
+      }else{
+        rr = self$rr
+      }
+
       self$learners = rr$learners
       # Predict Calibration Task on base learner
       preds = rr$predictions(predict_sets = "test")
@@ -159,7 +181,7 @@ PipeOpCalibrationCV <- R6Class(
     },
     
     .additional_phash_input = function() {
-      list(self$learner$hash, self$calibration_ratio)
+      list(self$learner$hash)
     }
   )
 )

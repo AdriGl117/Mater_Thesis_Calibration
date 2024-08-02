@@ -1,13 +1,13 @@
-source("sources.R")
+ysource("sources.R")
 
 set.seed(12)
-#df = read.csv("Data/cs-training.csv")
-#df = df[,-1]
-#task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
+df = read.csv("Data/cs-training.csv")
+df = df[,-1]
+task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
 #Load the OML Task
-odata = odt(id = 37)
-backend = as_data_backend(odata)
-task = as_task_classif(backend, target = odata$target_names)
+#odata = odt(id = 37)
+#backend = as_data_backend(odata)
+#task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
 task_train = task$clone()$filter(splits$train)
 task_test = task$clone()$filter(splits$test)
@@ -26,13 +26,13 @@ learner_beta_cal <- as_learner(po("calibration_beta", learner = learner_uncal,
 learner_iso_cal <- as_learner(po("calibration_isotonic", learner = learner_uncal,
                                  calibration_ratio = 0.2))
 learner_cv_cal_log <- as_learner(po("calibration_cv", learner = learner_uncal, 
-                                    folds = 5))
+                                    method = "platt", rsmp = rsmp))
 learner_cv_cal_iso <- as_learner(po("calibration_cv", learner = learner_uncal, 
-                                    method = "isotonic", folds = rsmp))
+                                    method = "isotonic", rsmp = rsmp))
 learner_cv_cal_beta <- as_learner(po("calibration_cv", learner = learner_uncal, 
-                                     method = "beta", folds = 5))
+                                     method = "beta", rsmp = rsmp))
 learner_cv_cal_gam <- as_learner(po("calibration_cv", learner = learner_uncal, 
-                                    method = "gam", folds = 5))
+                                    method = "gam", rsmp = rsmp))
 learner_union_cal_log <- as_learner(po("calibration_union", learner = learner_uncal, 
                                        method = "platt", folds = 5))
 learner_union_cal_iso <- as_learner(po("calibration_union", learner = learner_uncal, 
@@ -90,4 +90,3 @@ calibrationplot(learner_iso, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learner_beta, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learners_simple_cal, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learner_cv, task_test, bins = 11, smooth = TRUE)
-

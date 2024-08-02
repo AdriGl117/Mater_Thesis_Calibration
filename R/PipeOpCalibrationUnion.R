@@ -124,7 +124,7 @@ PipeOpCalibrationUnion <- R6Class(
           response = pred$response
         )
       } else if (self$method == "beta") {
-        pred_calibrated = beta_predict(calibration_data$response, 
+        pred_calibrated = betacal::beta_predict(calibration_data$response, 
                                        self$calibrator)
         prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
         colnames(prob) = c(task$positive, task$negative)

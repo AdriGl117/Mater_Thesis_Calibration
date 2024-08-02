@@ -67,7 +67,7 @@ PipeOpCalibrationBeta <- R6Class(
       calibration_data = data.table( 
         response = with(pred_data, get(paste0("prob.", positive))))
       colnames(calibration_data) = c("response")
-      pred_calibrated = beta_predict(calibration_data$response, self$calibrator)
+      pred_calibrated = betacal::beta_predict(calibration_data$response, self$calibrator)
       prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
       colnames(prob) = c(task$positive, task$negative)
       pred_calibrated = PredictionClassif$new(
