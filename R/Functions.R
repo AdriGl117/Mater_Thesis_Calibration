@@ -35,7 +35,7 @@ calibrationplot <- function(learners, task, bins = 11,
     theme(plot.title = element_text(hjust = 0.5, size = 20))
   
   if (smooth) {
-    p <- p + geom_point(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
+    p <- p + #geom_point(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id)) +
              geom_smooth(data = all_data, aes(x = mean_res, y = mean_truth, color = learner_id), method = "loess", se = CI) 
              
   } else {

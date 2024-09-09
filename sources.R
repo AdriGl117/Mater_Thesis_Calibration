@@ -11,6 +11,8 @@ library(mlr3tuning)
 library(mlr3mbo)
 library(mlr3oml)
 library(iml)
+library(batchtools)
+library(mlr3batchmark)
 
 sourceDir <- function(path, trace = TRUE, ...) {
   op <- options(); on.exit(options(op)) # to reset after each

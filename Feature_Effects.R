@@ -3,7 +3,7 @@ source("sources.R")
 set.seed(1234)
 
 # Generating Sythetic Data following a quadratic function
-n <- 100000
+n <- 10000
 set.seed(42)
 age <- sample(0:100, n, replace = TRUE)
 prob <- 1 - (age - 50)^2 / (50^2) + rnorm(n, sd = 0.1)
@@ -15,9 +15,11 @@ prob <- 1 - (age - 50)^2 / (50^2) + rnorm(n, sd = 0.1)
 #prob <- 0.5 + 0.5 * sin(age / 10) + rnorm(n, sd = 0.1)
 prob <- pmax(0, pmin(1, prob))
 target <- rbinom(n, 1, prob)
-# feature 2 is just noise, since iml needs 2 features
+# feature 2 is uninformative, since iml needs 2 features
 feature2 <- runif(n, 0, 1)
 synthetic_data <- data.frame(age = age, target = target, feature2 = feature2)
+
+#ToDo: Mit, ohne und starke interaktionen (korrelation der Features)
 
 # Frequencies by age
 relative_frequencies <- synthetic_data %>%
@@ -51,7 +53,7 @@ task <- as_task_classif(synthetic_data, target = "target", positive = "1")
 split <- partition(task, stratify = TRUE, ratio = 0.8)
 
 
-learner_uncal <- lrn("classif.xgboost", nrounds = 100, predict_type = "prob")
+learner_uncal <- lrn("classif.rpart",  predict_type = "prob")
 # Calibrated Learner
 learner_log_cal <- as_learner(po("calibration_cv", learner = learner_uncal))
 learner_log_cal$id <- "Calibrated Logistic"
