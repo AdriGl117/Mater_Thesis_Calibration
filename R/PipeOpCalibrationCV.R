@@ -130,9 +130,9 @@ PipeOpCalibrationCV <- R6Class(
           task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
                                                 positive = positive, id = "Task_cal")
           pred_calibrated = self$calibrators[[learner_index]]$predict(task_for_calibrator)
-          x = calibration_data$response
-          y = pred_calibrated$prob[,1]
-          plot(x,y)
+          #x = calibration_data$response
+          #y = pred_calibrated$prob[,1]
+          #plot(x,y)
         } else if (self$method == "isotonic") {
           pred_calibrated = self$calibrators[[learner_index]](calibration_data$response)
           prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
@@ -160,9 +160,6 @@ PipeOpCalibrationCV <- R6Class(
           task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
                                                 positive = positive, id = "Task_cal")
           pred_calibrated = self$calibrators[[learner_index]]$predict(task_for_calibrator)
-          x = calibration_data$response
-          y = pred_calibrated$prob[,1]
-          plot(x,y)
         }
         predictions[[length(predictions) + 1]] = as.data.table(pred_calibrated)
       }
