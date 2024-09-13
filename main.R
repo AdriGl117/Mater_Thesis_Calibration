@@ -5,16 +5,16 @@ df = read.csv("Data/cs-training.csv")
 df = df[,-1]
 task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
 #Load the OML Task
-odata = odt(id = 37)
-backend = as_data_backend(odata)
-task = as_task_classif(backend, target = odata$target_names)
+#odata = odt(id = 37)
+#backend = as_data_backend(odata)
+#task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
 task_train = task$clone()$filter(splits$train)
 task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
 po = po("imputemean")
-learner_uncal <- as_learner(po %>>% lrn("classif.naive_bayes", predict_type = "prob"))
+learner_uncal <- as_learner(po %>>% lrn("classif.ranger", predict_type = "prob"))
 
 holdout <- rsmp("holdout", ratio = 0.7)
 rsmp <- rsmp("cv", folds = 5)
@@ -51,6 +51,7 @@ learner_cv_cal_log$train(task_train)
 learner_cv_cal_iso$train(task_train)
 learner_cv_cal_beta$train(task_train)
 learner_cv_cal_gam$train(task_train)
+
 
 # Predict the learners
 preds_uncal = learner_uncal$predict(task_test)
