@@ -1,5 +1,5 @@
-PipeOpCalibrationCV <- R6Class(
-  "PipeOpCalibrationCV",
+PipeOpCalibration <- R6Class(
+  "PipeOpCalibration",
   inherit = mlr3pipelines::PipeOp,
   
   public = list(
@@ -190,4 +190,4 @@ PipeOpCalibrationCV <- R6Class(
 )
 
 # Register the new PipeOp
-mlr_pipeops$add("calibration_cv", PipeOpCalibrationCV)
+mlr_pipeops$add("calibration", PipeOpCalibration)

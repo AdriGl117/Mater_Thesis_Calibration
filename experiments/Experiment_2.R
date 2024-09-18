@@ -102,7 +102,7 @@ for (learner in base_learners) {
                   "_TwP_", calibrator),
            auto_tuner(
              tuner = tnr("mbo"),
-             learner = as_learner(po("calibration_cv", learner = learner,
+             learner = as_learner(po("calibration", learner = learner,
                                     rsmp = rsmp_cv5, method = calibrator)),
              resampling = rsmp("cv", folds = 3),
              measure = msr("classif.ece"),
@@ -123,7 +123,7 @@ for (learner in base_learners) {
   for (calibrator in calibrators) {
     assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
                   "_TbC_", calibrator),
-           as_learner(po("calibration_cv",
+           as_learner(po("calibration",
                          learner = auto_tuner(
                            tuner = tnr("mbo"),
                            learner = learner,

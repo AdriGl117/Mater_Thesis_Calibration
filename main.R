@@ -20,25 +20,25 @@ holdout <- rsmp("holdout", ratio = 0.7)
 rsmp <- rsmp("cv", folds = 5)
 
 # Calibrated Learner
-learner_log_cal <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_log_cal <- as_learner(po("calibration", learner = learner_uncal, 
                                  method = "platt", rsmp = holdout))
 learner_log_cal$id = "Calibrated Logistic (Holdout)"
-learner_beta_cal <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_beta_cal <- as_learner(po("calibration", learner = learner_uncal, 
                                   method = "beta", rsmp = holdout))
 learner_beta_cal$id = "Calibrated Beta (Holdout)"
-learner_iso_cal <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_iso_cal <- as_learner(po("calibration", learner = learner_uncal, 
                                  method = "isotonic", rsmp = holdout))
 learner_iso_cal$id = "Calibrated Isotonic (Holdout)"
-learner_cv_cal_log <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_cv_cal_log <- as_learner(po("calibration", learner = learner_uncal, 
                                     method = "platt", rsmp = rsmp))
 learner_cv_cal_log$id = "Calibrated Logistic (CV)"
-learner_cv_cal_iso <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_cv_cal_iso <- as_learner(po("calibration", learner = learner_uncal, 
                                     method = "isotonic", rsmp = rsmp))
 learner_cv_cal_iso$id = "Calibrated Isotonic (CV)"
-learner_cv_cal_beta <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_cv_cal_beta <- as_learner(po("calibration", learner = learner_uncal, 
                                      method = "beta", rsmp = rsmp))
 learner_cv_cal_beta$id = "Calibrated Beta (CV)"
-learner_cv_cal_gam <- as_learner(po("calibration_cv", learner = learner_uncal, 
+learner_cv_cal_gam <- as_learner(po("calibration", learner = learner_uncal, 
                                     method = "gam", rsmp = rsmp))
 learner_cv_cal_gam$id = "Calibrated GAM (CV)"
 learner_uncal$id = "Uncalibrated"

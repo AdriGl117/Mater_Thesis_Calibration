@@ -124,7 +124,7 @@ for (learner in base_learners) {
       # Creates the learner
       assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
                     "_calibrated_", calibrator, "_", rsmp$id),
-             as_learner(po("calibration_cv", learner = learner, 
+             as_learner(po("calibration", learner = learner, 
                            method = calibrator, rsmp = rsmp)))
       # Append learner to list
       learners[[length(learners) + 1]] = get(paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
