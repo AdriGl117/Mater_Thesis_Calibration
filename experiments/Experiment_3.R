@@ -1,5 +1,6 @@
 source("sources.R")
-set.seed(123)
+seed = 123
+set.seed(seed)
 
 #####Load the different Friedman Tasks#####
 task_1 <- friedman_tasks(n = 10000, setting = "1")
@@ -122,7 +123,7 @@ params_grid <- expand.grid(params_list)
 #####Run the benchmark#####
 reg = makeRegistry(
   file.dir = "./Experiments/Exp_3",
-  seed = 1,
+  seed = seed,
   packages = "mlr3verse"
 )
 
