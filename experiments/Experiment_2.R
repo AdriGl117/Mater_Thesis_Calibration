@@ -1,5 +1,6 @@
 source("sources.R")
-set.seed(123)
+seed = 123
+set.seed(seed)
 
 #####Load cc-18 Tasks#####
 otask_collection = ocl(id = 99)
@@ -152,7 +153,7 @@ large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 reg = makeExperimentRegistry(
   file.dir = "./Exp_2",
-  seed = 1,
+  seed = seed,
   packages = "mlr3verse"
 )
 
