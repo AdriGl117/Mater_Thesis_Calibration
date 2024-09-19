@@ -152,7 +152,7 @@ learners = learners[order(sapply(learners, function(x) x$id))]
 large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 reg = makeExperimentRegistry(
-  file.dir = "./Exp_1",
+  file.dir = "./Experiments/Exp_1",
   seed = 1,
   packages = "mlr3verse"
 )

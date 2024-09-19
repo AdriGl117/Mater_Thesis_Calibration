@@ -69,7 +69,6 @@ friedman_tasks <- function(setting = "1", n = 10000, cor = 0, snr = 1){
   eps = rnorm(length(Y), mean = 0, sd = sqrt(eps_var))
   Y = Y + eps
   Y = pmin(pmax(Y, 0), 1)
-  boxplot(Y)
   # Transform Y to a binary target
   Y = ifelse(Y > median(Y), 1, 0)
   
