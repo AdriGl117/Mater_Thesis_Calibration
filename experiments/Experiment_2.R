@@ -4,7 +4,7 @@ set.seed(seed)
 
 #####Load cc-18 Tasks#####
 otask_collection = ocl(id = 99)
-number_instances = c(569, 583)#c(569, 583, 1000, 2109, 5000, 5404, 11055, 34465, 45312, 96320)
+number_instances = c(569, 583, 1000, 2109, 5000, 5404, 11055, 34465, 45312, 96320)
 binary_cc18 = list_oml_tasks(
   task_id = otask_collection$task_ids,
   number_missing_values = 0,
@@ -152,7 +152,7 @@ learners = learners[order(sapply(learners, function(x) x$id))]
 large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 reg = makeExperimentRegistry(
-  file.dir = "./Exp_2",
+  file.dir = "./Experiments/Exp_2",
   seed = seed,
   packages = "mlr3verse"
 )

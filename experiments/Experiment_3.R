@@ -15,7 +15,7 @@ task_4a <- friedman_tasks(n = 10000, setting = "4", cor = 0.4)
 task_4a$id <- "Setting 4a"
 task_4b <- friedman_tasks(n = 10000, setting = "4", cor = 0.8)
 task_4b$id <- "Setting 4b"
-tasks = list(task_1, task_2a)#, task_2b, task_3, task_4a, task_4b)
+tasks = list(task_1, task_2a, task_2b, task_3, task_4a, task_4b)
 
 #####Base Learners#####
 
@@ -105,7 +105,7 @@ calibrators <- list("unbalibrated", "platt", "beta", "isotonic")
 rsmps <- list(rsmp("cv", folds = 3))
 
 # Features
-features <- list("x3", "x4")#, "x5")
+features <- list("x2", "x3", "x4", "x5")
 
 # Param list of all combinations
 # Create a list of parameters

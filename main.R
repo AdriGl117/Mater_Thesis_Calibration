@@ -9,7 +9,7 @@ task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
 #backend = as_data_backend(odata)
 #task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
-task_train = task$clone()$filter(splits$train)
+task_train = task$clone()$filter(splits$train)s
 task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
