@@ -9,12 +9,12 @@ task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
 #backend = as_data_backend(odata)
 #task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
-task_train = task$clone()$filter(splits$train)s
+task_train = task$clone()$filter(splits$train)
 task_test = task$clone()$filter(splits$test)
 
 # Uncalibrated Learner
 po = po("imputemean")
-learner_uncal <- as_learner(po %>>% lrn("classif.ranger", predict_type = "prob"))
+learner_uncal <- as_learner(po %>>% lrn("classif.xgboost", nrounds = 50, predict_type = "prob"))
 
 holdout <- rsmp("holdout", ratio = 0.7)
 rsmp <- rsmp("cv", folds = 5)

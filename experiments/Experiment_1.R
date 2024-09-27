@@ -10,28 +10,41 @@ binary_cc18 = list_oml_tasks(
   number_missing_values = 0,
   number_classes = 2
 )
+
+# Filter down to the 10 relevant tasks
 binary_cc18 = binary_cc18[binary_cc18$NumberOfInstances %in% number_instances,]
+
+# List of the tasks
 otasks = lapply(binary_cc18$task_id, otsk)
 tasks = as_tasks(otasks)
+
+#List of the resamplings for each task
 resamplings = as_resamplings(otasks)
 
 #####Resampling#####
+# Resampling strategies for calibration
 rsmp_66 = rsmp("holdout", ratio = 2/3)
-rsmp_66$id = "holdout_66"
+rsmp_66$id = "66"
 rsmp_75 = rsmp("holdout", ratio = 3/4)
-rsmp_75$id = "holdout_75"
+rsmp_75$id = "75"
 rsmp_80 = rsmp("holdout", ratio = 4/5)
-rsmp_80$id = "holdout_80"
+rsmp_80$id = "80"
 rsmp_90 = rsmp("holdout", ratio = 9/10)
-rsmp_90$id = "holdout_90"
+rsmp_90$id = "90"
 rsmp_cv5 = rsmp("cv", folds = 5)
-rsmp_cv5$id = "cv_5"
+rsmp_cv5$id = "cv5"
 rsmp_cv10 = rsmp("cv", folds = 10)
-rsmp_cv10$id = "cv_10"
+rsmp_cv10$id = "cv10"
+
+# List of all rsmp objects
 rsmps <- list(rsmp_66, rsmp_75, rsmp_80, rsmp_90, rsmp_cv5, rsmp_cv10)
 
-#####Base Learners#####
+# Remove rsmps from environment
+for (rsmp in rsmps) {
+  remove(list = paste0("rsmp_", rsmp$id))
+}
 
+#####Base Learners#####
 # Support Vector Machine
 learner_svm = lrn("classif.svm", 
                   kernel = "radial",
@@ -106,6 +119,7 @@ base_learners = list(learner_svm,
                      learner_nnet, 
                      learner_naive_bayes)
 
+# Remove base learner from enviroment
 for (learner in base_learners) {
   remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id))))
 }
@@ -118,21 +132,22 @@ calibrators = list("platt", "beta", "isotonic")
 # Empty list to store all learners
 learners = list()
 
-# Loop to create all possible combinations of learners, calibrators and resamplings
+# Loop to create all possible combinations of learners, calibrators and rsmps
 for (learner in base_learners) {
   for (calibrator in calibrators) {
     for (rsmp in rsmps) {
-      # Creates the learner
+      # Creates calibrated the learner
       assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
                     "_calibrated_", calibrator, "_", rsmp$id),
              as_learner(po("calibration", learner = learner, 
                            method = calibrator, rsmp = rsmp)))
       # Append learner to list
-      learners[[length(learners) + 1]] = get(paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
-                                                     "_calibrated_", calibrator, "_", rsmp$id))
+      learners[[length(learners) + 1]] = get(paste0("learner_", 
+        substr(learner$id, 9, nchar(learner$id)), 
+        "_calibrated_", calibrator, "_", rsmp$id))
       # Set id of learner
-      learners[[length(learners)]]$id <- paste0(substr(learner$id, 9, nchar(learner$id)), 
-                                                " calibrated ", calibrator, " ", rsmp$id)
+      learners[[length(learners)]]$id <- paste0(substr(learner$id, 
+        9, nchar(learner$id)), " calibrated ", calibrator, " ", rsmp$id)
       # Remove learner from environment
       remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
                            "_calibrated_", calibrator, "_", rsmp$id))
@@ -183,7 +198,7 @@ getStatus(reg = reg)
 waitForJobs(reg = reg)
 
 #####Evaluate the Benchmark#####
-#bmr = reduceResultsBatchmark(reg = reg)
+bmr = reduceResultsBatchmark(reg = reg)
 measure <- msr("classif.ece")
 ece = bmr$aggregate(measure)
 ece = ece[, .(task_id, learner_id, classif.ece)]
@@ -193,7 +208,7 @@ ece
 ece[, Calibrator := ifelse(grepl("uncalibrated", learner_id), "uncalibrated",
                            gsub(".*calibrated (.*) .*", "\\1", learner_id))]
 
-# Add coumn Resampling
+# Add coloumn Resampling
 ece[, Resampling := ifelse(grepl("holdout", learner_id), 
                            gsub(".*holdout_(.*)", "\\1", learner_id), 
                            ifelse(grepl("cv", learner_id), 
@@ -204,9 +219,10 @@ ece[,Resampling := ifelse(grepl("75", Resampling), "holdout_75",
                           ifelse(grepl("66", Resampling), "holdout_66",
                           ifelse(grepl("5", Resampling), "cv_5",
                           ifelse(grepl("80", Resampling), "holdout_80",
-                          ifelse(grepl("90", Resampling), "holdout_90", "none"))))))]
+                          ifelse(grepl("90", Resampling), "holdout_90", "none"
+                                 ))))))]
 
-# Add coloumn learner, wich can be "svm", "ranger", "kknn", "rpart", "glmnet", "xgboost", "nnet", "naive_bayes"
+# Add coloumn learner
 ece[, Learner := gsub("(.*) .* .*", "\\1", learner_id)]
 ece[, Learner := gsub("(.*) .*", "\\1", Learner)]
 
@@ -226,7 +242,8 @@ ece_learner = ece_learner[, .(classif.ece = mean(classif.ece)), by = Learner]
 
 # Group by resampling and calibrator
 ece_res_cal = ece[, .(Resampling, Calibrator, classif.ece)]
-ece_res_cal = ece_res_cal[, .(classif.ece = mean(classif.ece)), by = .(Resampling, Calibrator)]
+ece_res_cal = ece_res_cal[, .(classif.ece = mean(classif.ece)), 
+                          by = .(Resampling, Calibrator)]
 
 library(mlr3benchmark)
 bma = as_benchmark_aggr(bmr, measures = msr("classif.ece"))

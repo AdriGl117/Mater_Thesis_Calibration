@@ -170,8 +170,11 @@ results_df <- do.call(rbind, results_list)
 # View the results
 print(results_df)
 
+# Shape of the feature
+results_df$shape <- ifelse(results_df$feature == "x2", "Sinus", 
+                           ifelse(results_df$feature == "x3", "Quadratic", "Linear"))
 
 # Result per Calibrator
 results_df %>%
-  group_by(task_id, calibrator) %>%
+  group_by(calibrator, shape) %>%
   summarise(mean_mse = mean(mse))

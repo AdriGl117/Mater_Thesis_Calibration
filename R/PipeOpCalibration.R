@@ -10,7 +10,7 @@ PipeOpCalibration <- R6Class(
     calibrators = NULL,
     rr = NULL,
     
-    initialize = function(id = "Calibrated",
+    initialize = function(#id = "Calibrated",
                           learner = NULL, 
                           method = "platt", 
                           rsmp = NULL,
@@ -34,10 +34,13 @@ PipeOpCalibration <- R6Class(
       }else if (is.null(rsmp) && is.null(rr)){
         self$rsmp = rsmp("cv", folds = 5)
       }
+      if (self$learner$predict_type != "prob"){
+        stop("predict_type has to be 'prob'")
+      }
       self$method = method
       self$learners = list()
       self$calibrators = list()
-      super$initialize(id,
+      super$initialize(id = paste0(self$learner$id, "_calibrated_", self$method),
                        param_set = alist(self$learner$base_learner()$param_set),
                        param_vals = param_vals,
                        input = data.table(name = "input", train = "Task", 
