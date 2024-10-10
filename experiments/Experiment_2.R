@@ -106,7 +106,7 @@ for (learner in base_learners) {
              learner = as_learner(po("calibration", learner = learner,
                                     rsmp = rsmp_cv5, method = calibrator)),
              resampling = rsmp("cv", folds = 3),
-             measure = msr("classif.ece"),
+             measure = msr("classif.bbrier"),
              term_evals = 100))
     learners_TwP_cal[[length(learners_TwP_cal) + 1]] <- get(
       paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
@@ -129,7 +129,7 @@ for (learner in base_learners) {
                            tuner = tnr("mbo"),
                            learner = learner,
                            resampling = rsmp("cv", folds = 3),
-                           measure = msr("classif.ece"),
+                           measure = msr("classif.bbrier"),
                            term_evals = 100),
                          rsmp = rsmp_cv5, 
                          method = calibrator)))

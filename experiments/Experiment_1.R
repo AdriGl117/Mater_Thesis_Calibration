@@ -4,7 +4,7 @@ set.seed(seed)
 
 #####Load cc-18 Tasks#####
 otask_collection = ocl(id = 99)
-number_instances = c(569, 583, 1000, 2109, 5000, 5404, 11055, 34465, 45312, 96320)
+number_instances = c(569)#, 583, 1000, 2109, 5000, 5404, 11055, 34465, 45312, 96320)
 binary_cc18 = list_oml_tasks(
   task_id = otask_collection$task_ids,
   number_missing_values = 0,
@@ -23,13 +23,11 @@ resamplings = as_resamplings(otasks)
 
 #####Resampling#####
 # Resampling strategies for calibration
-rsmp_66 = rsmp("holdout", ratio = 2/3)
-rsmp_66$id = "66"
-rsmp_75 = rsmp("holdout", ratio = 3/4)
-rsmp_75$id = "75"
-rsmp_80 = rsmp("holdout", ratio = 4/5)
+rsmp_70 = rsmp("holdout", ratio = 0.7)
+rsmp_70$id = "70"
+rsmp_80 = rsmp("holdout", ratio = 0.8)
 rsmp_80$id = "80"
-rsmp_90 = rsmp("holdout", ratio = 9/10)
+rsmp_90 = rsmp("holdout", ratio = 0.9)
 rsmp_90$id = "90"
 rsmp_cv5 = rsmp("cv", folds = 5)
 rsmp_cv5$id = "cv5"
@@ -37,7 +35,7 @@ rsmp_cv10 = rsmp("cv", folds = 10)
 rsmp_cv10$id = "cv10"
 
 # List of all rsmp objects
-rsmps <- list(rsmp_66, rsmp_75, rsmp_80, rsmp_90, rsmp_cv5, rsmp_cv10)
+rsmps <- list(rsmp_70, rsmp_80, rsmp_90, rsmp_cv5, rsmp_cv10)
 
 # Remove rsmps from environment
 for (rsmp in rsmps) {
@@ -167,10 +165,12 @@ learners = learners[order(sapply(learners, function(x) x$id))]
 #####Run the benchmark#####
 large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
+
 reg = makeExperimentRegistry(
-  file.dir = "./Experiments/Exp_1",
+  file.dir = "./Experiments/Exp_Test_Beta",
   seed = seed,
-  packages = "mlr3verse"
+  packages = "mlr3verse",
+  source = "sources.R"
 )
 
 batchmark(large_design, reg = reg)
@@ -200,6 +200,8 @@ waitForJobs(reg = reg)
 #####Evaluate the Benchmark#####
 bmr = reduceResultsBatchmark(reg = reg)
 measure <- msr("classif.ece")
+
+# Verschiedene Measures (ece, bbrier, auc, log loss)
 ece = bmr$aggregate(measure)
 ece = ece[, .(task_id, learner_id, classif.ece)]
 ece
@@ -214,13 +216,12 @@ ece[, Resampling := ifelse(grepl("holdout", learner_id),
                            ifelse(grepl("cv", learner_id), 
                                   gsub(".*cv_(.*)", "\\1", learner_id),
                                   "none"))]
-ece[,Resampling := ifelse(grepl("75", Resampling), "holdout_75",
+ece[,Resampling := ifelse(grepl("5", Resampling), "cv_5",
                           ifelse(grepl("10", Resampling), "cv_10", 
-                          ifelse(grepl("66", Resampling), "holdout_66",
-                          ifelse(grepl("5", Resampling), "cv_5",
+                          ifelse(grepl("70", Resampling), "holdout_70",
                           ifelse(grepl("80", Resampling), "holdout_80",
                           ifelse(grepl("90", Resampling), "holdout_90", "none"
-                                 ))))))]
+                                 )))))]
 
 # Add coloumn learner
 ece[, Learner := gsub("(.*) .* .*", "\\1", learner_id)]
@@ -231,20 +232,28 @@ ece = ece[, .(Learner, Calibrator, Resampling, task_id, classif.ece)]
 # Group by Calibrator
 ece_cal = ece[, .(Calibrator, classif.ece)]
 ece_cal = ece_cal[, .(classif.ece = mean(classif.ece)), by = Calibrator]
+ece_cal
 
 # Group by Resampling
 ece_res = ece[, .(Resampling, classif.ece)]
 ece_res = ece_res[, .(classif.ece = mean(classif.ece)), by = Resampling]
+ece_res
 
 # Group by Learner
 ece_learner = ece[, .(Learner, classif.ece)]
 ece_learner = ece_learner[, .(classif.ece = mean(classif.ece)), by = Learner]
+ece_learner
 
 # Group by resampling and calibrator
 ece_res_cal = ece[, .(Resampling, Calibrator, classif.ece)]
 ece_res_cal = ece_res_cal[, .(classif.ece = mean(classif.ece)), 
                           by = .(Resampling, Calibrator)]
+ece_res_cal
 
 library(mlr3benchmark)
 bma = as_benchmark_aggr(bmr, measures = msr("classif.ece"))
 autoplot(bma)
+
+error_ids = findErrors(reg = reg)
+summarizeExperiments(error_ids, by = c("task_id", "learner_id"),
+                     reg = reg)

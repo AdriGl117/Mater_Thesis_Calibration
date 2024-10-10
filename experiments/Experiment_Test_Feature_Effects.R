@@ -59,7 +59,7 @@ job_table = job_table[,
 job_table
 result = testJob(1, external = FALSE, reg = reg)
 
-cf = makeClusterFunctionsInteractive()
+cf = makeClusterFunctionsSlurm()
 reg$cluster.functions = cf
 saveRegistry(reg = reg)
 ids = job_table$job.id

@@ -49,7 +49,7 @@ generate_x = function(nobs = 1000, nfeat = 10, sigma = diag(nfeat),
   return(data)
 }
 
-friedman_tasks <- function(setting = "1", n = 10000, cor = 0, snr = 1){
+friedman_tasks <- function(setting = "1", n = 10000, cor = 0, snr = 10){
   
   # Features
   X <- generate_x(nobs = n, nfeat = 10, 
@@ -58,6 +58,7 @@ friedman_tasks <- function(setting = "1", n = 10000, cor = 0, snr = 1){
         distribution = "unif")
 
   # Target
+  # ToDo: Über logit model binär transformieren
   if (setting == "1" | setting == "2"){
     Y = 1/3 * sin(pi * X$x1 * X$x2) + 2/3 * (X$x3 - 0.5)^2 + 1/3 * X$x4 + 1/6 * X$x5 
   }else{
@@ -68,9 +69,10 @@ friedman_tasks <- function(setting = "1", n = 10000, cor = 0, snr = 1){
   eps_var = var(Y) / snr
   eps = rnorm(length(Y), mean = 0, sd = sqrt(eps_var))
   Y = Y + eps
-  Y = pmin(pmax(Y, 0), 1)
+  Y = 1 / (1 + exp(-(Y- mean(Y))))
+  
   # Transform Y to a binary target
-  Y = ifelse(Y > median(Y), 1, 0)
+  Y = ifelse(Y > 0.5, 1, 0)
   
   # Create Task
   df = data.frame(X, Y)

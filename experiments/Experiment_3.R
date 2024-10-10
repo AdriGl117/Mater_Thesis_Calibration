@@ -3,20 +3,34 @@ seed = 123
 set.seed(seed)
 
 #####Load the different Friedman Tasks#####
-task_1 <- friedman_tasks(n = 10000, setting = "1")
-task_1$id <- "Setting 1"
-task_2a <- friedman_tasks(n = 10000, setting = "2", cor = 0.4)
-task_2a$id <- "Setting 2a"
-task_2b <- friedman_tasks(n = 10000, setting = "2", cor = 0.8)
-task_2b$id <- "Setting 2b"
-task_3 <- friedman_tasks(n = 10000, setting = "3")
-task_3$id <- "Setting 3"
-task_4a <- friedman_tasks(n = 10000, setting = "4", cor = 0.4)
-task_4a$id <- "Setting 4a"
-task_4b <- friedman_tasks(n = 10000, setting = "4", cor = 0.8)
-task_4b$id <- "Setting 4b"
-tasks = list(task_1, task_2a, task_2b, task_3, task_4a, task_4b)
+# SNR 10 und 20
+task_1a <- friedman_tasks(n = 10000, setting = "1", snr = 10)
+task_1a$id <- "Setting 1a: snr = 10"
+task_1b <- friedman_tasks(n = 10000, setting = "1", snr = 20)
+task_1b$id <- "Setting 1b: snr = 20"
+task_2aa <- friedman_tasks(n = 10000, setting = "2", cor = 0.4, snr = 10)
+task_2aa$id <- "Setting 2aa, snr = 10"
+task_2ab <- friedman_tasks(n = 10000, setting = "2", cor = 0.4, snr = 20)
+task_2ab$id <- "Setting 2ab, snr = 20"
+task_2ba <- friedman_tasks(n = 10000, setting = "2", cor = 0.8, snr = 10)
+task_2ba$id <- "Setting 2ba, snr = 10"
+task_2bb <- friedman_tasks(n = 10000, setting = "2", cor = 0.8, snr = 10)
+task_2bb$id <- "Setting 2bb, snr = 20"
+task_3a <- friedman_tasks(n = 10000, setting = "3", snr = 10)
+task_3a$id <- "Setting 3a, snr = 10"
+task_3b <- friedman_tasks(n = 10000, setting = "3", snr = 20)
+task_3b$id <- "Setting 3b, snr = 20"
+task_4aa <- friedman_tasks(n = 10000, setting = "4", cor = 0.4, snr = 10)
+task_4aa$id <- "Setting 4aa, snr = 10"
+task_4ab <- friedman_tasks(n = 10000, setting = "4", cor = 0.4, snr = 20)
+task_4ab$id <- "Setting 4ab, snr = 20"
+task_4ba <- friedman_tasks(n = 10000, setting = "4", cor = 0.8, snr = 10)
+task_4ba$id <- "Setting 4ba, snr = 10"
+task_4bb <- friedman_tasks(n = 10000, setting = "4", cor = 0.8, snr = 20)
+task_4bb$id <- "Setting 4bb, snr = 20"
 
+tasks <- list(task_1a, task_1b, task_2aa, task_2ab, task_2ba, task_2bb, 
+              task_3a, task_3b, task_4aa, task_4ab, task_4ba, task_4bb)
 #####Base Learners#####
 
 # Support Vector Machine
@@ -102,7 +116,7 @@ for (learner in base_learners) {
 calibrators <- list("unbalibrated", "platt", "beta", "isotonic")
 
 # Resampling
-rsmps <- list(rsmp("cv", folds = 3))
+rsmps <- list(rsmp("cv", folds = 5))
 
 # Features
 features <- list("x2", "x3", "x4", "x5")
@@ -122,7 +136,7 @@ params_grid <- expand.grid(params_list)
 
 #####Run the benchmark#####
 reg = makeRegistry(
-  file.dir = "./Experiments/Exp_3",
+  file.dir = "./Experiments/Exp_6",
   seed = seed,
   packages = "mlr3verse"
 )
@@ -177,4 +191,8 @@ results_df$shape <- ifelse(results_df$feature == "x2", "Sinus",
 # Result per Calibrator
 results_df %>%
   group_by(calibrator, shape) %>%
+  summarise(mean_mse = mean(mse))
+
+results_df %>%
+  group_by(task_id, calibrator) %>%
   summarise(mean_mse = mean(mse))

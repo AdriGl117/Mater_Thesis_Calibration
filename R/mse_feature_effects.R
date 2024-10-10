@@ -1,8 +1,6 @@
 mse_feature_effect <- function(task, calibrator = "uncalibrated", 
                                rsmp = rsmp("cv", fold = 5),
                                learner, feature){
-  # Split in train and test data
-  split <- partition(task, stratify = TRUE, ratio = 0.7)
   
   # Set up the calibrator
   if(calibrator == "platt"){
@@ -23,17 +21,20 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
   }
   
   # Train the learner
-  learner$train(task, row_ids = split$train)
+  learner$train(task)
   
   # Prepare test data
-  x <- task$data(rows = split$test, cols = task$feature_names)
-  y <- task$data(rows = split$test, cols = task$target_names)
+  x <- task$data(cols = task$feature_names)
+  y <- task$data(cols = task$target_names)
   predictor <- Predictor$new(learner, data = x, y = y)
   
-  # Feture effect
+  # Feature effect
+  # ToDo Grid angeben für vergleichbarkeit (0, 0.1,...)
   effect <- FeatureEffect$new(predictor,
                               feature = feature,
-                              method = "pdp"
+                              method = "ale",
+                              grid.points = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 
+                                              0.7, 0.8, 0.9, 1)
   )
   
   # Extract PDP results for positive Class
@@ -41,6 +42,7 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
     filter(.class == 1) %>%
     select(feature, .value)
   colnames(results) <- c("feature", "value")
+  results$value <- results$value - min(results$value)
   
   # Calculate the ground truth
   if(feature == "x2"){

@@ -85,3 +85,12 @@ calibrationplot(learner_iso, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learner_beta, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learners_simple_cal, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learner_cv, task_test, bins = 11, smooth = TRUE)
+
+# aus learner nur die behalten, deren id "beta" enthält
+learner_beta = list()
+for (learner in learners) {
+  if (grepl("beta", learner$id)) {
+    learner_beta[[length(learner_beta) + 1]] = learner
+  }
+}
+learners = learner_beta
