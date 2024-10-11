@@ -25,7 +25,7 @@ resamplings = as_resamplings(otasks)
 rsmp <- rsmp("holdout", ratio = 0.7)
 
 # Calibrated Learners 
-learner = lrn("classif.rpart", predict_type = "prob", nrounds = 100)
+learner = lrn("classif.rpart", predict_type = "prob")
 learner_cal_log = as_learner(po("calibration", learner = learner, rsmp = rsmp,
                                 method = "platt"))
 learner_cal_beta = as_learner(po("calibration", learner = learner, rsmp = rsmp,

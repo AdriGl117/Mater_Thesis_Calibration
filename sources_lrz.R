@@ -1,3 +1,4 @@
+.libPaths("~/R/library")
 library(mlr3)
 library(mlr3pipelines)
 library(mlr3misc)
