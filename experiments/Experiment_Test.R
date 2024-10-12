@@ -48,7 +48,7 @@ job_table = job_table[,
 ]
 
 job_table
-result = testJob(1, external = TRUE, reg = reg)
+result = testJob(1, external = FALSE, reg = reg)
 
 reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl")
 reg$max.concurrent.jobs = 2
@@ -57,7 +57,7 @@ saveRegistry(reg = reg)
 ids = job_table$job.id
 
 chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
+  job.id = ids, chunk = chunk(ids, chunk.size = 2, shuffle = FALSE)
 )
 
 resources = list(walltime = 60, memory = 512, ntasks = 1, ncpus = 1, 
