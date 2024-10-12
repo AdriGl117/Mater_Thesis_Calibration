@@ -28,11 +28,7 @@ rsmp <- rsmp("holdout", ratio = 0.7)
 learner = lrn("classif.rpart", predict_type = "prob")
 learner_cal_log = as_learner(po("calibration", learner = learner, rsmp = rsmp,
                                 method = "platt"))
-learner_cal_beta = as_learner(po("calibration", learner = learner, rsmp = rsmp,
-                                 method = "beta"))
-learner_cal_iso = as_learner(po("calibration", learner = learner, rsmp = rsmp,
-                                method = "isotonic"))
-learners = list(learner, learner_cal_log, learner_cal_beta, learner_cal_iso)
+learners = list(learner, learner_cal_log)
 
 #####Run the benchmark#####
 large_design = benchmark_grid(tasks, learners, resamplings,
@@ -52,17 +48,17 @@ job_table = job_table[,
 ]
 
 job_table
-result = testJob(1, external = FALSE, reg = reg)
+result = testJob(1, external = TRUE, reg = reg)
 
 reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl")
-reg$max.concurrent.jobs = 40
+reg$max.concurrent.jobs = 2
 
 saveRegistry(reg = reg)
 ids = job_table$job.id
+
 chunks = data.table(
   job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
 )
 
-resources = list(walltime = 3600, memory = 512, ntasks = 1, ncpus = 1, 
-                 nodes = 1, clusters = "serial")
-
+resources = list(walltime = 60, memory = 512, ntasks = 1, ncpus = 1, 
+                 nodes = 1, clusters = "Inter")
