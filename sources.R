@@ -4,8 +4,8 @@ library(mlr3misc)
 library(paradox)
 library(mlr3verse)
 library(R6)
-#library(ggplot2)
-#library(ggpubr)
+library(ggplot2)
+library(ggpubr)
 library(dplyr)
 library(mlr3tuning)
 library(mlr3mbo)
@@ -14,7 +14,7 @@ library(iml)
 library(batchtools)
 library(mlr3batchmark)
 library(betacal)
-#library(gmish)
+library(gmish)
 
 sourceDir <- function(path, trace = TRUE, ...) {
   op <- options(); on.exit(options(op)) # to reset after each
@@ -22,7 +22,7 @@ sourceDir <- function(path, trace = TRUE, ...) {
     if(trace) cat(nm,":")
     source(file.path(path, nm), ...)
     if(trace) cat("\n")
-    options(op)
+        options(op)
   }
 }
 sourceDir("R")

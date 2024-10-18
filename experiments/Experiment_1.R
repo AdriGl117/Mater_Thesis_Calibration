@@ -4,7 +4,7 @@ set.seed(seed)
 
 #####Load cc-18 Tasks#####
 otask_collection = ocl(id = 99)
-number_instances = c(569)#, 583, 1000, 2109, 5000, 5404, 11055, 34465, 45312, 96320)
+number_instances = c(569, 583, 1000, 2109, 5000, 5404, 11055, 34465, 45312, 96320)
 binary_cc18 = list_oml_tasks(
   task_id = otask_collection$task_ids,
   number_missing_values = 0,
@@ -29,13 +29,13 @@ rsmp_80 = rsmp("holdout", ratio = 0.8)
 rsmp_80$id = "80"
 rsmp_90 = rsmp("holdout", ratio = 0.9)
 rsmp_90$id = "90"
+rsmp_cv3 = rsmp("cv", folds = 3)
+rsmp_cv3$id = "cv3"
 rsmp_cv5 = rsmp("cv", folds = 5)
 rsmp_cv5$id = "cv5"
-rsmp_cv10 = rsmp("cv", folds = 10)
-rsmp_cv10$id = "cv10"
 
 # List of all rsmp objects
-rsmps <- list(rsmp_70, rsmp_80, rsmp_90, rsmp_cv5, rsmp_cv10)
+rsmps <- list(rsmp_70, rsmp_80, rsmp_90, rsmp_cv3, rsmp_cv5)
 
 # Remove rsmps from environment
 for (rsmp in rsmps) {
@@ -167,7 +167,7 @@ large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 
 reg = makeExperimentRegistry(
-  file.dir = "./Experiments/Exp_Test_Beta",
+  file.dir = "./Experiments/Exp_1",
   seed = seed,
   packages = "mlr3verse",
   source = "sources.R"
@@ -181,7 +181,7 @@ job_table = job_table[,
 ]
 
 job_table
-result = testJob(1, external = FALSE, reg = reg)
+result = testJob(1, external = TRUE, reg = reg)
 
 cf = makeClusterFunctionsInteractive()
 reg$cluster.functions = cf
@@ -257,3 +257,9 @@ autoplot(bma)
 error_ids = findErrors(reg = reg)
 summarizeExperiments(error_ids, by = c("task_id", "learner_id"),
                      reg = reg)
+
+#electricity
+#numerai28.6
+
+# job table without task_id = "electricity" and "numerai28.6"
+ids = job_table[task_id != "electricity" & task_id != "numerai28.6"]$job.id

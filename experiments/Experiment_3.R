@@ -116,7 +116,7 @@ for (learner in base_learners) {
 calibrators <- list("unbalibrated", "platt", "beta", "isotonic")
 
 # Resampling
-rsmps <- list(rsmp("cv", folds = 5))
+rsmps <- list(rsmp("cv", folds = 3))
 
 # Features
 features <- list("x2", "x3", "x4", "x5")
@@ -136,7 +136,7 @@ params_grid <- expand.grid(params_list)
 
 #####Run the benchmark#####
 reg = makeRegistry(
-  file.dir = "./Experiments/Exp_6",
+  file.dir = "./Experiments/Exp_3",
   seed = seed,
   packages = "mlr3verse"
 )
@@ -196,3 +196,4 @@ results_df %>%
 results_df %>%
   group_by(task_id, calibrator) %>%
   summarise(mean_mse = mean(mse))
+
