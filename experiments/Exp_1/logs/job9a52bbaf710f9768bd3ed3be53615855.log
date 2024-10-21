@@ -1,0 +1,348 @@
+### [bt]: This is batchtools v0.9.17
+### [bt]: Starting calculation of 5 jobs
+### [bt]: Setting working directory to '/Users/adrian/Desktop/Mater_Thesis_Calibration'
+ece.R :
+Friedmann_tasks.R :
+Functions.R :
+ici.R :
+mse_feature_effects.R :
+PipeOpCalibration.R :
+### [bt]: Memory measurement disabled
+### [bt]: Starting job [batchtools job.id=10621]
+### [bt]: Generating problem instance for problem 'cfb05fadfc1e266b' ...
+### [bt]: Applying algorithm 'run_learner' on problem 'cfb05fadfc1e266b' for job 10621 (seed = 10744) ...
+INFO  [12:07:05.017] [mlr3] Applying learner 'naive_bayes calibrated isotonic 80' on task 'numerai28.6' (iter 1/10)
+
+### [bt]: Job terminated successfully [batchtools job.id=10621]
+### [bt]: Starting job [batchtools job.id=10622]
+### [bt]: Generating problem instance for problem 'cfb05fadfc1e266b' ...
+### [bt]: Applying algorithm 'run_learner' on problem 'cfb05fadfc1e266b' for job 10622 (seed = 10745) ...
+INFO  [12:07:35.371] [mlr3] Applying learner 'naive_bayes calibrated isotonic 80' on task 'numerai28.6' (iter 2/10)
+
+### [bt]: Job terminated successfully [batchtools job.id=10622]
+### [bt]: Starting job [batchtools job.id=10623]
+### [bt]: Generating problem instance for problem 'cfb05fadfc1e266b' ...
+### [bt]: Applying algorithm 'run_learner' on problem 'cfb05fadfc1e266b' for job 10623 (seed = 10746) ...
+INFO  [12:08:04.820] [mlr3] Applying learner 'naive_bayes calibrated isotonic 80' on task 'numerai28.6' (iter 3/10)
+
+82: (function (e) 
+    traceback(2L))()
+81: apply(log(vapply(seq_along(attribs), function(v) {
+        nd <- ndata[attribs[v]]
+        if (is.na(nd)) rep.int(1, len) else {
+            prob <- if (isnumeric[attribs[v]]) {
+                msd <- object$tables[[v]]
+                msd[, 2][msd[, 2] <= eps] <- threshold
+                dnorm(nd, msd[, 1], msd[, 2])
+            } else object$tables[[v]][, nd + islogical[attribs[v]]]
+            prob[prob <= eps] <- threshold
+            prob
+        }
+    }, double(len))), 1, sum)
+80: FUN(X[[i]], ...)
+79: vapply(seq_len(nrow(newdata)), function(i) {
+        ndata <- newdata[i, ]
+        L <- log(object$apriori) + apply(log(vapply(seq_along(attribs), 
+            function(v) {
+                nd <- ndata[attribs[v]]
+                if (is.na(nd)) rep.int(1, len) else {
+                    prob <- if (isnumeric[attribs[v]]) {
+                      msd <- object$tables[[v]]
+                      msd[, 2][msd[, 2] <= eps] <- threshold
+                      dnorm(nd, msd[, 1], msd[, 2])
+                    } else object$tables[[v]][, nd + islogical[attribs[v]]]
+                    prob[prob <= eps] <- threshold
+                    prob
+                }
+            }, double(len))), 1, sum)
+        if (type == "class") 
+            L
+        else {
+            vapply(L, function(lp) {
+                1/sum(exp(L - lp))
+     ...
+78: predict.naiveBayes(self$model, newdata = newdata, type = "raw")
+77: predict(self$model, newdata = newdata, type = "raw")
+76: eval(expr, p)
+75: eval(expr, p)
+74: eval.parent(expr, n = 1L)
+73: invoke(predict, self$model, newdata = newdata, type = "raw", 
+        .args = pv)
+72: .__LearnerClassifNaiveBayes__.predict(self = self, private = private, 
+        super = super, task = task)
+71: get_private(learner)$.predict(task)
+70: .f(task = <environment>, learner = <environment>)
+69: eval(expr, p)
+68: eval(expr, p)
+67: eval.parent(expr, n = 1L)
+66: invoke(.f, .args = .args, .opts = .opts, .seed = .seed, .timeout = .timeout)
+65: encapsulate(learner$encapsulation["predict"], .f = predict_wrapper, 
+        .args = list(task = task, learner = learner), .pkgs = learner$packages, 
+        .seed = NA_integer_, .timeout = learner$timeout["predict"])
+64: learner_predict(learner, task, row_ids)
+63: (function (set, row_ids, task) 
+    {
+        lg$debug("Creating Prediction for predict set '%s'", set)
+        learner_predict(learner, task, row_ids)
+    })(set = dots[[1L]][[1L]], row_ids = dots[[2L]][[1L]], task = dots[[3L]][[1L]])
+62: mapply(FUN = f, ..., SIMPLIFY = FALSE)
+61: Map(function(set, row_ids, task) {
+        lg$debug("Creating Prediction for predict set '%s'", set)
+        learner_predict(learner, task, row_ids)
+    }, set = predict_sets, row_ids = pred_data$sets, task = pred_data$tasks)
+60: ...future.FUN(...)
+59: (function (..., ...future.seeds_ii_jj) 
+    {
+        assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), 
+            inherits = FALSE)
+        ...future.FUN(...)
+    })(iteration = dots[[1L]][[1L]], learner = dots[[2L]][[1L]], 
+        mode = dots[[3L]][[1L]], ...future.seeds_ii_jj = dots[[4L]][[1L]], 
+        task = <environment>, resampling = <environment>, store_models = TRUE, 
+        lgr_threshold = c(mlr3 = 300L, bbotk = 400L), pb = NULL, 
+        unmarshal = TRUE, is_sequential = TRUE)
+58: (function (FUN, ..., MoreArgs = NULL, SIMPLIFY = TRUE, USE.NAMES = TRUE) 
+    {
+        FUN <- match.fun(FUN)
+        dots <- list(...)
+        answer <- .Internal(mapply(FUN, dots, MoreArgs))
+        if (USE.NAMES && length(dots)) {
+            if (is.null(names1 <- names(dots[[1L]])) && is.character(dots[[1L]])) 
+                names(answer) <- if (length(answer)) 
+                    dots[[1L]]
+                else character()
+            else if (!is.null(names1)) 
+                names(answer) <- names1
+        }
+        if (!isFALSE(SIMPLIFY)) 
+            simplify2array(answer, higher = (SIMPLIFY == "array"))
+        else answer
+    })(FUN = function (..., ...future.seeds_ii_jj) 
+    {
+        assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), 
+            inherits = FALSE)
+     ...
+57: do.call(mapply, args = args)
+56: eval(quote({
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+            oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+            on.exit(options(oopts), add = TRUE)
+        }
+        {
+            ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+                assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), 
+                    inherits = FALSE)
+                ...future.FUN(...)
+            }
+            args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, 
+                list(...future.seeds_ii_jj = ...future.seeds_ii), 
+                MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+            do.call(mapply, args = args)
+        }
+    }), new.env())
+55: eval(quote({
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+            oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+            on.exit(options(oopts), add = TRUE)
+        }
+        {
+            ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+                assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), 
+                    inherits = FALSE)
+                ...future.FUN(...)
+            }
+            args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, 
+                list(...future.seeds_ii_jj = ...future.seeds_ii), 
+                MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+            do.call(mapply, args = args)
+        }
+    }), new.env())
+54: eval(expr, p)
+53: eval(expr, p)
+52: eval.parent(substitute(eval(quote(expr), envir)))
+51: base::local({
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+            oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+            on.exit(options(oopts), add = TRUE)
+        }
+        {
+            ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+                assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), 
+                    inherits = FALSE)
+                ...future.FUN(...)
+            }
+            args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, 
+                list(...future.seeds_ii_jj = ...future.seeds_ii), 
+                MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+            do.call(mapply, args = args)
+        }
+    })
+50: base::withVisible(base::local({
+        ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+        if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+            oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+            on.exit(options(oopts), add = TRUE)
+        }
+        {
+            ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+                assign(".Random.seed", ...future.seeds_ii_jj, envir = globalenv(), 
+                    inherits = FALSE)
+                ...future.FUN(...)
+            }
+            args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, 
+                list(...future.seeds_ii_jj = ...future.seeds_ii), 
+                MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, USE.NAMES = FALSE)
+            do.call(mapply, args = args)
+        }
+    }))
+49: base::withCallingHandlers({
+        ...future.value <- base::withVisible(base::local({
+            ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+            if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+                oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+                on.exit(options(oopts), add = TRUE)
+            }
+            {
+                ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+                    assign(".Random.seed", ...future.seeds_ii_jj, 
+                      envir = globalenv(), inherits = FALSE)
+                    ...future.FUN(...)
+                }
+                args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, 
+                    list(...future.seeds_ii_jj = ...future.seeds_ii), 
+                    MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, 
+                    USE.NAMES = FALSE)
+                do.call(mapply, args = args)
+            }
+        }))
+     ...
+48: doTryCatch(return(expr), name, parentenv, handler)
+47: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+46: tryCatchList(expr, classes, parentenv, handlers)
+45: base::tryCatch({
+        base::withCallingHandlers({
+            ...future.value <- base::withVisible(base::local({
+                ...future.globals.maxSize.org <- getOption("future.globals.maxSize")
+                if (!identical(...future.globals.maxSize.org, ...future.globals.maxSize)) {
+                    oopts <- options(future.globals.maxSize = ...future.globals.maxSize)
+                    on.exit(options(oopts), add = TRUE)
+                }
+                {
+                    ...future.FUN2 <- function(..., ...future.seeds_ii_jj) {
+                      assign(".Random.seed", ...future.seeds_ii_jj, 
+                        envir = globalenv(), inherits = FALSE)
+                      ...future.FUN(...)
+                    }
+                    args <- c(list(FUN = ...future.FUN2), ...future.elements_ii, 
+                      list(...future.seeds_ii_jj = ...future.seeds_ii), 
+                      MoreArgs = list(MoreArgs), SIMPLIFY = FALSE, 
+                      USE.NAMES = FALSE)
+                    do.call(mapply, args = args)
+                }
+     ...
+44: eval(expr, envir = envir, enclos = baseenv())
+43: eval(expr, envir = envir, enclos = baseenv())
+42: run.UniprocessFuture(future)
+41: run(future)
+40: run.Future(future)
+39: run(future)
+38: future(expr, substitute = FALSE, envir = future.envir, stdout = future.stdout, 
+        conditions = future.conditions, globals = globals_ii, packages = packages_ii, 
+        seed = future.seed, label = labels[ii])
+37: future_xapply(FUN = FUN, nX = nX, chunk_args = dots, MoreArgs = MoreArgs, 
+        get_chunk = function(X, chunk) lapply(X, FUN = `chunkWith[[`, 
+            chunk), expr = expr, envir = envir, future.envir = future.envir, 
+        future.globals = future.globals, future.packages = future.packages, 
+        future.scheduling = future.scheduling, future.chunk.size = future.chunk.size, 
+        future.stdout = future.stdout, future.conditions = future.conditions, 
+        future.seed = future.seed, future.label = future.label, fcn_name = fcn_name, 
+        args_name = args_name, debug = debug)
+36: future.apply::future_mapply(FUN, ..., MoreArgs = MoreArgs, SIMPLIFY = FALSE, 
+        USE.NAMES = FALSE, future.globals = FALSE, future.packages = "mlr3", 
+        future.seed = TRUE, future.scheduling = scheduling, future.chunk.size = chunk_size, 
+        future.stdout = stdout)
+35: future_map(n, workhorse, iteration = seq_len(n), learner = grid$learner, 
+        mode = grid$mode, MoreArgs = list(task = task, resampling = resampling, 
+            store_models = store_models, lgr_threshold = lgr_threshold, 
+            pb = pb, unmarshal = unmarshal))
+34: resample(task, self$learner, self$rsmp, store_models = TRUE) at PipeOpCalibration.R#70
+33: private$.train(input)
+32: withCallingHandlers({
+        output = private$.train(input)
+    }, error = function(e) {
+        e$message = sprintf("%s\nThis happened PipeOp %s's $train()", 
+            e$message, self$id)
+        stop(e)
+    }, warning = function(w) {
+        w$message = sprintf("%s\nThis happened PipeOp %s's $train()", 
+            w$message, self$id)
+        warning(w)
+        invokeRestart("muffleWarning")
+    })
+31: .__PipeOp__train(self = self, private = private, super = super, 
+        input = input)
+30: op[[fun]](input)
+29: graph_reduce(self, input, "train", single_input)
+28: .__Graph__train(self = self, private = private, super = super, 
+        input = input, single_input = single_input)
+27: self$graph$train(task)
+26: .__GraphLearner__.train(self = self, private = private, super = super, 
+        task = task)
+25: get_private(learner)$.train(task)
+24: .f(learner = <environment>, task = <environment>)
+23: eval(expr, p)
+22: eval(expr, p)
+21: eval.parent(expr, n = 1L)
+20: invoke(.f, .args = .args, .opts = .opts, .seed = .seed, .timeout = .timeout)
+19: encapsulate(learner$encapsulation["train"], .f = train_wrapper, 
+        .args = list(learner = learner, task = task), .pkgs = learner$packages, 
+        .seed = NA_integer_, .timeout = learner$timeout["train"])
+18: learner_train(learner, task, sets[["train"]], test_set, mode = mode)
+17: workhorse(iteration = job$repl, task = data, learner = learner, 
+        resampling = resampling, store_models = store_models, lgr_threshold = lgr::get_logger("mlr3")$threshold)
+16: job$algorithm$fun(job = job, data = job$problem$data, instance = instance, 
+        ...)
+15: (function (...) 
+    job$algorithm$fun(job = job, data = job$problem$data, instance = instance, 
+        ...))(learner_hash = "61a09e617e2ae5fb", learner_id = "naive_bayes calibrated isotonic 80", 
+        store_models = FALSE)
+14: do.call(wrapper, job$algo.pars, envir = .GlobalEnv)
+13: with_preserve_seed({
+        set_seed(list(seed = seed, rng_kind = rng_kind))
+        code
+    })
+12: with_seed(job$seed, do.call(wrapper, job$algo.pars, envir = .GlobalEnv))
+11: execJob.Experiment(job)
+10: execJob(job)
+9: doTryCatch(return(expr), name, parentenv, handler)
+8: tryCatchOne(expr, names, parentenv, handlers[[1L]])
+7: tryCatchList(expr, classes, parentenv, handlers)
+6: tryCatch(expr, error = function(e) {
+       call <- conditionCall(e)
+       if (!is.null(call)) {
+           if (identical(call[[1L]], quote(doTryCatch))) 
+               call <- sys.call(-4L)
+           dcall <- deparse(call, nlines = 1L)
+           prefix <- paste("Error in", dcall, ": ")
+           LONG <- 75L
+           sm <- strsplit(conditionMessage(e), "\n")[[1L]]
+           w <- 14L + nchar(dcall, type = "w") + nchar(sm[1L], type = "w")
+           if (is.na(w)) 
+               w <- 14L + nchar(dcall, type = "b") + nchar(sm[1L], 
+                   type = "b")
+           if (w > LONG) 
+               prefix <- paste0(prefix, "\n  ")
+       }
+       else prefix <- "Error : "
+       msg <- paste0(prefix, conditionMessage(e), "\n")
+       .Internal(seterrmessage(msg[1L]))
+       if (!silent && isTRUE(getOption("show.error.messages"))) {
+    ...
+5: try(execJob(job))
+4: doJobCollection.JobCollection(jc, output = jc$log.file)
+3: doJobCollection(jc, output = jc$log.file)
+2: reg$cluster.functions$submitJob(reg = reg, jc = jc)
+1: submitJobs(ids = chunks, resources = resources, reg = reg)
