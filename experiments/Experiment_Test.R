@@ -25,17 +25,14 @@ resamplings = as_resamplings(otasks)
 rsmp <- rsmp("holdout", ratio = 0.7)
 
 # Calibrated Learners 
-learner = lrn("classif.rpart", predict_type = "prob")
-learner_cal_log = as_learner(po("calibration", learner = learner, rsmp = rsmp,
-                                method = "platt"))
-learners = list(learner, learner_cal_log)
+learner = lrn("classif.log_reg", predict_type = "prob")
 
 #####Run the benchmark#####
-large_design = benchmark_grid(tasks, learners, resamplings,
+large_design = benchmark_grid(tasks, learner, resamplings,
                               paired = TRUE)
 
 reg = makeExperimentRegistry(
-  file.dir = "Exp_Test_Benchmark",
+  file.dir = "Exp_Test",
   seed = seed,
   source = "Mater_Thesis_Calibration/sources_lrz.R"
 )
@@ -48,7 +45,7 @@ job_table = job_table[,
 ]
 
 job_table
-result = testJob(1, external = FALSE, reg = reg)
+result = testJob(1, external = TRUE, reg = reg)
 
 reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl")
 
@@ -60,4 +57,6 @@ chunks = data.table(
 )
 
 resources = list(walltime = 60, memory = 512, ntasks = 1, ncpus = 1, 
-                 nodes = 1, clusters = "inter")
+                 nodes = 1, clusters = "serial")
+
+submitJobs(ids = chunks, resources = resources, reg = reg)
