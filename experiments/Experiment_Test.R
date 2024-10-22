@@ -33,8 +33,8 @@ large_design = benchmark_grid(tasks, learner, resamplings,
 
 reg = makeExperimentRegistry(
   file.dir = "Exp_Test",
-  seed = seed,
-  source = "Mater_Thesis_Calibration/sources_lrz.R"
+  seed = 1,
+  packages = c("batchtools", "mlr3", "stats","mlr3oml", "mlr3batchmark", "mlr3learners")
 )
 
 batchmark(large_design, reg = reg)
@@ -51,12 +51,17 @@ reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl"
 
 saveRegistry(reg = reg)
 ids = job_table$job.id
+reg$max.concurrent.jobs = 1
 
 chunks = data.table(
   job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
 )
 
-resources = list(walltime = 60, memory = 512, ntasks = 1, ncpus = 1, 
-                 nodes = 1, clusters = "serial")
+resources = list(
+  walltime = 3600,
+  memory = 1024,
+  ntasks = 1,
+  ncpus = 1,
+  nodes = 1)
 
 submitJobs(ids = chunks, resources = resources, reg = reg)
