@@ -9,10 +9,12 @@ library(dplyr)
 library(mlr3tuning)
 library(mlr3mbo)
 library(mlr3oml)
+if(!require("batchtools")) {
+  install.packages("batchtools")
+}
 library(batchtools)
 library(mlr3batchmark)
 library(betacal)
-#library(batchtools)
 library(stats)
 library(rpart)
 source("Mater_Thesis_Calibration/R/PipeOpCalibration.R")
