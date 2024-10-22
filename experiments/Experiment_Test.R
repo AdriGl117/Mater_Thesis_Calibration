@@ -53,7 +53,7 @@ saveRegistry(reg = reg)
 ids = job_table$job.id
 
 chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 2, shuffle = FALSE)
+  job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
 )
 
 resources = list(walltime = 60, memory = 512, ntasks = 1, ncpus = 1, 
