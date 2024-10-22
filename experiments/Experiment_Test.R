@@ -60,8 +60,8 @@ chunks = data.table(
 resources = list(
   walltime = 3600,
   memory = 1024,
-  ntasks = 1,
-  ncpus = 1,
+  ntasks = 10,
+  ncpus = 10,
   nodes = 1)
 
-submitJobs(ids = chunks, resources = resources, reg = reg)
+#submitJobs(ids = chunks, resources = resources, reg = reg)
