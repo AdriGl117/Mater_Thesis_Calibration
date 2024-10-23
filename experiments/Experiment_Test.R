@@ -1,4 +1,4 @@
-source("Mater_Thesis_Calibration/sources_lrz.R")
+source("sources_lrz.R")
 seed = 123
 set.seed(seed)
 
@@ -44,21 +44,16 @@ job_table = job_table[,
 job_table
 result = testJob(1, external = TRUE, reg = reg)
 
-reg$cluster.functions = makeClusterFunctionsSlurm(template = "Mater_Thesis_Calibration/slurm_lmulrz.tmpl")
+reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl")
 
 saveRegistry(reg = reg)
 ids = job_table$job.id
 reg$max.concurrent.jobs = 1
-
-chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
-)
 
 resources = list(
   walltime = 3600,
   memory = 1024,
   ntasks = 10,
   ncpus = 10,
-  nodes = 1)
-
-#submitJobs(ids = chunks, resources = resources, reg = reg)
+  nodes = 1,
+  clusters = "serial")
