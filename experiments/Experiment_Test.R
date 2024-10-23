@@ -44,7 +44,7 @@ job_table = job_table[,
 job_table
 result = testJob(1, external = TRUE, reg = reg)
 
-reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl")
+reg$cluster.functions = makeClusterFunctionsSlurm(template = "Mater_Thesis_Calibration/slurm_lmulrz.tmpl")
 
 saveRegistry(reg = reg)
 ids = job_table$job.id
