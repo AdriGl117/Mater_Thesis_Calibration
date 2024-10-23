@@ -21,9 +21,6 @@ tasks = as_tasks(otasks)
 # List of the resamplings for each task
 resamplings = as_resamplings(otasks)
 
-# RSMP
-rsmp <- rsmp("holdout", ratio = 0.7)
-
 # Calibrated Learners 
 learner = lrn("classif.log_reg", predict_type = "prob")
 
@@ -64,4 +61,4 @@ resources = list(
   ncpus = 10,
   nodes = 1)
 
-#submitJobs(ids = chunks, resources = resources, reg = reg)
+submitJobs(ids = chunks, resources = resources, reg = reg)
