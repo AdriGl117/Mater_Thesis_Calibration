@@ -61,4 +61,4 @@ resources = list(
   ncpus = 10,
   nodes = 1)
 
-submitJobs(ids = chunks, resources = resources, reg = reg)
+#submitJobs(ids = chunks, resources = resources, reg = reg)
