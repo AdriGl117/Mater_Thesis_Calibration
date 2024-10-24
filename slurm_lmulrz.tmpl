@@ -72,11 +72,8 @@ sprintf(paste0("#SBATCH --partition='", resources$partition, "'\n"))
 }
 %>
 
-# Laden der benötigten Module
-module load slurm_setup
-module load R/4.0.0
+module load R/4.2.1
 
-# Setzen des Library-Pfades
 export R_LIBS_USER=~/R/library
 
 <%= cmd %> -e 'batchtools::doJobCollection("<%= uri %>")'
