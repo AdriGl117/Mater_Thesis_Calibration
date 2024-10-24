@@ -263,3 +263,7 @@ summarizeExperiments(error_ids, by = c("task_id", "learner_id"),
 
 # job table without task_id = "electricity" and "numerai28.6"
 ids = job_table[task_id != "electricity" & task_id != "numerai28.6"]$job.id
+
+# jobtable only with task_id =  "numerai28.6" and learner id not include cv5 or cv3
+ids = job_table[task_id == "numerai28.6" & !grepl("cv5", learner_id) & !grepl("cv3", learner_id)]$job.id
+

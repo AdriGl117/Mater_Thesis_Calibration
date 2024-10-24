@@ -48,12 +48,12 @@ reg$cluster.functions = makeClusterFunctionsSlurm(template = "slurm_lmulrz.tmpl"
 
 saveRegistry(reg = reg)
 ids = job_table$job.id
-reg$max.concurrent.jobs = 1
+reg$max.concurrent.jobs = 10
 
 resources = list(
-  walltime = 3600,
-  memory = 1024,
-  ntasks = 10,
-  ncpus = 10,
+  walltime = 360,
+  memory = 2048,
+  ntasks = 1,
+  ncpus = 1,
   nodes = 1,
-  clusters = "serial")
+  clusters = "cm2_tiny", partition = "cm2_tiny")
