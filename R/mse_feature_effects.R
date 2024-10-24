@@ -32,7 +32,7 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
   # ToDo Grid angeben für vergleichbarkeit (0, 0.1,...)
   effect <- FeatureEffect$new(predictor,
                               feature = feature,
-                              method = "ale",
+                              method = "pdp",
                               grid.points = c(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 
                                               0.7, 0.8, 0.9, 1)
   )
