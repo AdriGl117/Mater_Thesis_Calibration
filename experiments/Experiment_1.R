@@ -188,10 +188,10 @@ reg$cluster.functions = cf
 saveRegistry(reg = reg)
 ids = job_table$job.id
 chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
+  job.id = ids, chunk = chunk(ids, chunk.size = 4, shuffle = FALSE)
 )
 
-resources = list(ncpus = 1, walltime = 3600, memory = 8000)
+resources = list(ncpus = 1, walltime = 3600, memory = 16000)
 submitJobs(ids = chunks, resources = resources, reg = reg)
 getStatus(reg = reg)
 # wait for all jobs to terminate
@@ -265,5 +265,7 @@ summarizeExperiments(error_ids, by = c("task_id", "learner_id"),
 ids = job_table[task_id != "electricity" & task_id != "numerai28.6"]$job.id
 
 # jobtable only with task_id =  "numerai28.6" and learner id not include cv5 or cv3
-ids = job_table[task_id == "numerai28.6" & !grepl("cv5", learner_id) & !grepl("cv3", learner_id)]$job.id
+ids = job_table[task_id == "numerai28.6" & !grepl("xgboost", learner_id) & !grepl("svm", learner_id)]$job.id
+
+ids = job_table[task_id == "electricity" & grepl("cv5", learner_id)]$job.id
 
