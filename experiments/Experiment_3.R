@@ -89,14 +89,6 @@ learner_nnet = lrn("classif.nnet",
 learner_naive_bayes = lrn("classif.naive_bayes",
                           predict_type = "prob")
 
-# Feature Encoding for learners that require it
-learner_svm = as_learner(po("encode", method = "one-hot") %>>% learner_svm)
-learner_svm$id = substr(learner_svm$id, 8, nchar(learner_svm$id))
-learner_glmnet = as_learner(po("encode", method = "one-hot") %>>% learner_glmnet)
-learner_glmnet$id = substr(learner_glmnet$id, 8, nchar(learner_glmnet$id))
-learner_xgboost = as_learner(po("encode", method = "one-hot") %>>% learner_xgboost)
-learner_xgboost$id = substr(learner_xgboost$id, 8, nchar(learner_xgboost$id))
-
 # List of all base learners
 base_learners = list(learner_svm, 
                      learner_ranger, 
@@ -116,7 +108,7 @@ for (learner in base_learners) {
 calibrators <- list("unbalibrated", "platt", "beta", "isotonic")
 
 # Resampling
-rsmps <- list(rsmp("cv", folds = 3))
+rsmps <- list(rsmp("holdout", ratio = 0.7))
 
 # Features
 features <- list("x2", "x3", "x4", "x5")
@@ -134,16 +126,16 @@ params_list <- list(
 # Generate a data frame with all combinations
 params_grid <- expand.grid(params_list)
 
-# Alle einträge mit feature = "x2" löschen, wenn task$id "Setting 1" oder "Setting 2" enthält
-params_grid <- params_grid[!(grepl("Setting 1", params_grid$task$id) | 
-                               grepl("Setting 2", params_grid$task$id) & 
-                               params_grid$feature == "x2"),]
+params_grid$task_id <- sapply(params_grid$task, function(x) x$id)
+condition_to_remove <- params_grid$feature == "x2" & grepl("Setting 1|Setting 2", params_grid$task_id)
+params_grid <- params_grid[!condition_to_remove, ]
 
 #####Run the benchmark#####
 reg = makeRegistry(
   file.dir = "./Experiments/Exp_3",
   seed = seed,
-  packages = "mlr3verse"
+  packages = "mlr3verse",
+  source = "sources.R"
 )
 
 batchMap(fun = mse_feature_effect, reg = reg, args = params_grid)
