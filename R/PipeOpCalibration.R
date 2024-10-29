@@ -133,31 +133,30 @@ PipeOpCalibration <- R6Class(
           task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
                                                 positive = positive, id = "Task_cal")
           pred_calibrated = self$calibrators[[learner_index]]$predict(task_for_calibrator)
-          #x = calibration_data$response
-          #y = pred_calibrated$prob[,1]
-          #plot(x,y)
         } else if (self$method == "isotonic") {
           pred_calibrated = self$calibrators[[learner_index]](calibration_data$response)
           prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
           colnames(prob) = c(task$positive, task$negative)
+          response = ifelse(pred_calibrated < 0.5, task$negative, task$positive)
           pred_calibrated = PredictionClassif$new(
             task = task,
             row_ids = task$row_ids,
             truth = task$truth(),
             prob = prob,
-            response = pred$response
+            response = response
           )
         } else if (self$method == "beta") {
           pred_calibrated = betacal::beta_predict(calibration_data$response, 
                                          self$calibrators[[learner_index]])
           prob = as.matrix(data.frame(pred_calibrated, 1 - pred_calibrated))
           colnames(prob) = c(task$positive, task$negative)
+          response = ifelse(pred_calibrated < 0.5, task$negative, task$positive)
           pred_calibrated = PredictionClassif$new(
             task = task,
             row_ids = task$row_ids,
             truth = task$truth(),
             prob = prob,
-            response = pred$response
+            response = response
           )
         } else if(self$method == "gam") {
           task_for_calibrator = as_task_classif(calibration_data, target = "truth", 

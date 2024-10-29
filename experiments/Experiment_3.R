@@ -134,6 +134,11 @@ params_list <- list(
 # Generate a data frame with all combinations
 params_grid <- expand.grid(params_list)
 
+# Alle einträge mit feature = "x2" löschen, wenn task$id "Setting 1" oder "Setting 2" enthält
+params_grid <- params_grid[!(grepl("Setting 1", params_grid$task$id) | 
+                               grepl("Setting 2", params_grid$task$id) & 
+                               params_grid$feature == "x2"),]
+
 #####Run the benchmark#####
 reg = makeRegistry(
   file.dir = "./Experiments/Exp_3",
