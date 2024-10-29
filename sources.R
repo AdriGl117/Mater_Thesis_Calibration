@@ -15,6 +15,7 @@ library(batchtools)
 library(mlr3batchmark)
 library(betacal)
 library(gmish)
+library(MASS)
 
 sourceDir <- function(path, trace = TRUE, ...) {
   op <- options(); on.exit(options(op)) # to reset after each
