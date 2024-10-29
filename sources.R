@@ -6,6 +6,7 @@ library(mlr3verse)
 library(R6)
 library(ggplot2)
 library(ggpubr)
+library(MASS)
 library(dplyr)
 library(mlr3tuning)
 library(mlr3mbo)
@@ -15,7 +16,6 @@ library(batchtools)
 library(mlr3batchmark)
 library(betacal)
 library(gmish)
-library(MASS)
 
 sourceDir <- function(path, trace = TRUE, ...) {
   op <- options(); on.exit(options(op)) # to reset after each

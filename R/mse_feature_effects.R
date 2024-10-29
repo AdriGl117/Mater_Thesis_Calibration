@@ -29,6 +29,7 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
   predictor <- Predictor$new(learner, data = x, y = y)
   
   # Feature effect
+  # ToDo Grid angeben für vergleichbarkeit (0, 0.1,...)
   effect <- FeatureEffect$new(predictor,
                               feature = feature,
                               method = "pdp",
@@ -39,7 +40,7 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
   # Extract PDP results for positive Class
   results <- effect$results %>%
     filter(.class == 1) %>%
-    select(feature, .value)
+    dplyr::select(feature, .value)
   colnames(results) <- c("feature", "value")
   results$value <- results$value - min(results$value)
   
