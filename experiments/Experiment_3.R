@@ -129,6 +129,7 @@ params_grid <- expand.grid(params_list)
 params_grid$task_id <- sapply(params_grid$task, function(x) x$id)
 condition_to_remove <- params_grid$feature == "x2" & grepl("Setting 1|Setting 2", params_grid$task_id)
 params_grid <- params_grid[!condition_to_remove, ]
+params_grid$task_id <- NULL
 
 #####Run the benchmark#####
 reg = makeRegistry(
