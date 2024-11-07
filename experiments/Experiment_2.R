@@ -16,7 +16,7 @@ tasks = as_tasks(otasks)
 resamplings = as_resamplings(otasks)
 
 #####Resampling#####
-rsmp_cv5 <- rsmp("cv", folds = 5)
+rsmp_70 <- rsmp("holdout", ratio = 0.7)
 
 #####Learner#####
 learner_svm <- lrn("classif.svm",
@@ -104,7 +104,7 @@ for (learner in base_learners) {
            auto_tuner(
              tuner = tnr("mbo"),
              learner = as_learner(po("calibration", learner = learner,
-                                    rsmp = rsmp_cv5, method = calibrator)),
+                                    rsmp = rsmp_70, method = calibrator)),
              resampling = rsmp("cv", folds = 3),
              measure = msr("classif.bbrier"),
              term_evals = 100))
@@ -131,7 +131,7 @@ for (learner in base_learners) {
                            resampling = rsmp("cv", folds = 3),
                            measure = msr("classif.bbrier"),
                            term_evals = 100),
-                         rsmp = rsmp_cv5, 
+                         rsmp = rsmp_70, 
                          method = calibrator)))
     learners_Tb_cal[[length(learners_Tb_cal) + 1]] <- get(
       paste0("learner_", substr(learner$id, 9, nchar(learner$id)),

@@ -167,7 +167,7 @@ large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 
 reg = makeExperimentRegistry(
-  file.dir = "./Experiments/Exp_1",
+  file.dir = "./Experiments/Exp_Test",
   seed = seed,
   packages = "mlr3verse",
   source = "sources.R"
@@ -181,7 +181,7 @@ job_table = job_table[,
 ]
 
 job_table
-result = testJob(1, external = TRUE, reg = reg)
+result = testJob(4321, external = TRUE, reg = reg)
 
 cf = makeClusterFunctionsInteractive()
 reg$cluster.functions = cf

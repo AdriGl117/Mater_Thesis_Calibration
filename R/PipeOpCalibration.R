@@ -9,12 +9,14 @@ PipeOpCalibration <- R6Class(
     learners = NULL,
     calibrators = NULL,
     rr = NULL,
+    parameters = NULL,
     
     initialize = function(#id = "Calibrated",
                           learner = NULL, 
                           method = "platt", 
                           rsmp = NULL,
                           rr = NULL,
+                          parameters = "abm",
                           param_vals = list()) {
       
       if (is.null(learner) && is.null(rr)) {
@@ -38,6 +40,7 @@ PipeOpCalibration <- R6Class(
         stop("predict_type has to be 'prob'")
       }
       self$method = method
+      self$parameters = parameters
       self$learners = list()
       self$calibrators = list()
       super$initialize(id = self$learner$base_learner()$id, #paste0(self$learner$id, "_calibrated_", self$method),
@@ -101,16 +104,9 @@ PipeOpCalibration <- R6Class(
           calibration_data$truth <- ifelse(calibration_data$truth == positive, 1, 0)
           calibrator = betacal::beta_calibration(p = calibration_data$response, 
                                                  y = calibration_data$truth,
-                                                 parameter = "ab")
+                                                 parameters = self$parameters)
           self$calibrators[[length(self$calibrators) + 1]] = calibrator
-        } else if(self$method == "gam") {
-          task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
-                                                positive = positive, id = "Task_cal")
-          calibrator = lrn("classif.gam", predict_type = "prob")
-          # ToDo: Monotonie
-          calibrator$train(task_for_calibrator)
-          self$calibrators[[length(self$calibrators) + 1]] = calibrator
-        }
+        } 
       }
       return(list(NULL)) 
     },
@@ -158,11 +154,7 @@ PipeOpCalibration <- R6Class(
             prob = prob,
             response = response
           )
-        } else if(self$method == "gam") {
-          task_for_calibrator = as_task_classif(calibration_data, target = "truth", 
-                                                positive = positive, id = "Task_cal")
-          pred_calibrated = self$calibrators[[learner_index]]$predict(task_for_calibrator)
-        }
+        } 
         predictions[[length(predictions) + 1]] = as.data.table(pred_calibrated)
       }
       

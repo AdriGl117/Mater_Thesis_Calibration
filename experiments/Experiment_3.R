@@ -160,7 +160,7 @@ chunks = data.table(
 
 resources = list(ncpus = 1, walltime = 3600, memory = 8000)
 
-submitJobs(ids = chunks, resources = resources, reg = reg)
+submitJobs(ids = ids[2:5], resources = resources, reg = reg)
 getStatus(reg = reg)
 # wait for all jobs to terminate
 waitForJobs(reg = reg)
