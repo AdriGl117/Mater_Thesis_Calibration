@@ -77,11 +77,16 @@ PipeOpCalibrationUnion <- R6Class(
                                             y = calibration_data$truth))
       } else if (self$method == "beta") {
         calibration_data$truth <- ifelse(calibration_data$truth == positive, 1, 0)
-        self$calibrator = betacal::beta_calibration(p = calibration_data$response, 
-                                               y = calibration_data$truth,
-                                               parameter = self$parameters)
-
+        self$calibrator = try(betacal::beta_calibration(p = calibration_data$response, 
+                                                   y = calibration_data$truth,
+                                                   parameters = self$parameters),
+                         silent = TRUE)
+        if (class(self$calibrator) == "try-error"){
+          self$calibrator = betacal::beta_calibration(p = calibration_data$response, 
+                                                 y = calibration_data$truth,
+                                                 parameters = "ab")
         }
+      }
       return(list(NULL)) 
     },
     
