@@ -52,7 +52,7 @@ ece <- R6::R6Class("ece",
       #ece
       actual = ifelse(prediction$truth == colnames(prediction$prob)[1], 1, 0)
       prediction = prediction$prob[,1]
-      CalibratR::get_ECE_equal_width(actual = actual, predicted = prediction)
+      CalibratR::getECE(actual = actual, predicted = prediction)
     }
   )
 )

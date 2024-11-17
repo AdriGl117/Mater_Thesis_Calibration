@@ -102,9 +102,15 @@ PipeOpCalibration <- R6Class(
           self$calibrators[[length(self$calibrators) + 1]] = calibrator
         } else if (self$method == "beta") {
           calibration_data$truth <- ifelse(calibration_data$truth == positive, 1, 0)
-          calibrator = betacal::beta_calibration(p = calibration_data$response, 
+          calibrator = try(betacal::beta_calibration(p = calibration_data$response, 
                                                  y = calibration_data$truth,
-                                                 parameters = self$parameters)
+                                                 parameters = self$parameters),
+                           silent = TRUE)
+          if (class(calibrator) == "try-error"){
+            calibrator = betacal::beta_calibration(p = calibration_data$response, 
+                                                   y = calibration_data$truth,
+                                                   parameters = "ab")
+          }
           self$calibrators[[length(self$calibrators) + 1]] = calibrator
         } 
       }

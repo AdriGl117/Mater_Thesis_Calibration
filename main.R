@@ -5,9 +5,9 @@ df = read.csv("Data/cs-training.csv")
 df = df[,-1]
 task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
 # Load the OML Task
-odata = odt(id = 37)
-backend = as_data_backend(odata)
-task = as_task_classif(backend, target = odata$target_names)
+#odata = odt(id = 37)
+#backend = as_data_backend(odata)
+#task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
 task_train = task$clone()$filter(splits$train)
 task_test = task$clone()$filter(splits$test)

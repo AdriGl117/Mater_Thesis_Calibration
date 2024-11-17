@@ -293,7 +293,7 @@ job_table = job_table[,
 ]
 
 job_table
-result = testJob(1, external = TRUE, reg = reg)
+result = testJob(12952, external = TRUE, reg = reg)
 
 cf = makeClusterFunctionsSocket(ncpus = 4)
 reg$cluster.functions = cf

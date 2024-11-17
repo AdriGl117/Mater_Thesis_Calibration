@@ -1,7 +1,7 @@
 source("sources.R")
 
 # Read result object
-bmr <- readRDS("~/Desktop/bmr_Exp_1.rds")
+bmr <- readRDS("~/Desktop/bmr_Exp_1b.rds")
 
 # Select measure
 measure <- msr("classif.ece")
