@@ -16,7 +16,7 @@ tasks = as_tasks(otasks)
 resamplings = as_resamplings(otasks)
 
 #####Resampling#####
-rsmp_70 <- rsmp("holdout", ratio = 0.7)
+rsmp_cv5 <- rsmp("cv", folds = 5)
 
 #####Learner#####
 learner_svm <- lrn("classif.svm",
@@ -63,32 +63,21 @@ learner_xgboost <- lrn("classif.xgboost",
                        subsample         = to_tune(1e-1, 1),
                        predict_type = "prob")
 
-learner_nnet <- lrn("classif.nnet",
-                  size = to_tune(1,20),
-                  maxit = to_tune(1, 500),
-                  predict_type = "prob")
-
-learner_naive_bayes <- lrn("classif.naive_bayes",
-                          laplace = to_tune(0, 10),
-                          eps = to_tune(0, 1e-1),
-                          predict_type = "prob")
-
 # Feature Encoding for learners that require it
-learner_svm = as_learner(po("encode", method = "one-hot") %>>% learner_svm)
-learner_svm$id = substr(learner_svm$id, 8, nchar(learner_svm$id))
-learner_glmnet = as_learner(po("encode", method = "one-hot") %>>% learner_glmnet)
-learner_glmnet$id = substr(learner_glmnet$id, 8, nchar(learner_glmnet$id))
-learner_xgboost = as_learner(po("encode", method = "one-hot") %>>% learner_xgboost)
-learner_xgboost$id = substr(learner_xgboost$id, 8, nchar(learner_xgboost$id))
+#learner_svm = as_learner(po("encode", method = "one-hot") %>>% learner_svm)
+#learner_svm$id = substr(learner_svm$id, 8, nchar(learner_svm$id))
+#learner_glmnet = as_learner(po("encode", method = "one-hot") %>>% learner_glmnet)
+#learner_glmnet$id = substr(learner_glmnet$id, 8, nchar(learner_glmnet$id))
+#learner_xgboost = as_learner(po("encode", method = "one-hot") %>>% learner_xgboost)
+#learner_xgboost$id = substr(learner_xgboost$id, 8, nchar(learner_xgboost$id))
 
 base_learners <- list(learner_svm, 
-                 learner_ranger, 
-                 learner_kknn, 
-                 learner_rpart, 
-                 learner_glmnet, 
-                 learner_xgboost, 
-                 learner_nnet, 
-                 learner_naive_bayes)
+                      learner_ranger, 
+                      learner_kknn, 
+                      learner_rpart, 
+                      learner_glmnet, 
+                      learner_xgboost
+)
 
 for (learner in base_learners) {
   remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id))))
@@ -104,7 +93,7 @@ for (learner in base_learners) {
            auto_tuner(
              tuner = tnr("mbo"),
              learner = as_learner(po("calibration", learner = learner,
-                                    rsmp = rsmp_70, method = calibrator)),
+                                     rsmp = rsmp_cv5, method = calibrator)),
              resampling = rsmp("cv", folds = 3),
              measure = msr("classif.bbrier"),
              term_evals = 100))
@@ -112,7 +101,7 @@ for (learner in base_learners) {
       paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
              "_TwP_", calibrator))
     learners_TwP_cal[[length(learners_TwP_cal)]]$id <- paste0(substr(learner$id, 9, nchar(learner$id)),
-                                                               " TwP ", calibrator)
+                                                              " TwP ", calibrator)
     
     remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
                          "_TwP_", calibrator))
@@ -124,20 +113,20 @@ for (learner in base_learners) {
   for (calibrator in calibrators) {
     assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
                   "_TbC_", calibrator),
-           as_learner(po("calibration",
+           as_learner(po("calibration_tune_before_calibration",
                          learner = auto_tuner(
                            tuner = tnr("mbo"),
                            learner = learner,
                            resampling = rsmp("cv", folds = 3),
                            measure = msr("classif.bbrier"),
                            term_evals = 100),
-                         rsmp = rsmp_70, 
+                         rsmp = rsmp_cv5, 
                          method = calibrator)))
     learners_Tb_cal[[length(learners_Tb_cal) + 1]] <- get(
       paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
              "_TbC_", calibrator))
     learners_Tb_cal[[length(learners_Tb_cal)]]$id <- paste0(substr(learner$id, 9, nchar(learner$id)),
-                                                             " TbC ", calibrator)
+                                                            " TbC ", calibrator)
     remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
                          "_TbC_", calibrator))
   }
@@ -147,6 +136,16 @@ learners <- c(learners_TwP_cal, learners_Tb_cal)
 
 # Sort learners learners alphabetisch sortieren
 learners = learners[order(sapply(learners, function(x) x$id))]
+
+# Feature Encoding for learners that require it
+for (i in seq_along(learners)) {
+  learner <- learners[[i]]
+  if (grepl("svm", learner$id) | grepl("xgboost", learner$id) | grepl("glmnet", learner$id)) {
+    learner <- as_learner(po("encode", method = "one-hot") %>>% learner)
+    learner$id <- substr(learner$id, 8, nchar(learner$id))
+    learners[[i]] <- learner
+  }
+}
 
 #####Run the benchmark#####
 large_design = benchmark_grid(tasks, learners, resamplings,
@@ -164,29 +163,7 @@ job_table = job_table[,
                       .(job.id, learner_id, task_id, resampling_id, repl)
 ]
 
-job_table
+job_table[grepl("glmnet", learner_id)]
+
 result = testJob(1, external = FALSE, reg = reg)
 
-cf = makeClusterFunctionsInteractive()
-reg$cluster.functions = cf
-saveRegistry(reg = reg)
-ids = job_table$job.id
-chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
-)
-
-resources = list(ncpus = 1, walltime = 3600, memory = 8000)
-submitJobs(ids = chunks, resources = resources, reg = reg)
-getStatus(reg = reg)
-# wait for all jobs to terminate
-waitForJobs(reg = reg)
-
-bmr = reduceResultsBatchmark(reg = reg)
-ece = bmr$aggregate(msr("classif.ece"))
-ece = ece[, .(task_id, learner_id, classif.ece)]
-ece
-autoplot(bmr)
-
-library(mlr3benchmark)
-bma = as_benchmark_aggr(bmr, measures = msr("classif.ece"))
-autoplot(bma)

@@ -50,13 +50,13 @@ learner_cal_tuned = lrn("classif.xgboost",
               predict_type = "prob"
 )
 
-learner_cal_tuned = po("calibration_logistic", learner = learner_cal_tuned)
+learner_cal_tuned = po("calibration_isotonic", learner = learner_cal_tuned)
 
 learner_cal_tuned = auto_tuner(tuner = tnr("mbo"), 
                 learner = learner_cal_tuned, 
                 resampling = rsmp("cv", folds = 3),
                 measure = msr("classif.ici"),
-                term_evals = 20)
+                term_evals = 10)
 
 learner_tuned_cal = lrn("classif.xgboost",
               nrounds = to_tune(1, 100),
@@ -68,9 +68,9 @@ learner_tuned_cal = auto_tuner(tuner = tnr("mbo"),
                 learner = learner_tuned_cal, 
                 resampling = rsmp("cv", folds = 3),
                 measure = msr("classif.ici"),
-                term_evals = 20)
+                term_evals = 10)
 
-learner_tuned_cal = po("calibration_logistic", learner = learner_tuned_cal)
+learner_tuned_cal = as_learner(po("calibration_isotonic", learner = learner_tuned_cal))
 
 lrns = list(learner_tuned_cal, learner_cal_tuned)
 

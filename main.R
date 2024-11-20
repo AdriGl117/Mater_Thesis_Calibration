@@ -4,10 +4,6 @@ set.seed(123)
 df = read.csv("Data/cs-training.csv")
 df = df[,-1]
 task = as_task_classif(df, target = "SeriousDlqin2yrs", positive = "1")
-# Load the OML Task
-#odata = odt(id = 37)
-#backend = as_data_backend(odata)
-#task = as_task_classif(backend, target = odata$target_names)
 splits = partition(task)
 task_train = task$clone()$filter(splits$train)
 task_test = task$clone()$filter(splits$test)
@@ -95,7 +91,7 @@ calibrationplot(learners_simple_cal, task_test, bins = 11, smooth = TRUE)
 calibrationplot(learner_cv, task_test, bins = 11, smooth = TRUE)
 
 # ECEs
-ece_uncal = preds_uncal$score(msr("classif.ece", bins = 20))
+ece_uncal = preds_uncal$score(msr("classif.ece"))
 ece_log_cal = preds_log_cal$score(msr("classif.ece"))
 ece_beta_cal = preds_beta_cal$score(msr("classif.ece"))
 ece_iso_cal = preds_iso_cal$score(msr("classif.ece"))
