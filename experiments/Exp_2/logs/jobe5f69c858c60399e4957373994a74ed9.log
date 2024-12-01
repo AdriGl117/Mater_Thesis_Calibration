@@ -1,0 +1,806 @@
+### [bt]: This is batchtools v0.9.17
+### [bt]: Starting calculation of 1 jobs
+### [bt]: Setting working directory to '/content/drive/MyDrive/GitHub/Mater_Thesis_Calibration'
+Loading required package: mlr3verse
+Loading required package: mlr3
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:MASS’:
+
+    select
+
+The following object is masked from ‘package:mlr3misc’:
+
+    cross_join
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘batchtools’
+
+The following object is masked from ‘package:mlr3misc’:
+
+    chunk
+
+Loading required package: randomForest
+randomForest 4.7-1.2
+Type rfNews() to see new features/changes/bug fixes.
+
+Attaching package: ‘randomForest’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+The following object is masked from ‘package:ggplot2’:
+
+    margin
+
+Loading required package: ranger
+
+Attaching package: ‘ranger’
+
+The following object is masked from ‘package:randomForest’:
+
+    importance
+
+Loading required package: palmerpenguins
+ece.R :
+Friedmann_tasks.R :
+Functions.R :
+ici.R :
+mse_feature_effects.R :
+PipeOpCalibration_TuningExperiment.R :
+PipeOpCalibration.R :
+PipeOpCalibrationUnion.R :
+### [bt]: Memory measurement disabled
+### [bt]: Starting job [batchtools job.id=3313]
+### [bt]: Generating problem instance for problem '7f16ca74b5d8776b' ...
+### [bt]: Applying algorithm 'run_learner' on problem '7f16ca74b5d8776b' for job 3313 (seed = 3436) ...
+INFO  [11:24:36.620] [mlr3] Applying learner 'kknn TbC isotonic' on task 'churn' (iter 3/10)
+INFO  [11:24:42.266] [bbotk] Starting to optimize 3 parameter(s) with '<OptimizerMbo>' and '<TerminatorEvals> [n_evals=100, k=0]'
+INFO  [11:24:43.768] [bbotk] Evaluating 12 configuration(s)
+INFO  [11:26:34.633] [bbotk] Result of batch 1:
+INFO  [11:26:34.727] [bbotk]           k distance       kernel classif.bbrier warnings errors
+INFO  [11:26:34.727] [bbotk]  2.96906688 2.301078          cos     0.08820512        0      0
+INFO  [11:26:34.727] [bbotk]  1.00315418 4.301078      optimal     0.12681654        0      0
+INFO  [11:26:34.727] [bbotk]  0.02019774 1.301078         rank     0.16022222        0      0
+INFO  [11:26:34.727] [bbotk]  1.98611047 3.301078     biweight     0.10192344        0      0
+INFO  [11:26:34.727] [bbotk]  0.51167592 3.801078    triweight     0.14755556        0      0
+INFO  [11:26:34.727] [bbotk]  2.47758868 1.801078  rectangular     0.08849770        0      0
+INFO  [11:26:34.727] [bbotk]  1.49463239 2.801078 epanechnikov     0.10324743        0      0
+INFO  [11:26:34.727] [bbotk]  3.46054509 4.801078          inv     0.09280394        0      0
+INFO  [11:26:34.727] [bbotk]  3.21480598 3.551078      optimal     0.08790251        0      0
+INFO  [11:26:34.727] [bbotk]  1.24889328 1.551078          inv     0.10337763        0      0
+INFO  [11:26:34.727] [bbotk]  0.26593685 4.551078    triweight     0.14755556        0      0
+INFO  [11:26:34.727] [bbotk]  2.23184958 2.551078         rank     0.09137218        0      0
+INFO  [11:26:34.727] [bbotk]  runtime_learners                                uhash
+INFO  [11:26:34.727] [bbotk]             6.864 3c6b94ec-0de8-4948-99bb-a4c08f9879bd
+INFO  [11:26:34.727] [bbotk]             5.197 d3d8bd5b-5bd7-4a43-ad5a-786e20569144
+INFO  [11:26:34.727] [bbotk]             6.744 0ae97eba-fdf5-44c5-a3ba-d157d21187c0
+INFO  [11:26:34.727] [bbotk]             6.853 54bbcdfb-71e7-4f94-9a74-84a16a6f2f78
+INFO  [11:26:34.727] [bbotk]             7.616 0255a08a-47e7-41e6-8b0a-fdddcd3ac40c
+INFO  [11:26:34.727] [bbotk]            11.288 7a09309c-639f-4b4c-a30e-8d07de6da70b
+INFO  [11:26:34.727] [bbotk]             9.077 629924ee-f5d4-4809-8f30-cb5c5eee73d3
+INFO  [11:26:34.727] [bbotk]            12.395 7cbaa655-add1-417f-9217-016e33361372
+INFO  [11:26:34.727] [bbotk]            10.993 507bbff7-b40e-47db-b265-3555c36d09a4
+INFO  [11:26:34.727] [bbotk]             9.310 da14e2a9-c6b6-4f6a-97c8-0e867500a78a
+INFO  [11:26:34.727] [bbotk]             8.926 d8845f72-3a06-4ada-aa17-4e8c0e63f934
+INFO  [11:26:34.727] [bbotk]             9.752 7612eed3-df67-416d-8de2-2a0c744db301
+INFO  [11:26:38.960] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:26:49.705] [bbotk] Result of batch 2:
+INFO  [11:26:49.725] [bbotk]         k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:26:49.725] [bbotk]  1.149936 1.447973 optimal 0.001573431 <list[3]>              FALSE
+INFO  [11:26:49.725] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:26:49.725] [bbotk]        0.119565        0      0           10.345
+INFO  [11:26:49.725] [bbotk]                                 uhash
+INFO  [11:26:49.725] [bbotk]  22fcd4bf-d4ab-4c24-84e4-1153d49a688d
+INFO  [11:26:53.162] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:27:04.488] [bbotk] Result of batch 3:
+INFO  [11:27:04.532] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:27:04.532] [bbotk]  2.278515  1.85133 rectangular 0.001218637 <list[3]>              FALSE
+INFO  [11:27:04.532] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:27:04.532] [bbotk]      0.08903429        0      0           10.845
+INFO  [11:27:04.532] [bbotk]                                 uhash
+INFO  [11:27:04.532] [bbotk]  4a25b0f8-6144-4449-852d-314e4848904d
+INFO  [11:27:08.064] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:27:18.779] [bbotk] Result of batch 4:
+INFO  [11:27:18.849] [bbotk]         k distance kernel     acq_ei  x_domain .already_evaluated
+INFO  [11:27:18.849] [bbotk]  2.645112  3.57536   rank 0.00164226 <list[3]>              FALSE
+INFO  [11:27:18.849] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:27:18.849] [bbotk]      0.08851058        0      0           10.335
+INFO  [11:27:18.849] [bbotk]                                 uhash
+INFO  [11:27:18.849] [bbotk]  6c71c506-706b-4e5f-b8e6-7d9bb96ff323
+INFO  [11:27:22.002] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:27:32.131] [bbotk] Result of batch 5:
+INFO  [11:27:32.189] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:27:32.189] [bbotk]  2.765819 3.680482   rank 0.002160232 <list[3]>              FALSE
+INFO  [11:27:32.189] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:27:32.189] [bbotk]      0.08832031        0      0            9.746
+INFO  [11:27:32.189] [bbotk]                                 uhash
+INFO  [11:27:32.189] [bbotk]  fcc9ab88-366d-4d72-8108-3a94da8587b3
+INFO  [11:27:34.968] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:27:44.365] [bbotk] Result of batch 6:
+INFO  [11:27:44.405] [bbotk]        k distance       kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:27:44.405] [bbotk]  1.24594 1.537034 epanechnikov 0.0009153229 <list[3]>              FALSE
+INFO  [11:27:44.405] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:27:44.405] [bbotk]       0.1150132        0      0            8.965
+INFO  [11:27:44.405] [bbotk]                                 uhash
+INFO  [11:27:44.405] [bbotk]  783b0d10-65c5-456d-b6c6-b71a5a97dd76
+INFO  [11:27:47.721] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:27:59.215] [bbotk] Result of batch 7:
+INFO  [11:27:59.281] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:27:59.281] [bbotk]  3.381934  3.68541   rank 0.001329556 <list[3]>              FALSE
+INFO  [11:27:59.281] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:27:59.281] [bbotk]      0.08965468        0      0           11.078
+INFO  [11:27:59.281] [bbotk]                                 uhash
+INFO  [11:27:59.281] [bbotk]  fc763373-397c-4137-8c5a-95deaab58e50
+INFO  [11:28:03.039] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:28:14.047] [bbotk] Result of batch 8:
+INFO  [11:28:14.056] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:28:14.056] [bbotk]  2.454921  1.40708   rank 0.002421065 <list[3]>              FALSE
+INFO  [11:28:14.056] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:28:14.056] [bbotk]       0.0878796        0      0           10.599
+INFO  [11:28:14.056] [bbotk]                                 uhash
+INFO  [11:28:14.056] [bbotk]  4adc9f92-f048-4b02-a37e-2dcf426fcd4f
+INFO  [11:28:17.803] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:28:31.817] [bbotk] Result of batch 9:
+INFO  [11:28:31.948] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:28:31.948] [bbotk]  3.265932  1.35877   rank 0.002130318 <list[3]>              FALSE
+INFO  [11:28:31.948] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:28:31.948] [bbotk]      0.08700476        0      0           13.491
+INFO  [11:28:31.948] [bbotk]                                 uhash
+INFO  [11:28:31.948] [bbotk]  74a8d07e-599d-49bb-991b-07ad60adb4fb
+INFO  [11:28:34.790] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:28:46.753] [bbotk] Result of batch 10:
+INFO  [11:28:46.825] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:28:46.825] [bbotk]  3.668947 1.351091   rank 0.003079631 <list[3]>              FALSE
+INFO  [11:28:46.825] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:28:46.825] [bbotk]      0.08844493        0      0           11.671
+INFO  [11:28:46.825] [bbotk]                                 uhash
+INFO  [11:28:46.825] [bbotk]  2cb3e591-18c5-4a20-a341-baf301132522
+INFO  [11:28:50.293] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:29:00.676] [bbotk] Result of batch 11:
+INFO  [11:29:00.719] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:29:00.719] [bbotk]  1.297383 1.335877 rectangular 0.001335255 <list[3]>              FALSE
+INFO  [11:29:00.719] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:29:00.719] [bbotk]       0.1042716        0      0           10.055
+INFO  [11:29:00.719] [bbotk]                                 uhash
+INFO  [11:29:00.719] [bbotk]  f61d9332-ac2e-4b29-81f8-0e701210ad32
+INFO  [11:29:04.336] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:29:17.101] [bbotk] Result of batch 12:
+INFO  [11:29:17.106] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:29:17.106] [bbotk]  3.267136 1.221664   rank 0.002555615 <list[3]>              FALSE
+INFO  [11:29:17.106] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:29:17.106] [bbotk]      0.08718758        0      0           12.429
+INFO  [11:29:17.106] [bbotk]                                 uhash
+INFO  [11:29:17.106] [bbotk]  bf8eb3af-b8fe-4e46-9499-3468c0e2e3be
+INFO  [11:29:20.221] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:29:30.574] [bbotk] Result of batch 13:
+INFO  [11:29:30.594] [bbotk]         k distance kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:29:30.594] [bbotk]  2.546422 1.995501    cos 0.0006146856 <list[3]>              FALSE
+INFO  [11:29:30.594] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:29:30.594] [bbotk]      0.09005197        0      0           10.032
+INFO  [11:29:30.594] [bbotk]                                 uhash
+INFO  [11:29:30.594] [bbotk]  3bd69840-9ea9-4aab-874c-17e0f0de2618
+INFO  [11:29:34.303] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:29:46.088] [bbotk] Result of batch 14:
+INFO  [11:29:46.131] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:29:46.131] [bbotk]  2.518948 1.320606   rank 0.001141625 <list[3]>              FALSE
+INFO  [11:29:46.131] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:29:46.131] [bbotk]      0.08764599        0      0           11.493
+INFO  [11:29:46.131] [bbotk]                                 uhash
+INFO  [11:29:46.131] [bbotk]  47247d7b-0401-4512-90c3-43aa78b9a09f
+INFO  [11:29:48.750] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:30:03.287] [bbotk] Result of batch 15:
+INFO  [11:30:03.315] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:30:03.315] [bbotk]  3.276629 1.227515   rank 0.001995032 <list[3]>              FALSE
+INFO  [11:30:03.315] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:30:03.315] [bbotk]      0.08718768        0      0           14.084
+INFO  [11:30:03.315] [bbotk]                                 uhash
+INFO  [11:30:03.315] [bbotk]  5daa4249-1ebb-4b0d-90a2-dc797a6be16b
+INFO  [11:30:06.879] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:30:17.564] [bbotk] Result of batch 16:
+INFO  [11:30:17.592] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:30:17.592] [bbotk]  2.168145 1.221243   rank 0.001940516 <list[3]>              FALSE
+INFO  [11:30:17.592] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:30:17.592] [bbotk]      0.09032373        0      0           10.217
+INFO  [11:30:17.592] [bbotk]                                 uhash
+INFO  [11:30:17.592] [bbotk]  7f908268-1e04-466a-be44-faae791cb3f9
+INFO  [11:30:21.189] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:30:34.578] [bbotk] Result of batch 17:
+INFO  [11:30:34.593] [bbotk]         k distance kernel     acq_ei  x_domain .already_evaluated
+INFO  [11:30:34.593] [bbotk]  2.877951 1.249039   rank 0.00227789 <list[3]>              FALSE
+INFO  [11:30:34.593] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:30:34.593] [bbotk]      0.08686012        0      0            12.89
+INFO  [11:30:34.593] [bbotk]                                 uhash
+INFO  [11:30:34.593] [bbotk]  73a81a51-24e2-4fcd-8c02-41c80365383e
+INFO  [11:30:37.916] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:30:48.394] [bbotk] Result of batch 18:
+INFO  [11:30:48.405] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:30:48.405] [bbotk]  2.730559 1.313305   rank 0.001042671 <list[3]>              FALSE
+INFO  [11:30:48.405] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:30:48.405] [bbotk]      0.08699816        0      0           10.236
+INFO  [11:30:48.405] [bbotk]                                 uhash
+INFO  [11:30:48.405] [bbotk]  61bf7acf-2a04-4655-aa84-9ea5c8c77d4a
+INFO  [11:30:51.176] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:31:03.648] [bbotk] Result of batch 19:
+INFO  [11:31:03.691] [bbotk]         k distance    kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:31:03.691] [bbotk]  3.576201 1.308207 triweight 0.001294528 <list[3]>              FALSE
+INFO  [11:31:03.691] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:31:03.691] [bbotk]      0.09121858        0      0           12.096
+INFO  [11:31:03.691] [bbotk]                                 uhash
+INFO  [11:31:03.691] [bbotk]  1a705c2f-81fe-49d2-bf9d-a4c546c78578
+INFO  [11:31:06.583] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:31:18.727] [bbotk] Result of batch 20:
+INFO  [11:31:18.800] [bbotk]         k distance  kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:31:18.800] [bbotk]  3.154985 1.313854 optimal 0.0006760686 <list[3]>              FALSE
+INFO  [11:31:18.800] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:31:18.800] [bbotk]      0.08688083        0      0           11.724
+INFO  [11:31:18.800] [bbotk]                                 uhash
+INFO  [11:31:18.800] [bbotk]  10891f18-2751-4a79-bd67-20627aa16ba1
+INFO  [11:31:22.112] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:31:35.397] [bbotk] Result of batch 21:
+INFO  [11:31:35.442] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:31:35.442] [bbotk]  2.770122 1.242377   rank 0.001333053 <list[3]>              FALSE
+INFO  [11:31:35.442] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:31:35.442] [bbotk]      0.08706193        0      0           12.818
+INFO  [11:31:35.442] [bbotk]                                 uhash
+INFO  [11:31:35.442] [bbotk]  4a499ca4-a1b2-419e-87a5-31c99e14edde
+INFO  [11:31:38.472] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:31:51.261] [bbotk] Result of batch 22:
+INFO  [11:31:51.285] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:31:51.285] [bbotk]  3.203683 1.272395   rank 0.001288246 <list[3]>              FALSE
+INFO  [11:31:51.285] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:31:51.285] [bbotk]      0.08694505        0      0           12.496
+INFO  [11:31:51.285] [bbotk]                                 uhash
+INFO  [11:31:51.285] [bbotk]  63ea43ce-1d41-43b3-a8cd-6b77937244e5
+INFO  [11:31:55.900] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:32:08.180] [bbotk] Result of batch 23:
+INFO  [11:32:08.206] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:32:08.206] [bbotk]  3.006125  1.30056   rank 0.002504606 <list[3]>              FALSE
+INFO  [11:32:08.206] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:32:08.206] [bbotk]      0.08682215        0      0           11.876
+INFO  [11:32:08.206] [bbotk]                                 uhash
+INFO  [11:32:08.206] [bbotk]  a390edc9-a579-4699-a7bf-c39698759f4a
+INFO  [11:32:11.112] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:32:20.723] [bbotk] Result of batch 24:
+INFO  [11:32:20.764] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:32:20.764] [bbotk]  2.288128 1.301179 rectangular 0.001532591 <list[3]>              FALSE
+INFO  [11:32:20.764] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:32:20.764] [bbotk]      0.08846914        0      0            9.355
+INFO  [11:32:20.764] [bbotk]                                 uhash
+INFO  [11:32:20.764] [bbotk]  9455ba55-be6a-44a2-a848-0c828715e60a
+INFO  [11:32:23.039] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:32:33.552] [bbotk] Result of batch 25:
+INFO  [11:32:33.575] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:32:33.575] [bbotk]  3.110172 1.302176   rank 0.001706546 <list[3]>              FALSE
+INFO  [11:32:33.575] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:32:33.575] [bbotk]      0.08684293        0      0           10.284
+INFO  [11:32:33.575] [bbotk]                                 uhash
+INFO  [11:32:33.575] [bbotk]  22727f99-0fd6-4799-a74b-c096ef351dbd
+INFO  [11:32:36.200] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:32:46.870] [bbotk] Result of batch 26:
+INFO  [11:32:46.884] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:32:46.884] [bbotk]  2.888534 1.286861   rank 0.001779648 <list[3]>              FALSE
+INFO  [11:32:46.884] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:32:46.884] [bbotk]      0.08680416        0      0           10.357
+INFO  [11:32:46.884] [bbotk]                                 uhash
+INFO  [11:32:46.884] [bbotk]  f24110cc-241c-4431-b974-90657f26bd7b
+INFO  [11:32:49.864] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:33:01.781] [bbotk] Result of batch 27:
+INFO  [11:33:01.841] [bbotk]         k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:33:01.841] [bbotk]  3.733552 1.300844 optimal 0.002186617 <list[3]>              FALSE
+INFO  [11:33:01.841] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:33:01.841] [bbotk]      0.08734132        0      0           11.566
+INFO  [11:33:01.841] [bbotk]                                 uhash
+INFO  [11:33:01.841] [bbotk]  e1e10f37-0263-4af8-bf81-b8efe8dd2e4f
+INFO  [11:33:04.913] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:33:13.558] [bbotk] Result of batch 28:
+INFO  [11:33:13.610] [bbotk]        k distance  kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:33:13.610] [bbotk]  2.38621 3.721314 optimal 0.0007011189 <list[3]>              FALSE
+INFO  [11:33:13.610] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:33:13.610] [bbotk]      0.09015022        0      0            8.386
+INFO  [11:33:13.610] [bbotk]                                 uhash
+INFO  [11:33:13.610] [bbotk]  8340f0be-6a4e-44b5-a9e2-9adcf140e590
+INFO  [11:33:16.772] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:33:26.507] [bbotk] Result of batch 29:
+INFO  [11:33:26.586] [bbotk]        k distance   kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:33:26.586] [bbotk]  2.13155 1.279044 biweight 0.0007314798 <list[3]>              FALSE
+INFO  [11:33:26.586] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:33:26.586] [bbotk]       0.1048224        0      0            9.391
+INFO  [11:33:26.586] [bbotk]                                 uhash
+INFO  [11:33:26.586] [bbotk]  6f636f0c-d213-4c84-a705-31a019bfad5f
+INFO  [11:33:29.360] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:33:37.808] [bbotk] Result of batch 30:
+INFO  [11:33:37.828] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:33:37.828] [bbotk]  2.207778  3.83531 rectangular 0.001616122 <list[3]>              FALSE
+INFO  [11:33:37.828] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:33:37.828] [bbotk]      0.09031276        0      0            8.112
+INFO  [11:33:37.828] [bbotk]                                 uhash
+INFO  [11:33:37.828] [bbotk]  2a554ef2-71a8-4cd6-a81f-d06e575878ad
+INFO  [11:33:40.486] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:33:49.925] [bbotk] Result of batch 31:
+INFO  [11:33:49.996] [bbotk]        k distance  kernel     acq_ei  x_domain .already_evaluated
+INFO  [11:33:49.996] [bbotk]  1.90817 1.421113 optimal 0.00071858 <list[3]>              FALSE
+INFO  [11:33:49.996] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:33:49.996] [bbotk]       0.1004214        0      0             9.07
+INFO  [11:33:49.996] [bbotk]                                 uhash
+INFO  [11:33:49.996] [bbotk]  f44095ae-7edc-48a7-a8d7-fcf0537aaad1
+INFO  [11:33:52.993] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:34:03.280] [bbotk] Result of batch 32:
+INFO  [11:34:03.295] [bbotk]         k distance kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:34:03.295] [bbotk]  3.299275 3.898769   rank 0.0009575873 <list[3]>              FALSE
+INFO  [11:34:03.295] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:34:03.295] [bbotk]      0.08951545        0      0           10.008
+INFO  [11:34:03.295] [bbotk]                                 uhash
+INFO  [11:34:03.295] [bbotk]  918fbc88-d14e-496e-9c34-c019adb6f39a
+INFO  [11:34:06.025] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:34:15.192] [bbotk] Result of batch 33:
+INFO  [11:34:15.207] [bbotk]         k distance    kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:34:15.207] [bbotk]  1.270111 1.269633 triweight 0.0008968732 <list[3]>              FALSE
+INFO  [11:34:15.207] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:34:15.207] [bbotk]       0.1360786        0      0            8.866
+INFO  [11:34:15.207] [bbotk]                                 uhash
+INFO  [11:34:15.207] [bbotk]  ec9b0400-c77a-43ac-9ddc-83d4557c6b1d
+INFO  [11:34:17.873] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:34:27.082] [bbotk] Result of batch 34:
+INFO  [11:34:27.108] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:34:27.108] [bbotk]  2.844342 4.208173   rank 0.001952026 <list[3]>              FALSE
+INFO  [11:34:27.108] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:34:27.108] [bbotk]      0.08835979        0      0            8.973
+INFO  [11:34:27.108] [bbotk]                                 uhash
+INFO  [11:34:27.108] [bbotk]  0b71a45b-bac5-450a-a5af-1f280ad36bc1
+INFO  [11:34:29.973] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:34:41.965] [bbotk] Result of batch 35:
+INFO  [11:34:41.990] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:34:41.990] [bbotk]  3.119841 1.290904 rectangular 0.001459316 <list[3]>              FALSE
+INFO  [11:34:41.990] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:34:41.990] [bbotk]      0.08840358        0      0           11.714
+INFO  [11:34:41.990] [bbotk]                                 uhash
+INFO  [11:34:41.990] [bbotk]  4cdd5761-cfea-4810-b0a6-0e2d04f472b2
+INFO  [11:34:44.852] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:34:53.399] [bbotk] Result of batch 36:
+INFO  [11:34:53.433] [bbotk]        k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:34:53.433] [bbotk]  2.50694 4.420398 rectangular 0.001242138 <list[3]>              FALSE
+INFO  [11:34:53.433] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:34:53.433] [bbotk]      0.08958333        0      0            8.192
+INFO  [11:34:53.433] [bbotk]                                 uhash
+INFO  [11:34:53.433] [bbotk]  22fccb7e-debc-4e97-bdea-a7eba549b703
+INFO  [11:34:56.201] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:35:05.686] [bbotk] Result of batch 37:
+INFO  [11:35:05.707] [bbotk]         k distance      kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:35:05.707] [bbotk]  2.822993 4.361395 rectangular 0.0008322638 <list[3]>              FALSE
+INFO  [11:35:05.707] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:35:05.707] [bbotk]      0.09065017        0      0            9.174
+INFO  [11:35:05.707] [bbotk]                                 uhash
+INFO  [11:35:05.707] [bbotk]  c3732d1c-7835-454b-815f-6b53439685fc
+INFO  [11:35:08.783] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:35:18.357] [bbotk] Result of batch 38:
+INFO  [11:35:18.386] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:35:18.386] [bbotk]  3.062942 4.462052 rectangular 0.001614953 <list[3]>              FALSE
+INFO  [11:35:18.386] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:35:18.386] [bbotk]      0.09183925        0      0            9.233
+INFO  [11:35:18.386] [bbotk]                                 uhash
+INFO  [11:35:18.386] [bbotk]  21ee3d9f-9c3a-4483-b555-23abb765cd0e
+INFO  [11:35:21.369] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:35:31.476] [bbotk] Result of batch 39:
+INFO  [11:35:31.521] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:35:31.521] [bbotk]  2.314146   1.3011 rectangular 0.001558071 <list[3]>              FALSE
+INFO  [11:35:31.521] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:35:31.521] [bbotk]      0.08829778        0      0            9.828
+INFO  [11:35:31.521] [bbotk]                                 uhash
+INFO  [11:35:31.521] [bbotk]  542e7718-dad2-4f9b-bdaf-e1a5d0d35757
+INFO  [11:35:34.917] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:35:44.226] [bbotk] Result of batch 40:
+INFO  [11:35:44.253] [bbotk]         k distance  kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:35:44.253] [bbotk]  3.037286 4.277665 optimal 0.0007065608 <list[3]>              FALSE
+INFO  [11:35:44.253] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:35:44.253] [bbotk]      0.08771115        0      0            8.991
+INFO  [11:35:44.253] [bbotk]                                 uhash
+INFO  [11:35:44.253] [bbotk]  596f8ddf-7bcc-4981-8f55-8b3274b7c69c
+INFO  [11:35:47.043] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:35:57.601] [bbotk] Result of batch 41:
+INFO  [11:35:57.664] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:35:57.664] [bbotk]  2.591506 1.300253   rank 0.001169608 <list[3]>              FALSE
+INFO  [11:35:57.664] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:35:57.664] [bbotk]      0.08734195        0      0           10.334
+INFO  [11:35:57.664] [bbotk]                                 uhash
+INFO  [11:35:57.664] [bbotk]  cdf43dd2-1489-4c3d-a956-6c2225294162
+INFO  [11:36:00.220] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:36:09.618] [bbotk] Result of batch 42:
+INFO  [11:36:09.648] [bbotk]        k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:36:09.648] [bbotk]  3.04287 3.812587    cos 0.001590783 <list[3]>              FALSE
+INFO  [11:36:09.648] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:36:09.648] [bbotk]      0.08693021        0      0            9.095
+INFO  [11:36:09.648] [bbotk]                                 uhash
+INFO  [11:36:09.648] [bbotk]  f430b1aa-2e59-43c8-b49c-211f4e7115ea
+INFO  [11:36:12.278] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:36:21.948] [bbotk] Result of batch 43:
+INFO  [11:36:21.987] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:36:21.987] [bbotk]  1.332979 1.324049 rectangular 0.001495443 <list[3]>              FALSE
+INFO  [11:36:21.987] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:36:21.987] [bbotk]       0.1043457        0      0            9.322
+INFO  [11:36:21.987] [bbotk]                                 uhash
+INFO  [11:36:21.987] [bbotk]  59854e68-7b6d-472b-b866-ce5d1ead5349
+INFO  [11:36:24.778] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:36:34.168] [bbotk] Result of batch 44:
+INFO  [11:36:34.202] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:36:34.202] [bbotk]  1.255073 1.328003   rank 0.001067745 <list[3]>              FALSE
+INFO  [11:36:34.202] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:36:34.202] [bbotk]       0.1088765        0      0            9.145
+INFO  [11:36:34.202] [bbotk]                                 uhash
+INFO  [11:36:34.202] [bbotk]  15e26941-e71b-4455-9876-a8507921b9ac
+INFO  [11:36:36.957] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:36:45.386] [bbotk] Result of batch 45:
+INFO  [11:36:45.419] [bbotk]         k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:36:45.419] [bbotk]  2.427097 4.501871 rectangular 0.001033669 <list[3]>              FALSE
+INFO  [11:36:45.419] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:36:45.419] [bbotk]       0.0897686        0      0             8.11
+INFO  [11:36:45.419] [bbotk]                                 uhash
+INFO  [11:36:45.419] [bbotk]  73f643c6-7daa-44b8-a6ce-984b5462d69f
+INFO  [11:36:48.184] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:36:59.388] [bbotk] Result of batch 46:
+INFO  [11:36:59.411] [bbotk]        k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:36:59.411] [bbotk]  2.96057 1.271706   rank 0.001198548 <list[3]>              FALSE
+INFO  [11:36:59.411] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:36:59.411] [bbotk]      0.08680749        0      0            10.85
+INFO  [11:36:59.411] [bbotk]                                 uhash
+INFO  [11:36:59.411] [bbotk]  1cc4df70-bf02-4b41-885b-fdb89bfc5d8d
+INFO  [11:37:02.445] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:37:11.062] [bbotk] Result of batch 47:
+INFO  [11:37:11.114] [bbotk]      k distance kernel       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [11:37:11.114] [bbotk]  2.141 4.489172   rank 0.0008503601 <list[3]>              FALSE     0.08988632
+INFO  [11:37:11.114] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [11:37:11.114] [bbotk]         0      0            8.222 dc16f9ae-7973-4fa3-b609-435561b74755
+INFO  [11:37:14.214] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:37:24.296] [bbotk] Result of batch 48:
+INFO  [11:37:24.319] [bbotk]         k distance       kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:37:24.319] [bbotk]  2.788337 1.321013 epanechnikov 0.001057818 <list[3]>              FALSE
+INFO  [11:37:24.319] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:37:24.319] [bbotk]      0.08761761        0      0            9.785
+INFO  [11:37:24.319] [bbotk]                                 uhash
+INFO  [11:37:24.319] [bbotk]  f1a79ef4-8cfb-4ef4-a442-2f4b2ef6d07b
+INFO  [11:37:27.165] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:37:36.178] [bbotk] Result of batch 49:
+INFO  [11:37:36.208] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:37:36.208] [bbotk]  2.709904 4.522255   rank 0.001263201 <list[3]>              FALSE
+INFO  [11:37:36.208] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:37:36.208] [bbotk]       0.0883156        0      0            8.755
+INFO  [11:37:36.208] [bbotk]                                 uhash
+INFO  [11:37:36.208] [bbotk]  4e2a7408-5a64-4811-bf2b-b6c857789150
+INFO  [11:37:39.193] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:37:47.635] [bbotk] Result of batch 50:
+INFO  [11:37:47.645] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:37:47.645] [bbotk]  2.428158 4.541226   rank 0.001602681 <list[3]>              FALSE
+INFO  [11:37:47.645] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:37:47.645] [bbotk]      0.08853398        0      0            8.113
+INFO  [11:37:47.645] [bbotk]                                 uhash
+INFO  [11:37:47.645] [bbotk]  2ddd2f94-909e-4f9a-b456-6d493d0c553b
+INFO  [11:37:50.980] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:38:00.551] [bbotk] Result of batch 51:
+INFO  [11:38:00.577] [bbotk]         k distance   kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:38:00.577] [bbotk]  2.184473 1.226399 gaussian 0.001141998 <list[3]>              FALSE
+INFO  [11:38:00.577] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:38:00.577] [bbotk]      0.08931811        0      0            9.243
+INFO  [11:38:00.577] [bbotk]                                 uhash
+INFO  [11:38:00.577] [bbotk]  325b377e-3ba2-43c8-a2c3-f9c049d185d0
+INFO  [11:38:03.366] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:38:12.782] [bbotk] Result of batch 52:
+INFO  [11:38:12.814] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:38:12.814] [bbotk]  2.828266 4.627607   rank 0.001349245 <list[3]>              FALSE
+INFO  [11:38:12.814] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:38:12.814] [bbotk]      0.08843302        0      0            9.135
+INFO  [11:38:12.814] [bbotk]                                 uhash
+INFO  [11:38:12.814] [bbotk]  be7724c0-1ef7-42cc-bbe7-f0be19e1f0a9
+INFO  [11:38:16.146] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:38:24.705] [bbotk] Result of batch 53:
+INFO  [11:38:24.725] [bbotk]        k distance    kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:38:24.725] [bbotk]  2.48759 4.592201 triweight 0.000979571 <list[3]>              FALSE
+INFO  [11:38:24.725] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:38:24.725] [bbotk]       0.1028456        0      0             8.25
+INFO  [11:38:24.725] [bbotk]                                 uhash
+INFO  [11:38:24.725] [bbotk]  878c6d3e-b144-4c0a-ba05-24d10ea08dc0
+INFO  [11:38:27.555] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:38:36.805] [bbotk] Result of batch 54:
+INFO  [11:38:36.850] [bbotk]        k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:38:36.850] [bbotk]  2.78406  4.54635   rank 0.001720971 <list[3]>              FALSE
+INFO  [11:38:36.850] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:38:36.850] [bbotk]      0.08845173        0      0            8.961
+INFO  [11:38:36.850] [bbotk]                                 uhash
+INFO  [11:38:36.850] [bbotk]  4b067744-b72c-4584-afcd-35f99f09cbac
+INFO  [11:38:39.599] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:38:48.447] [bbotk] Result of batch 55:
+INFO  [11:38:48.468] [bbotk]         k distance kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:38:48.468] [bbotk]  2.560941 4.559834   rank 0.0009117428 <list[3]>              FALSE
+INFO  [11:38:48.468] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:38:48.468] [bbotk]      0.08838286        0      0            8.554
+INFO  [11:38:48.468] [bbotk]                                 uhash
+INFO  [11:38:48.468] [bbotk]  d55cae2a-6bf5-4900-b8e5-061669a8419e
+INFO  [11:38:51.669] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:39:02.488] [bbotk] Result of batch 56:
+INFO  [11:39:02.530] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:39:02.530] [bbotk]  3.029109 1.262737    inv 0.001035088 <list[3]>              FALSE
+INFO  [11:39:02.530] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:39:02.530] [bbotk]      0.08797542        0      0           10.558
+INFO  [11:39:02.530] [bbotk]                                 uhash
+INFO  [11:39:02.530] [bbotk]  1a4160c2-7484-49ae-89c4-9fccb44723d2
+INFO  [11:39:05.766] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:39:15.651] [bbotk] Result of batch 57:
+INFO  [11:39:15.681] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:39:15.681] [bbotk]  3.079174 3.752096   rank 0.001215175 <list[3]>              FALSE
+INFO  [11:39:15.681] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:39:15.681] [bbotk]      0.08882411        0      0            9.505
+INFO  [11:39:15.681] [bbotk]                                 uhash
+INFO  [11:39:15.681] [bbotk]  8b9dac72-1f66-4933-ac49-bb0719d65da8
+INFO  [11:39:18.495] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:39:27.507] [bbotk] Result of batch 58:
+INFO  [11:39:27.524] [bbotk]        k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:39:27.524] [bbotk]  2.82784 3.794604 optimal 0.001308449 <list[3]>              FALSE
+INFO  [11:39:27.524] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:39:27.524] [bbotk]      0.08783976        0      0            8.673
+INFO  [11:39:27.524] [bbotk]                                 uhash
+INFO  [11:39:27.524] [bbotk]  59ab4058-3f4f-4db6-8f1d-978b24ee10e3
+INFO  [11:39:30.425] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:39:41.885] [bbotk] Result of batch 59:
+INFO  [11:39:41.906] [bbotk]         k distance    kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:39:41.906] [bbotk]  3.156165 1.126296 triweight 0.001035299 <list[3]>              FALSE
+INFO  [11:39:41.906] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:39:41.906] [bbotk]      0.09577775        0      0           11.138
+INFO  [11:39:41.906] [bbotk]                                 uhash
+INFO  [11:39:41.906] [bbotk]  c75a869e-da65-453a-be77-cb20090ebddb
+INFO  [11:39:44.809] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:39:55.744] [bbotk] Result of batch 60:
+INFO  [11:39:55.778] [bbotk]        k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:39:55.778] [bbotk]  2.94329  1.30084   rank 0.001226646 <list[3]>              FALSE
+INFO  [11:39:55.778] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:39:55.778] [bbotk]         0.08682        0      0           10.603
+INFO  [11:39:55.778] [bbotk]                                 uhash
+INFO  [11:39:55.778] [bbotk]  cee2e9e2-5dd3-4e01-a197-a13ad9d76c1d
+INFO  [11:39:58.689] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:40:09.685] [bbotk] Result of batch 61:
+INFO  [11:40:09.706] [bbotk]        k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:40:09.706] [bbotk]  3.36262 1.305821 optimal 0.001552692 <list[3]>              FALSE
+INFO  [11:40:09.706] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:40:09.706] [bbotk]      0.08674458        0      0           10.699
+INFO  [11:40:09.706] [bbotk]                                 uhash
+INFO  [11:40:09.706] [bbotk]  f4db1c33-7012-40f1-8365-5c6bfd43d62f
+INFO  [11:40:12.532] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:40:21.392] [bbotk] Result of batch 62:
+INFO  [11:40:21.425] [bbotk]         k distance kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:40:21.425] [bbotk]  2.619866 4.558602   rank 0.0006223975 <list[3]>              FALSE
+INFO  [11:40:21.425] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:40:21.425] [bbotk]      0.08831961        0      0            8.595
+INFO  [11:40:21.425] [bbotk]                                 uhash
+INFO  [11:40:21.425] [bbotk]  e87c3f5d-c6f0-4a36-a92a-5967b127adf1
+INFO  [11:40:24.253] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:40:34.787] [bbotk] Result of batch 63:
+INFO  [11:40:34.807] [bbotk]         k distance       kernel     acq_ei  x_domain .already_evaluated
+INFO  [11:40:34.807] [bbotk]  3.121653 1.536202 epanechnikov 0.00100649 <list[3]>              FALSE
+INFO  [11:40:34.807] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:40:34.807] [bbotk]      0.08702757        0      0           10.151
+INFO  [11:40:34.807] [bbotk]                                 uhash
+INFO  [11:40:34.807] [bbotk]  ddd3de23-a034-4390-9e0c-5036714a4ff0
+INFO  [11:40:37.358] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:40:47.619] [bbotk] Result of batch 64:
+INFO  [11:40:47.632] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:40:47.632] [bbotk]  2.303952 1.300992   rank 0.002096153 <list[3]>              FALSE
+INFO  [11:40:47.632] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:40:47.632] [bbotk]      0.08850689        0      0            9.859
+INFO  [11:40:47.632] [bbotk]                                 uhash
+INFO  [11:40:47.632] [bbotk]  7ee2d33a-d500-4f89-8d63-b5e969d432bc
+INFO  [11:40:50.602] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:41:00.575] [bbotk] Result of batch 65:
+INFO  [11:41:00.619] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:41:00.619] [bbotk]  1.261944 1.277165   rank 0.001100769 <list[3]>              FALSE
+INFO  [11:41:00.619] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:41:00.619] [bbotk]       0.1082346        0      0            9.664
+INFO  [11:41:00.619] [bbotk]                                 uhash
+INFO  [11:41:00.619] [bbotk]  d86f1e55-82c4-4c15-846b-adab5537ed7b
+INFO  [11:41:03.665] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:41:14.623] [bbotk] Result of batch 66:
+INFO  [11:41:14.655] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:41:14.655] [bbotk]  3.197215 1.301546    cos 0.001003828 <list[3]>              FALSE
+INFO  [11:41:14.655] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:41:14.655] [bbotk]       0.0868233        0      0           10.645
+INFO  [11:41:14.655] [bbotk]                                 uhash
+INFO  [11:41:14.655] [bbotk]  f7312481-d1ab-4c1e-90cb-6dab37db9dd2
+INFO  [11:41:17.850] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:41:27.737] [bbotk] Result of batch 67:
+INFO  [11:41:27.754] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:41:27.754] [bbotk]  3.128443 3.815231    cos 0.001125528 <list[3]>              FALSE
+INFO  [11:41:27.754] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:41:27.754] [bbotk]      0.08699699        0      0            9.543
+INFO  [11:41:27.754] [bbotk]                                 uhash
+INFO  [11:41:27.754] [bbotk]  881ab7b6-e4f1-4b1e-8e42-0dcd1ce0b9f6
+INFO  [11:41:31.069] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:41:40.204] [bbotk] Result of batch 68:
+INFO  [11:41:40.237] [bbotk]         k distance kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:41:40.237] [bbotk]  2.661106 4.466369    cos 0.0009355505 <list[3]>              FALSE
+INFO  [11:41:40.237] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:41:40.237] [bbotk]      0.08770664        0      0            8.789
+INFO  [11:41:40.237] [bbotk]                                 uhash
+INFO  [11:41:40.237] [bbotk]  6ede6158-f830-4908-afb3-484aa1fe504a
+INFO  [11:41:43.374] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:41:52.166] [bbotk] Result of batch 69:
+INFO  [11:41:52.186] [bbotk]         k distance       kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:41:52.186] [bbotk]  2.622176 4.547195 epanechnikov 0.001650246 <list[3]>              FALSE
+INFO  [11:41:52.186] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:41:52.186] [bbotk]      0.08785138        0      0              8.5
+INFO  [11:41:52.186] [bbotk]                                 uhash
+INFO  [11:41:52.186] [bbotk]  e03f8ea4-d344-48ba-bd57-14567860350b
+INFO  [11:41:55.133] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:42:04.997] [bbotk] Result of batch 70:
+INFO  [11:42:05.045] [bbotk]         k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:42:05.045] [bbotk]  3.217881 4.533976 optimal 0.001138642 <list[3]>              FALSE
+INFO  [11:42:05.045] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:42:05.045] [bbotk]      0.08789884        0      0            9.512
+INFO  [11:42:05.045] [bbotk]                                 uhash
+INFO  [11:42:05.045] [bbotk]  90e75b86-a7eb-4179-ada2-03de580b9f5d
+INFO  [11:42:08.611] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:42:18.512] [bbotk] Result of batch 71:
+INFO  [11:42:18.555] [bbotk]         k distance    kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:42:18.555] [bbotk]  2.201147 1.256934 triweight 0.001626604 <list[3]>              FALSE
+INFO  [11:42:18.555] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:42:18.555] [bbotk]       0.1124162        0      0            9.587
+INFO  [11:42:18.555] [bbotk]                                 uhash
+INFO  [11:42:18.555] [bbotk]  414d3bc7-a590-4f19-a48c-76f49b0414c8
+INFO  [11:42:21.392] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:42:29.445] [bbotk] Result of batch 72:
+INFO  [11:42:29.474] [bbotk]        k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:42:29.474] [bbotk]  2.49661 4.623072    cos 0.001479246 <list[3]>              FALSE
+INFO  [11:42:29.474] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:42:29.474] [bbotk]      0.08841315        0      0            7.803
+INFO  [11:42:29.474] [bbotk]                                 uhash
+INFO  [11:42:29.474] [bbotk]  df85c2a2-5016-48c2-a7c6-c2e682f0129a
+INFO  [11:42:32.127] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:42:41.374] [bbotk] Result of batch 73:
+INFO  [11:42:41.407] [bbotk]         k distance  kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:42:41.407] [bbotk]  2.892992 4.554396 optimal 0.0009804051 <list[3]>              FALSE
+INFO  [11:42:41.407] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:42:41.407] [bbotk]      0.08786863        0      0            8.834
+INFO  [11:42:41.407] [bbotk]                                 uhash
+INFO  [11:42:41.407] [bbotk]  257e3286-e6a9-43ef-896f-2ce1d86da681
+INFO  [11:42:44.217] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:42:55.000] [bbotk] Result of batch 74:
+INFO  [11:42:55.040] [bbotk]         k distance   kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:42:55.040] [bbotk]  3.043181 1.540869 biweight 0.0008327876 <list[3]>              FALSE
+INFO  [11:42:55.040] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:42:55.040] [bbotk]      0.09101375        0      0           10.441
+INFO  [11:42:55.040] [bbotk]                                 uhash
+INFO  [11:42:55.040] [bbotk]  7781f36b-b224-4677-ba71-edbfad13c9a4
+INFO  [11:42:58.050] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:43:07.583] [bbotk] Result of batch 75:
+INFO  [11:43:07.595] [bbotk]         k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:43:07.595] [bbotk]  3.235429 3.805842 optimal 0.001462631 <list[3]>              FALSE
+INFO  [11:43:07.595] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:43:07.595] [bbotk]      0.08772197        0      0             9.26
+INFO  [11:43:07.595] [bbotk]                                 uhash
+INFO  [11:43:07.595] [bbotk]  5a4d0fe9-e609-4591-8635-2d37363a8094
+INFO  [11:43:10.342] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:43:20.222] [bbotk] Result of batch 76:
+INFO  [11:43:20.260] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:43:20.260] [bbotk]  3.145475 3.799715    cos 0.001746055 <list[3]>              FALSE
+INFO  [11:43:20.260] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:43:20.260] [bbotk]      0.08707797        0      0            9.542
+INFO  [11:43:20.260] [bbotk]                                 uhash
+INFO  [11:43:20.260] [bbotk]  91fbe379-26a0-4db9-8608-f1b9cb2c7e69
+INFO  [11:43:23.179] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:43:31.168] [bbotk] Result of batch 77:
+INFO  [11:43:31.213] [bbotk]         k distance  kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:43:31.213] [bbotk]  2.038357 4.548794 optimal 0.001396386 <list[3]>              FALSE
+INFO  [11:43:31.213] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:43:31.213] [bbotk]      0.09428229        0      0             7.71
+INFO  [11:43:31.213] [bbotk]                                 uhash
+INFO  [11:43:31.213] [bbotk]  8e5f6d0c-81a5-406d-b3ed-0c5d83cca584
+INFO  [11:43:34.027] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:43:43.725] [bbotk] Result of batch 78:
+INFO  [11:43:43.780] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:43:43.780] [bbotk]  3.279883 3.800871    cos 0.002235596 <list[3]>              FALSE
+INFO  [11:43:43.780] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:43:43.780] [bbotk]      0.08724184        0      0            9.406
+INFO  [11:43:43.780] [bbotk]                                 uhash
+INFO  [11:43:43.780] [bbotk]  5881a9de-526e-4bb0-840f-8eaa2ba1215f
+INFO  [11:43:46.638] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:43:57.479] [bbotk] Result of batch 79:
+INFO  [11:43:57.503] [bbotk]         k distance  kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:43:57.503] [bbotk]  2.956756 1.262255 optimal 0.0009460181 <list[3]>              FALSE
+INFO  [11:43:57.503] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:43:57.503] [bbotk]      0.08739879        0      0           10.536
+INFO  [11:43:57.503] [bbotk]                                 uhash
+INFO  [11:43:57.503] [bbotk]  9d8ee783-4aae-46a6-9dc7-80a5196634e7
+INFO  [11:44:00.463] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:44:10.424] [bbotk] Result of batch 80:
+INFO  [11:44:10.446] [bbotk]         k distance  kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:44:10.446] [bbotk]  3.260648 2.949184 optimal 0.0007790148 <list[3]>              FALSE
+INFO  [11:44:10.446] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:44:10.446] [bbotk]      0.08850624        0      0            9.559
+INFO  [11:44:10.446] [bbotk]                                 uhash
+INFO  [11:44:10.446] [bbotk]  a1be7151-b1c7-4cef-9a60-21adf4f02f0e
+INFO  [11:44:13.379] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:44:22.505] [bbotk] Result of batch 81:
+INFO  [11:44:22.527] [bbotk]         k distance   kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:44:22.527] [bbotk]  3.100849 4.550466 gaussian 0.001258545 <list[3]>              FALSE
+INFO  [11:44:22.527] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:44:22.527] [bbotk]      0.08977642        0      0            8.803
+INFO  [11:44:22.527] [bbotk]                                 uhash
+INFO  [11:44:22.527] [bbotk]  3208ea6e-df08-432a-8379-9ad9f1ddbf15
+INFO  [11:44:25.369] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:44:35.809] [bbotk] Result of batch 82:
+INFO  [11:44:35.829] [bbotk]         k distance   kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:44:35.829] [bbotk]  3.070347 1.301659 gaussian 0.001891151 <list[3]>              FALSE
+INFO  [11:44:35.829] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:44:35.829] [bbotk]      0.08721519        0      0           10.195
+INFO  [11:44:35.829] [bbotk]                                 uhash
+INFO  [11:44:35.829] [bbotk]  88e82943-f70a-4ae8-a5f3-b1db59f9ef34
+INFO  [11:44:38.608] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:44:50.067] [bbotk] Result of batch 83:
+INFO  [11:44:50.074] [bbotk]         k distance   kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:44:50.074] [bbotk]  3.238607  1.28456 gaussian 0.000403497 <list[3]>              FALSE
+INFO  [11:44:50.074] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:44:50.074] [bbotk]      0.08769562        0      0           11.208
+INFO  [11:44:50.074] [bbotk]                                 uhash
+INFO  [11:44:50.074] [bbotk]  1cbfcc31-3968-4f97-b957-e665d92ccec1
+INFO  [11:44:52.830] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:45:03.614] [bbotk] Result of batch 84:
+INFO  [11:45:03.644] [bbotk]         k distance kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:45:03.644] [bbotk]  2.923524 1.301099    inv 0.002974669 <list[3]>              FALSE
+INFO  [11:45:03.644] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:45:03.644] [bbotk]      0.08796932        0      0           10.524
+INFO  [11:45:03.644] [bbotk]                                 uhash
+INFO  [11:45:03.644] [bbotk]  031998e4-50e9-4da2-a3eb-69cf425ecc15
+INFO  [11:45:06.370] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:45:15.806] [bbotk] Result of batch 85:
+INFO  [11:45:15.856] [bbotk]         k distance       kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:45:15.856] [bbotk]  2.269095 1.261149 epanechnikov 0.001749047 <list[3]>              FALSE
+INFO  [11:45:15.856] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:45:15.856] [bbotk]      0.09207814        0      0            9.193
+INFO  [11:45:15.856] [bbotk]                                 uhash
+INFO  [11:45:15.856] [bbotk]  b23639ee-7254-4e35-add9-8980e1b4d8e4
+INFO  [11:45:18.811] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:45:28.540] [bbotk] Result of batch 86:
+INFO  [11:45:28.569] [bbotk]         k distance kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:45:28.569] [bbotk]  3.219674 4.339934    cos 0.0008152681 <list[3]>              FALSE
+INFO  [11:45:28.569] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:45:28.569] [bbotk]      0.08675129        0      0            9.419
+INFO  [11:45:28.569] [bbotk]                                 uhash
+INFO  [11:45:28.569] [bbotk]  6a249cdc-5c09-4bf0-b0ae-fa4a20562976
+INFO  [11:45:31.236] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:45:38.593] [bbotk] Result of batch 87:
+INFO  [11:45:38.605] [bbotk]         k distance   kernel       acq_ei  x_domain .already_evaluated
+INFO  [11:45:38.605] [bbotk]  1.278388 4.479451 biweight 0.0006897447 <list[3]>              FALSE
+INFO  [11:45:38.605] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:45:38.605] [bbotk]       0.1203258        0      0            7.139
+INFO  [11:45:38.605] [bbotk]                                 uhash
+INFO  [11:45:38.605] [bbotk]  70d78fa0-a576-419f-90f3-9e3cf2e84b6c
+INFO  [11:45:41.569] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:45:51.448] [bbotk] Result of batch 88:
+INFO  [11:45:51.455] [bbotk]        k distance      kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:45:51.455] [bbotk]  2.06711 1.230511 rectangular 0.001413154 <list[3]>              FALSE
+INFO  [11:45:51.455] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:45:51.455] [bbotk]      0.09012698        0      0            9.562
+INFO  [11:45:51.455] [bbotk]                                 uhash
+INFO  [11:45:51.455] [bbotk]  e3421f2f-462a-41eb-969f-883412f20b71
+INFO  [11:45:54.285] [bbotk] Evaluating 1 configuration(s)
+INFO  [11:46:03.255] [bbotk] Result of batch 89:
+INFO  [11:46:03.277] [bbotk]         k distance   kernel      acq_ei  x_domain .already_evaluated
+INFO  [11:46:03.277] [bbotk]  2.808613 4.552128 gaussian 0.001254292 <list[3]>              FALSE
+INFO  [11:46:03.277] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [11:46:03.277] [bbotk]       0.0890996        0      0            8.735
+INFO  [11:46:03.277] [bbotk]                                 uhash
+INFO  [11:46:03.277] [bbotk]  3408849b-fada-4bab-93f4-eed00a774353
+INFO  [11:46:03.485] [bbotk] Finished optimizing after 100 evaluation(s)
+INFO  [11:46:03.498] [bbotk] Result:
+INFO  [11:46:03.512] [bbotk]        k distance  kernel learner_param_vals  x_domain classif.bbrier
+INFO  [11:46:03.512] [bbotk]    <num>    <num>  <char>             <list>    <list>          <num>
+INFO  [11:46:03.512] [bbotk]  3.36262 1.305821 optimal          <list[3]> <list[3]>     0.08674458
+
+### [bt]: Job terminated successfully [batchtools job.id=3313]
+### [bt]: Calculation finished!

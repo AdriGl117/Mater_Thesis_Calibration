@@ -21,6 +21,7 @@ tasks = as_tasks(otasks)
 #List of the resamplings for each task
 resamplings = as_resamplings(otasks)
 
+######Calibration######
 #####Resampling#####
 # Resampling strategies for calibration
 rsmp_70 = rsmp("holdout", ratio = 0.7)
@@ -166,6 +167,124 @@ learners = learners[order(sapply(learners, function(x) x$id))]
 large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 
+######Union Calibration######
+#####Resampling#####
+# Resampling strategies for union calibration
+rsmp_cv5 = rsmp("cv", folds = 5)
+rsmp_cv5$id = "cv5"
+
+#####Base Learners#####
+# Support Vector Machine
+learner_svm = lrn("classif.svm", 
+                  kernel = "radial",
+                  gamma = 0.005,
+                  predict_type = "prob")
+
+# Random Forest
+learner_ranger = lrn("classif.ranger",
+                     num.trees = 983,
+                     replace = FALSE,
+                     sample.fraction = 0.703,
+                     respect.unordered.factors = "ignore",
+                     min.node.size = 1,
+                     predict_type = "prob")
+
+# k-Nearest Neighbors
+learner_kknn = lrn("classif.kknn",
+                   k = 30,
+                   predict_type = "prob")
+
+# Decision Tree
+learner_rpart = lrn("classif.rpart",
+                    maxdepth = 21,
+                    minsplit = 24,
+                    cp = 0,
+                    minbucket = 12,
+                    predict_type = "prob")
+
+# Generalized Linear Model
+learner_glmnet = lrn("classif.glmnet",
+                     alpha = 0.403,
+                     lambda = 0.004,
+                     predict_type = "prob")
+
+# XGBoost
+learner_xgboost = lrn("classif.xgboost",
+                      nrounds = 4168,
+                      max_depth = 13,
+                      eta = 0.018,
+                      colsample_bytree = 0.752,
+                      colsample_bylevel = 0.585,
+                      min_child_weight = 2.06,
+                      subsample = 0.839,
+                      lambda = 0.982,
+                      alpha = 1.113,
+                      booster = "gbtree",
+                      predict_type = "prob")
+
+# Single Layer Neural Network
+learner_nnet = lrn("classif.nnet",
+                   predict_type = "prob")
+
+# Naive Bayes
+learner_naive_bayes = lrn("classif.naive_bayes",
+                          predict_type = "prob")
+
+# Feature Encoding for learners that require it
+learner_svm = as_learner(po("encode", method = "one-hot") %>>% learner_svm)
+learner_svm$id = substr(learner_svm$id, 8, nchar(learner_svm$id))
+learner_glmnet = as_learner(po("encode", method = "one-hot") %>>% learner_glmnet)
+learner_glmnet$id = substr(learner_glmnet$id, 8, nchar(learner_glmnet$id))
+learner_xgboost = as_learner(po("encode", method = "one-hot") %>>% learner_xgboost)
+learner_xgboost$id = substr(learner_xgboost$id, 8, nchar(learner_xgboost$id))
+
+# List of all base learners
+base_learners = list(learner_svm, 
+                     learner_ranger, 
+                     learner_kknn, 
+                     learner_rpart, 
+                     learner_glmnet, 
+                     learner_xgboost, 
+                     learner_nnet, 
+                     learner_naive_bayes)
+
+# Remove base learner from enviroment
+for (learner in base_learners) {
+  remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id))))
+}
+
+calibrators = list("platt", "beta", "isotonic")
+
+# Empty list to store all learners
+learners = list()
+
+for (learner in base_learners) {
+  for (calibrator in calibrators) {
+    # Creates calibrated the learner
+    assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
+                  "_calibrated_", calibrator, "_union_cv5"),
+           as_learner(po("calibration_union", learner = learner, 
+                         method = calibrator, rsmp = rsmp_cv5)))
+    # Append learner to list
+    learners[[length(learners) + 1]] = get(paste0("learner_", 
+                                                  substr(learner$id, 9, nchar(learner$id)), 
+                                                  "_calibrated_", calibrator, "_union_cv5"))
+    # Set id of learner
+    learners[[length(learners)]]$id <- paste0(substr(learner$id, 
+                                                     9, nchar(learner$id)), " calibrated ", calibrator, " union")
+    # Remove learner from environment
+    remove(list = paste0("learner_", substr(learner$id, 9, nchar(learner$id)), 
+                         "_calibrated_", calibrator, "_union_cv5"))
+    
+  }
+}
+
+# Sort learners alphabetically
+learners = learners[order(sapply(learners, function(x) x$id))]
+
+union_design = benchmark_grid(tasks, learners, resamplings,
+                              paired = TRUE)
+
 reg = makeExperimentRegistry(
   file.dir = "./Experiments/Exp_Test",
   seed = seed,
@@ -174,6 +293,7 @@ reg = makeExperimentRegistry(
 )
 
 batchmark(large_design, reg = reg)
+batchmark(union_design, reg = reg)
 job_table = getJobTable(reg = reg)
 job_table = unwrap(job_table)
 job_table = job_table[,
@@ -194,78 +314,3 @@ chunks = data.table(
 resources = list(ncpus = 1, walltime = 3600, memory = 16000)
 submitJobs(ids = chunks, resources = resources, reg = reg)
 getStatus(reg = reg)
-# wait for all jobs to terminate
-waitForJobs(reg = reg)
-
-#####Evaluate the Benchmark#####
-bmr = reduceResultsBatchmark(reg = reg)
-measure <- msr("classif.ece")
-
-# Verschiedene Measures (ece, bbrier, auc, log loss)
-ece = bmr$aggregate(measure)
-ece = ece[, .(task_id, learner_id, classif.ece)]
-ece
-
-# Add coloumn Calibrator 
-ece[, Calibrator := ifelse(grepl("uncalibrated", learner_id), "uncalibrated",
-                           gsub(".*calibrated (.*) .*", "\\1", learner_id))]
-
-# Add coloumn Resampling
-ece[, Resampling := ifelse(grepl("holdout", learner_id), 
-                           gsub(".*holdout_(.*)", "\\1", learner_id), 
-                           ifelse(grepl("cv", learner_id), 
-                                  gsub(".*cv_(.*)", "\\1", learner_id),
-                                  "none"))]
-ece[,Resampling := ifelse(grepl("5", Resampling), "cv_5",
-                          ifelse(grepl("10", Resampling), "cv_10", 
-                          ifelse(grepl("70", Resampling), "holdout_70",
-                          ifelse(grepl("80", Resampling), "holdout_80",
-                          ifelse(grepl("90", Resampling), "holdout_90", "none"
-                                 )))))]
-
-# Add coloumn learner
-ece[, Learner := gsub("(.*) .* .*", "\\1", learner_id)]
-ece[, Learner := gsub("(.*) .*", "\\1", Learner)]
-
-ece = ece[, .(Learner, Calibrator, Resampling, task_id, classif.ece)]
-
-# Group by Calibrator
-ece_cal = ece[, .(Calibrator, classif.ece)]
-ece_cal = ece_cal[, .(classif.ece = mean(classif.ece)), by = Calibrator]
-ece_cal
-
-# Group by Resampling
-ece_res = ece[, .(Resampling, classif.ece)]
-ece_res = ece_res[, .(classif.ece = mean(classif.ece)), by = Resampling]
-ece_res
-
-# Group by Learner
-ece_learner = ece[, .(Learner, classif.ece)]
-ece_learner = ece_learner[, .(classif.ece = mean(classif.ece)), by = Learner]
-ece_learner
-
-# Group by resampling and calibrator
-ece_res_cal = ece[, .(Resampling, Calibrator, classif.ece)]
-ece_res_cal = ece_res_cal[, .(classif.ece = mean(classif.ece)), 
-                          by = .(Resampling, Calibrator)]
-ece_res_cal
-
-library(mlr3benchmark)
-bma = as_benchmark_aggr(bmr, measures = msr("classif.ece"))
-autoplot(bma)
-
-error_ids = findErrors(reg = reg)
-summarizeExperiments(error_ids, by = c("task_id", "learner_id"),
-                     reg = reg)
-
-#electricity
-#numerai28.6
-
-# job table without task_id = "electricity" and "numerai28.6"
-ids = job_table[task_id != "electricity" & task_id != "numerai28.6"]$job.id
-
-# jobtable only with task_id =  "numerai28.6" and learner id not include cv5 or cv3
-ids = job_table[task_id == "numerai28.6" & !grepl("xgboost", learner_id) & !grepl("svm", learner_id)]$job.id
-
-ids = job_table[task_id == "electricity" & grepl("cv5", learner_id)]$job.id
-

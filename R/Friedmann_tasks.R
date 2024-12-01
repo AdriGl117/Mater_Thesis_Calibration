@@ -58,13 +58,11 @@ friedman_tasks <- function(setting = "1", n = 10000, cor = 0, snr = 10){
         distribution = "unif")
 
   # Target
-  # ToDo: Über logit model binär transformieren
   if (setting == "1" | setting == "2"){
-    Y = 1/3 * sin(pi * X$x1 * X$x2) + 2/3 * (X$x3 - 0.5)^2 + 1/3 * X$x4 + 1/6 * X$x5 
+    Y = 1/6 * (sin(2*pi * X$x1 * X$x2)+1) + 2/3 * (X$x3 - 0.5)^2 + 1/3 * X$x4 + 1/6 * X$x5 
   }else{
-    Y = 1/3 * sin(pi * X$x2) + 2/3 * (X$x3 - 0.5)^2 + 1/3 * X$x4 + 1/6 * X$x5 
+    Y = 1/6 * (sin(2*pi* X$x2)+1) + 2/3 * (X$x3 - 0.5)^2 + 1/3 * X$x4 + 1/6 * X$x5 
   }
-  
   # Add noise to the target
   eps_var = var(Y) / snr
   eps = rnorm(length(Y), mean = 0, sd = sqrt(eps_var))

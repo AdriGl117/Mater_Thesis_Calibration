@@ -1,0 +1,680 @@
+### [bt]: This is batchtools v0.9.17
+### [bt]: Starting calculation of 1 jobs
+### [bt]: Setting working directory to '/content/drive/MyDrive/GitHub/Mater_Thesis_Calibration'
+Loading required package: mlr3verse
+Loading required package: mlr3
+
+Attaching package: ‘dplyr’
+
+The following object is masked from ‘package:MASS’:
+
+    select
+
+The following object is masked from ‘package:mlr3misc’:
+
+    cross_join
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+
+Attaching package: ‘batchtools’
+
+The following object is masked from ‘package:mlr3misc’:
+
+    chunk
+
+Loading required package: randomForest
+randomForest 4.7-1.2
+Type rfNews() to see new features/changes/bug fixes.
+
+Attaching package: ‘randomForest’
+
+The following object is masked from ‘package:dplyr’:
+
+    combine
+
+The following object is masked from ‘package:ggplot2’:
+
+    margin
+
+Loading required package: ranger
+
+Attaching package: ‘ranger’
+
+The following object is masked from ‘package:randomForest’:
+
+    importance
+
+Loading required package: palmerpenguins
+ece.R :
+Friedmann_tasks.R :
+Functions.R :
+ici.R :
+mse_feature_effects.R :
+PipeOpCalibration_TuningExperiment.R :
+PipeOpCalibration.R :
+PipeOpCalibrationUnion.R :
+### [bt]: Memory measurement disabled
+### [bt]: Starting job [batchtools job.id=1462]
+### [bt]: Generating problem instance for problem 'a6b2cabd9f84c607' ...
+### [bt]: Applying algorithm 'run_learner' on problem 'a6b2cabd9f84c607' for job 1462 (seed = 1585) ...
+INFO  [17:48:14.922] [mlr3] Applying learner 'glmnet TbC platt' on task 'phoneme' (iter 2/10)
+INFO  [17:48:27.844] [bbotk] Starting to optimize 2 parameter(s) with '<OptimizerMbo>' and '<TerminatorEvals> [n_evals=100, k=0]'
+INFO  [17:48:44.490] [bbotk] Evaluating 8 configuration(s)
+INFO  [17:48:50.691] [bbotk] Result of batch 1:
+INFO  [17:48:50.722] [bbotk]       alpha          s classif.bbrier warnings errors runtime_learners
+INFO  [17:48:50.722] [bbotk]  0.06437878 -3.1646738      0.1586783        0      0            1.572
+INFO  [17:48:50.722] [bbotk]  0.56437880  6.0456660      0.2074049        0      0            0.175
+INFO  [17:48:50.722] [bbotk]  0.31437877  1.4404958      0.2074049        0      0            0.207
+INFO  [17:48:50.722] [bbotk]  0.81437880 -7.7698443      0.1584674        0      0            0.170
+INFO  [17:48:50.722] [bbotk]  0.18937878  8.3482511      0.2074049        0      0            0.202
+INFO  [17:48:50.722] [bbotk]  0.68937880 -0.8620887      0.2074049        0      0            0.252
+INFO  [17:48:50.722] [bbotk]  0.43937877 -5.4672592      0.1583669        0      0            0.168
+INFO  [17:48:50.722] [bbotk]  0.93937880  3.7430809      0.2074049        0      0            0.177
+INFO  [17:48:50.722] [bbotk]                                 uhash
+INFO  [17:48:50.722] [bbotk]  3bd6f42d-5ddd-4771-a91c-cc4637a86378
+INFO  [17:48:50.722] [bbotk]  907bc2fc-0e5d-4a63-80e7-7df4ecdd8fef
+INFO  [17:48:50.722] [bbotk]  1ae3a45b-84f9-433c-be94-068c66ace3b8
+INFO  [17:48:50.722] [bbotk]  bc9765be-db13-49e0-9e05-a98ee2328243
+INFO  [17:48:50.722] [bbotk]  c2beacda-2418-4099-9f83-ba0c0bd2ad1f
+INFO  [17:48:50.722] [bbotk]  e26741ee-ac22-4f26-abe0-d5929849ba6e
+INFO  [17:48:50.722] [bbotk]  1664c33f-23a1-4b36-a2af-a11622940baa
+INFO  [17:48:50.722] [bbotk]  5d820e94-27c0-49a2-9c99-2ef48f715a0c
+INFO  [17:48:54.670] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:48:55.311] [bbotk] Result of batch 2:
+INFO  [17:48:55.408] [bbotk]         alpha         s     acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:48:55.408] [bbotk]  0.0008295302 -7.672886 0.01974043 <list[2]>              FALSE       0.158201
+INFO  [17:48:55.408] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:48:55.408] [bbotk]         0      0            0.367 98229809-419e-4290-832b-313fffd301da
+INFO  [17:48:57.525] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:48:58.199] [bbotk] Result of batch 3:
+INFO  [17:48:58.231] [bbotk]       alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:48:58.231] [bbotk]  0.01233654 -4.958452 0.006931865 <list[2]>              FALSE      0.1583179
+INFO  [17:48:58.231] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:48:58.231] [bbotk]         0      0            0.265 f8e25314-24f5-4842-91c4-6c3db4475140
+INFO  [17:49:00.502] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:01.238] [bbotk] Result of batch 4:
+INFO  [17:49:01.327] [bbotk]        alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:01.327] [bbotk]  0.009786148 -3.864147 0.002608933 <list[2]>              FALSE      0.1582035
+INFO  [17:49:01.327] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:01.327] [bbotk]         0      0            0.409 ab9daa85-d1dc-44a6-96a8-442cffbdc76f
+INFO  [17:49:03.674] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:04.339] [bbotk] Result of batch 5:
+INFO  [17:49:04.419] [bbotk]      alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:04.419] [bbotk]  0.3642397 -8.058709 0.006172816 <list[2]>              FALSE      0.1584608
+INFO  [17:49:04.419] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:04.419] [bbotk]         0      0            0.288 36bca7d2-3721-49a6-816d-f84233c662c7
+INFO  [17:49:06.377] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:07.417] [bbotk] Result of batch 6:
+INFO  [17:49:07.441] [bbotk]      alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:07.441] [bbotk]  0.2778781 -6.701825 0.002644477 <list[2]>              FALSE      0.1584571
+INFO  [17:49:07.441] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:07.441] [bbotk]         0      0            0.407 d66d04bf-8fd1-4a09-85ca-4bbb864fafbf
+INFO  [17:49:09.722] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:10.393] [bbotk] Result of batch 7:
+INFO  [17:49:10.463] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:10.463] [bbotk]  0.9642848 -9.198404 0.0009582895 <list[2]>              FALSE      0.1584708
+INFO  [17:49:10.463] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:10.463] [bbotk]         0      0             0.29 7e9d91a8-bd5b-4aed-b6a7-f85fe8985082
+INFO  [17:49:13.359] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:14.350] [bbotk] Result of batch 8:
+INFO  [17:49:14.367] [bbotk]       alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:14.367] [bbotk]  0.06474577 -9.208081 0.001328151 <list[2]>              FALSE      0.1584532
+INFO  [17:49:14.367] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:14.367] [bbotk]         0      0            0.525 ab948f52-67c0-4fdd-8890-931973a766dc
+INFO  [17:49:17.439] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:17.905] [bbotk] Result of batch 9:
+INFO  [17:49:17.950] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:17.950] [bbotk]  0.9956472 -6.179544 0.0007351161 <list[2]>              FALSE      0.1584293
+INFO  [17:49:17.950] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:17.950] [bbotk]         0      0            0.195 3e332a9e-b7ff-4f98-a9db-1a502bfb900f
+INFO  [17:49:20.148] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:20.960] [bbotk] Result of batch 10:
+INFO  [17:49:20.978] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:20.978] [bbotk]  0.008274558 -5.853639 0.0007071407 <list[2]>              FALSE      0.1584398
+INFO  [17:49:20.978] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:20.978] [bbotk]         0      0            0.276 f89980d2-7014-4cea-9657-51f67ee2f130
+INFO  [17:49:23.531] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:24.583] [bbotk] Result of batch 11:
+INFO  [17:49:24.607] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:24.607] [bbotk]  0.002927877 -8.577227 0.0004154493 <list[2]>              FALSE      0.1583671
+INFO  [17:49:24.607] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:24.607] [bbotk]         0      0            0.496 7e03f4d7-cde1-402a-8755-78e5eed2c880
+INFO  [17:49:26.907] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:27.712] [bbotk] Result of batch 12:
+INFO  [17:49:27.742] [bbotk]        alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:27.742] [bbotk]  0.002094008 -3.505879 0.000433408 <list[2]>              FALSE      0.1582926
+INFO  [17:49:27.742] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:27.742] [bbotk]         0      0            0.313 b74b4e47-292d-4ac6-900c-e6c3509e78d2
+INFO  [17:49:30.223] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:31.083] [bbotk] Result of batch 13:
+INFO  [17:49:31.098] [bbotk]    alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:31.098] [bbotk]  0.99835 -7.959943 0.0007923632 <list[2]>              FALSE      0.1584691
+INFO  [17:49:31.098] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:31.098] [bbotk]         0      0            0.351 cf9b0eb7-1de3-4451-aca6-ee406e22d503
+INFO  [17:49:32.988] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:34.042] [bbotk] Result of batch 14:
+INFO  [17:49:34.099] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:34.099] [bbotk]  0.9937155 -4.672838 0.0003010479 <list[2]>              FALSE      0.1583178
+INFO  [17:49:34.099] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:34.099] [bbotk]         0      0            0.577 2f08711c-58f6-47e2-984e-ddbbf9ff796e
+INFO  [17:49:36.230] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:37.094] [bbotk] Result of batch 15:
+INFO  [17:49:37.169] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:37.169] [bbotk]  0.2871016 -4.382355 0.0004960007 <list[2]>              FALSE      0.1582377
+INFO  [17:49:37.169] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:37.169] [bbotk]         0      0            0.239 be24605a-5388-457d-879f-3922affb21b4
+INFO  [17:49:39.760] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:40.641] [bbotk] Result of batch 16:
+INFO  [17:49:40.683] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:40.683] [bbotk]  0.9902706 -5.215303 0.0003353309 <list[2]>              FALSE      0.1583151
+INFO  [17:49:40.683] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:40.683] [bbotk]         0      0            0.322 14df5536-1cac-449b-8904-7ffd2b7a526a
+INFO  [17:49:43.245] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:43.917] [bbotk] Result of batch 17:
+INFO  [17:49:43.945] [bbotk]     alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:43.945] [bbotk]  0.716283 -4.857658 0.0001854797 <list[2]>              FALSE      0.1582838
+INFO  [17:49:43.945] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:43.945] [bbotk]         0      0            0.241 7d967f5b-a560-42b4-a102-71e833b87092
+INFO  [17:49:46.603] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:47.223] [bbotk] Result of batch 18:
+INFO  [17:49:47.252] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:47.252] [bbotk]  0.5879473 -8.965484 0.0001561967 <list[2]>              FALSE      0.1584636
+INFO  [17:49:47.252] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:47.252] [bbotk]         0      0            0.203 202a3178-eb38-478c-b9c5-4e22ad459792
+INFO  [17:49:50.348] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:51.095] [bbotk] Result of batch 19:
+INFO  [17:49:51.116] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:51.116] [bbotk]  0.9937813 -7.129531 0.0001427125 <list[2]>              FALSE      0.1584688
+INFO  [17:49:51.116] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:51.116] [bbotk]         0      0            0.204 9bd3897f-7ccf-4e0d-8e6a-399642ddb47e
+INFO  [17:49:53.754] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:54.397] [bbotk] Result of batch 20:
+INFO  [17:49:54.435] [bbotk]     alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:54.435] [bbotk]  0.174802 -4.636409 0.0001212776 <list[2]>              FALSE      0.1582575
+INFO  [17:49:54.435] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:54.435] [bbotk]         0      0            0.273 c262873d-0b44-4ab1-b8a9-27c3d3c6daf1
+INFO  [17:49:56.995] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:49:57.951] [bbotk] Result of batch 21:
+INFO  [17:49:57.993] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:49:57.993] [bbotk]  0.2069207 -3.833802 0.0001193947 <list[2]>              FALSE      0.1582937
+INFO  [17:49:57.993] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:49:57.993] [bbotk]         0      0              0.5 13b31417-d37b-4d40-a4a3-47e51cc9032e
+INFO  [17:50:00.868] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:01.661] [bbotk] Result of batch 22:
+INFO  [17:50:01.686] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:01.686] [bbotk]  0.01560871 -7.252587 7.753812e-05 <list[2]>              FALSE      0.1584493
+INFO  [17:50:01.686] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:01.686] [bbotk]         0      0             0.28 e8ebe1e0-e97d-4bb9-bf49-d0d4108f923e
+INFO  [17:50:04.719] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:05.337] [bbotk] Result of batch 23:
+INFO  [17:50:05.377] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:05.377] [bbotk]  0.003409743 -8.052652 6.491646e-05 <list[2]>              FALSE      0.1583887
+INFO  [17:50:05.377] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:05.377] [bbotk]         0      0            0.331 a01655e8-1731-4c6d-8f3c-4590f0d0beda
+INFO  [17:50:08.710] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:09.448] [bbotk] Result of batch 24:
+INFO  [17:50:09.494] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:09.494] [bbotk]  0.1678778 -7.676014 6.940722e-05 <list[2]>              FALSE      0.1584547
+INFO  [17:50:09.494] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:09.494] [bbotk]         0      0            0.328 bcf176ef-0a02-4562-8739-8d20434d7551
+WARN  [17:50:10.010] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:50:12.654] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:13.202] [bbotk] Result of batch 25:
+INFO  [17:50:13.218] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:13.218] [bbotk]  0.4015918 -4.835291 6.854372e-05 <list[2]>              FALSE       0.158279
+INFO  [17:50:13.218] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:13.218] [bbotk]         0      0            0.206 4396a55d-8794-42f3-99c1-5662960fb56e
+INFO  [17:50:15.993] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:17.036] [bbotk] Result of batch 26:
+INFO  [17:50:17.065] [bbotk]      alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:17.065] [bbotk]  0.1258764 -4.115662 5.40923e-05 <list[2]>              FALSE      0.1582157
+INFO  [17:50:17.065] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:17.065] [bbotk]         0      0            0.606 a73e28cd-f2d5-4abd-9ab5-d878d2a41f15
+INFO  [17:50:19.959] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:20.562] [bbotk] Result of batch 27:
+INFO  [17:50:20.592] [bbotk]     alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:20.592] [bbotk]  0.980635 -8.733365 3.839875e-05 <list[2]>              FALSE      0.1584682
+INFO  [17:50:20.592] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:20.592] [bbotk]         0      0            0.271 ccb6c762-bde7-4a3e-8b23-21d5e4049364
+WARN  [17:50:20.879] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:50:22.997] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:23.536] [bbotk] Result of batch 28:
+INFO  [17:50:23.568] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:23.568] [bbotk]  0.5729792 -6.488713 3.090337e-05 <list[2]>              FALSE      0.1584638
+INFO  [17:50:23.568] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:23.568] [bbotk]         0      0            0.235 2c76c640-e982-4abd-8571-923c4941803d
+WARN  [17:50:23.925] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:50:25.775] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:26.284] [bbotk] Result of batch 29:
+INFO  [17:50:26.313] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:26.313] [bbotk]  0.1042392 -3.935012 2.849492e-05 <list[2]>              FALSE       0.158224
+INFO  [17:50:26.313] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:26.313] [bbotk]         0      0            0.243 28656899-d089-41ae-9dae-8cdae396b9e7
+INFO  [17:50:28.703] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:29.336] [bbotk] Result of batch 30:
+INFO  [17:50:29.369] [bbotk]     alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:29.369] [bbotk]  0.362343 -9.192662 2.094222e-05 <list[2]>              FALSE      0.1584605
+INFO  [17:50:29.369] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:29.369] [bbotk]         0      0            0.216 27b42474-9e06-40ec-ad53-638d7c8bbceb
+INFO  [17:50:31.970] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:32.956] [bbotk] Result of batch 31:
+INFO  [17:50:33.004] [bbotk]        alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:33.004] [bbotk]  0.001891474 -4.285023 2.21937e-05 <list[2]>              FALSE      0.1582143
+INFO  [17:50:33.004] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:33.004] [bbotk]         0      0            0.355 e365cf70-3714-43c1-98bd-c7372f1a9d58
+INFO  [17:50:36.002] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:36.770] [bbotk] Result of batch 32:
+INFO  [17:50:36.801] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:36.801] [bbotk]  0.001606366 -9.036201 2.633414e-05 <list[2]>              FALSE      0.1582689
+INFO  [17:50:36.801] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:36.801] [bbotk]         0      0            0.298 4ff057bb-4d2c-45f4-a603-bdf64f3483ab
+INFO  [17:50:39.186] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:40.004] [bbotk] Result of batch 33:
+INFO  [17:50:40.077] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:40.077] [bbotk]  0.8770807 -4.847793 1.497479e-05 <list[2]>              FALSE      0.1582912
+INFO  [17:50:40.077] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:40.077] [bbotk]         0      0             0.43 ae86f34f-23b6-4266-b24d-acd5f620dc43
+INFO  [17:50:42.584] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:43.637] [bbotk] Result of batch 34:
+INFO  [17:50:43.738] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:43.738] [bbotk]  0.001437286 -6.624078 1.247986e-05 <list[2]>              FALSE      0.1582504
+INFO  [17:50:43.738] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:43.738] [bbotk]         0      0            0.548 a2807aef-6609-450e-ad0e-5d1fc8983008
+INFO  [17:50:45.993] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:46.885] [bbotk] Result of batch 35:
+INFO  [17:50:46.939] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:46.939] [bbotk]  0.0083626 -4.010007 1.238912e-05 <list[2]>              FALSE       0.158197
+INFO  [17:50:46.939] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:46.939] [bbotk]         0      0            0.483 fa44fb9d-02d3-4d24-9b76-a8c93b01f4d3
+INFO  [17:50:49.410] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:50.560] [bbotk] Result of batch 36:
+INFO  [17:50:50.599] [bbotk]      alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:50.599] [bbotk]  0.5566778 -4.514901 9.93017e-06 <list[2]>              FALSE      0.1582676
+INFO  [17:50:50.599] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:50.599] [bbotk]         0      0            0.638 0b3a4e4c-4061-41e0-9e18-37885e529fc4
+INFO  [17:50:53.195] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:54.262] [bbotk] Result of batch 37:
+INFO  [17:50:54.353] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:54.353] [bbotk]  0.9754998 -6.667891 9.287533e-06 <list[2]>              FALSE      0.1584679
+INFO  [17:50:54.353] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:54.353] [bbotk]         0      0            0.513 9f1711cc-d60f-4792-8f6f-a38a7c47a05c
+INFO  [17:50:56.700] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:50:58.012] [bbotk] Result of batch 38:
+INFO  [17:50:58.095] [bbotk]      alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:50:58.095] [bbotk]  0.8875115 -4.092797 9.00805e-06 <list[2]>              FALSE      0.1586019
+INFO  [17:50:58.095] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:50:58.095] [bbotk]         0      0            0.794 ca012a45-7d4f-4f66-96e1-ad931b2d7459
+INFO  [17:51:00.257] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:00.764] [bbotk] Result of batch 39:
+INFO  [17:51:00.780] [bbotk]      alpha       s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:00.780] [bbotk]  0.4880595 -7.6587 7.920437e-06 <list[2]>              FALSE      0.1584651
+INFO  [17:51:00.780] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:00.780] [bbotk]         0      0            0.247 74b8253f-620d-44f1-a037-d187fa4d23b1
+WARN  [17:51:01.047] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:51:03.152] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:03.608] [bbotk] Result of batch 40:
+INFO  [17:51:03.629] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:03.629] [bbotk]  0.01285268 -6.289197 1.197445e-05 <list[2]>              FALSE      0.1584487
+INFO  [17:51:03.629] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:03.629] [bbotk]         0      0            0.231 d1d5f733-12f0-4a28-9fde-fb530e06cf62
+WARN  [17:51:03.870] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:51:06.025] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:06.581] [bbotk] Result of batch 41:
+INFO  [17:51:06.664] [bbotk]     alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:06.664] [bbotk]  0.936167 -5.711123 2.839391e-05 <list[2]>              FALSE      0.1583766
+INFO  [17:51:06.664] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:06.664] [bbotk]         0      0            0.252 6d33dac3-c9cd-4f4d-81a2-f87d0a02b567
+INFO  [17:51:10.003] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:10.544] [bbotk] Result of batch 42:
+INFO  [17:51:10.592] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:10.592] [bbotk]  0.2846195 -8.879464 1.711318e-06 <list[2]>              FALSE      0.1584589
+INFO  [17:51:10.592] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:10.592] [bbotk]         0      0            0.202 aa0a9412-3dbd-4d58-bd33-a5acc2833b8e
+WARN  [17:51:11.109] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:51:13.318] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:13.906] [bbotk] Result of batch 43:
+INFO  [17:51:13.924] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:13.924] [bbotk]  0.004806293 -4.570312 1.852403e-06 <list[2]>              FALSE      0.1582542
+INFO  [17:51:13.924] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:13.924] [bbotk]         0      0            0.251 c559dedd-abe1-4ba0-b4a8-e53925f50808
+INFO  [17:51:16.592] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:17.750] [bbotk] Result of batch 44:
+INFO  [17:51:17.770] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:17.770] [bbotk]  0.002578967 -3.920239 2.579414e-06 <list[2]>              FALSE      0.1581977
+INFO  [17:51:17.770] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:17.770] [bbotk]         0      0            0.538 d8030ddd-de54-42d0-a499-3d223959dcf8
+INFO  [17:51:20.735] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:21.232] [bbotk] Result of batch 45:
+INFO  [17:51:21.263] [bbotk]         alpha         s       acq_ei  x_domain .already_evaluated
+INFO  [17:51:21.263] [bbotk]  0.0003281471 -7.817115 2.044821e-06 <list[2]>              FALSE
+INFO  [17:51:21.263] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [17:51:21.263] [bbotk]       0.1582009        0      0            0.256
+INFO  [17:51:21.263] [bbotk]                                 uhash
+INFO  [17:51:21.263] [bbotk]  1994822b-6862-4ead-8440-ba9d3ab5b2bc
+INFO  [17:51:23.798] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:24.791] [bbotk] Result of batch 46:
+INFO  [17:51:24.876] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:24.876] [bbotk]  0.002867084 -6.769399 1.795129e-06 <list[2]>              FALSE       0.158364
+INFO  [17:51:24.876] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:24.876] [bbotk]         0      0            0.452 e5c0bc70-70ba-45e7-a8b3-90fe629dbe6c
+INFO  [17:51:26.998] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:27.917] [bbotk] Result of batch 47:
+INFO  [17:51:27.996] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:27.996] [bbotk]  0.04286152 -4.151839 8.636162e-07 <list[2]>              FALSE      0.1582052
+INFO  [17:51:27.996] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:27.996] [bbotk]         0      0            0.605 99c58e5c-939a-4519-823b-b04a9c2f290c
+INFO  [17:51:30.421] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:31.589] [bbotk] Result of batch 48:
+INFO  [17:51:31.597] [bbotk]         alpha         s       acq_ei  x_domain .already_evaluated
+INFO  [17:51:31.597] [bbotk]  0.0005861502 -3.985207 1.703087e-06 <list[2]>              FALSE
+INFO  [17:51:31.597] [bbotk]  classif.bbrier warnings errors runtime_learners
+INFO  [17:51:31.597] [bbotk]       0.1581956        0      0            0.643
+INFO  [17:51:31.597] [bbotk]                                 uhash
+INFO  [17:51:31.597] [bbotk]  0cedf671-4dbd-4dd0-9e89-8760932c6ca4
+WARN  [17:51:32.108] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:51:34.487] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:35.240] [bbotk] Result of batch 49:
+INFO  [17:51:35.275] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:35.275] [bbotk]  0.001769882 -5.393875 9.973382e-07 <list[2]>              FALSE      0.1582853
+INFO  [17:51:35.275] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:35.275] [bbotk]         0      0            0.365 cf6189a7-56c3-47a2-9a14-18f77c4982fb
+INFO  [17:51:37.755] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:38.444] [bbotk] Result of batch 50:
+INFO  [17:51:38.498] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:38.498] [bbotk]  0.7954148 -4.607804 4.385796e-07 <list[2]>              FALSE      0.1582945
+INFO  [17:51:38.498] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:38.498] [bbotk]         0      0            0.329 670f00b5-3a58-43e2-9ef8-8308a17ff54e
+INFO  [17:51:41.070] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:41.754] [bbotk] Result of batch 51:
+INFO  [17:51:41.781] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:41.781] [bbotk]  0.01705743 -4.053957 2.382293e-07 <list[2]>              FALSE      0.1581988
+INFO  [17:51:41.781] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:41.781] [bbotk]         0      0            0.439 e6ff6547-8abe-4c69-a85e-ec23e024974b
+INFO  [17:51:44.393] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:45.132] [bbotk] Result of batch 52:
+INFO  [17:51:45.170] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:45.170] [bbotk]  0.006375721 -4.099471 5.179304e-07 <list[2]>              FALSE      0.1581991
+INFO  [17:51:45.170] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:45.170] [bbotk]         0      0            0.379 f13de3f9-56ce-48d3-9e13-f06e9fc0eabb
+WARN  [17:51:45.635] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:51:48.346] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:48.991] [bbotk] Result of batch 53:
+INFO  [17:51:49.071] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:49.071] [bbotk]  0.001527418 -3.959616 5.013646e-07 <list[2]>              FALSE      0.1581962
+INFO  [17:51:49.071] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:49.071] [bbotk]         0      0            0.302 4b2b4db2-e495-40f9-b83a-f230b7cde493
+INFO  [17:51:51.273] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:51.938] [bbotk] Result of batch 54:
+INFO  [17:51:52.004] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:52.004] [bbotk]  0.001359858 -4.072015 2.519574e-07 <list[2]>              FALSE      0.1581973
+INFO  [17:51:52.004] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:52.004] [bbotk]         0      0              0.3 7634a202-f39b-48fa-9bae-8b60fa7a26e0
+INFO  [17:51:54.596] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:55.333] [bbotk] Result of batch 55:
+INFO  [17:51:55.354] [bbotk]       alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:55.354] [bbotk]  0.00230265 -3.985026 4.85487e-07 <list[2]>              FALSE       0.158196
+INFO  [17:51:55.354] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:55.354] [bbotk]         0      0            0.349 51d01b2c-4286-469a-9dfe-c861f454f92b
+INFO  [17:51:58.369] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:51:58.996] [bbotk] Result of batch 56:
+INFO  [17:51:59.021] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:51:59.021] [bbotk]  0.4041983 -4.204288 1.241808e-07 <list[2]>              FALSE      0.1582714
+INFO  [17:51:59.021] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:51:59.021] [bbotk]         0      0            0.297 d3d02dc6-386f-4148-81fb-3be48c1a6334
+WARN  [17:51:59.619] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:01.618] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:02.264] [bbotk] Result of batch 57:
+INFO  [17:52:02.283] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:02.283] [bbotk]  0.001419031 -7.721337 3.895702e-06 <list[2]>              FALSE      0.1582483
+INFO  [17:52:02.283] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:02.283] [bbotk]         0      0            0.329 b112fa2e-7f19-4a7d-a386-f7aeff77956e
+INFO  [17:52:05.538] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:05.904] [bbotk] Result of batch 58:
+INFO  [17:52:05.925] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:05.925] [bbotk]  0.02659847 -4.087908 4.253502e-06 <list[2]>              FALSE      0.1582009
+INFO  [17:52:05.925] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:05.925] [bbotk]         0      0             0.16 879668f3-b5b9-48e5-97cf-4430e787b750
+INFO  [17:52:08.637] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:09.476] [bbotk] Result of batch 59:
+INFO  [17:52:09.508] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:09.508] [bbotk]  0.006134692 -4.005471 5.787293e-06 <list[2]>              FALSE      0.1581966
+INFO  [17:52:09.508] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:09.508] [bbotk]         0      0             0.49 194bdc8b-8190-4b3e-ada4-f9396ca37343
+INFO  [17:52:12.121] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:13.104] [bbotk] Result of batch 60:
+INFO  [17:52:13.157] [bbotk]        alpha        s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:13.157] [bbotk]  0.008653176 -7.58275 9.386095e-05 <list[2]>              FALSE      0.1584506
+INFO  [17:52:13.157] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:13.157] [bbotk]         0      0            0.528 94fee953-06f1-4ea0-b209-f27b4c1e28f9
+WARN  [17:52:13.898] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:15.867] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:16.914] [bbotk] Result of batch 61:
+INFO  [17:52:16.959] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:16.959] [bbotk]  0.001570855 -3.954958 1.291925e-05 <list[2]>              FALSE      0.1581963
+INFO  [17:52:16.959] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:16.959] [bbotk]         0      0            0.655 3530c0ae-058c-4dcb-a5da-6d47b0b15294
+WARN  [17:52:17.330] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:19.720] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:20.958] [bbotk] Result of batch 62:
+INFO  [17:52:21.008] [bbotk]     alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:21.008] [bbotk]  0.207866 -9.178835 0.000879323 <list[2]>              FALSE      0.1584554
+INFO  [17:52:21.008] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:21.008] [bbotk]         0      0            0.793 c077d0af-03c8-489b-bab5-72789efca856
+WARN  [17:52:21.837] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:24.063] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:24.927] [bbotk] Result of batch 63:
+INFO  [17:52:24.948] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:24.948] [bbotk]  0.01383833 -3.964479 1.136925e-05 <list[2]>              FALSE      0.1581985
+INFO  [17:52:24.948] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:24.948] [bbotk]         0      0            0.496 8395e2db-677f-4d5a-aacb-d4c6922706a4
+INFO  [17:52:27.943] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:28.903] [bbotk] Result of batch 64:
+INFO  [17:52:28.946] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:28.946] [bbotk]  0.9934576 -3.178779 0.0001775074 <list[2]>              FALSE      0.1633761
+INFO  [17:52:28.946] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:28.946] [bbotk]         0      0            0.485 e329db31-f02a-494a-b835-4e959294c3f9
+WARN  [17:52:29.433] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:31.362] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:32.040] [bbotk] Result of batch 65:
+INFO  [17:52:32.071] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:32.071] [bbotk]  0.1895134 -4.154222 1.239843e-05 <list[2]>              FALSE      0.1582259
+INFO  [17:52:32.071] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:32.071] [bbotk]         0      0            0.322 73e4c8f6-2534-4bb7-a597-4b628cdc68fd
+WARN  [17:52:32.922] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:35.137] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:35.888] [bbotk] Result of batch 66:
+INFO  [17:52:35.901] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:35.901] [bbotk]  0.01879189 -3.950178 1.105171e-05 <list[2]>              FALSE         0.1582
+INFO  [17:52:35.901] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:35.901] [bbotk]         0      0            0.343 d5acdf53-214e-4f09-850b-0b049e485e6f
+WARN  [17:52:36.267] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:52:38.419] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:39.115] [bbotk] Result of batch 67:
+INFO  [17:52:39.145] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:39.145] [bbotk]  0.003791603 -3.993378 1.221788e-05 <list[2]>              FALSE      0.1581962
+INFO  [17:52:39.145] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:39.145] [bbotk]         0      0             0.43 319b9f22-71d3-4fcf-8550-53f6958aec8e
+INFO  [17:52:42.204] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:43.043] [bbotk] Result of batch 68:
+INFO  [17:52:43.076] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:43.076] [bbotk]  0.005808874 -3.940327 1.087724e-05 <list[2]>              FALSE      0.1581977
+INFO  [17:52:43.076] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:43.076] [bbotk]         0      0            0.522 ce215df0-0aa2-4234-b5b6-7310391ec245
+WARN  [17:52:43.480] [mlr3] train: 'starting.values' which are outside of the bounds have been provided.
+           Continuing, but unexpected behavior can occur with 'boundary.enforcement!=0'
+INFO  [17:52:46.004] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:46.631] [bbotk] Result of batch 69:
+INFO  [17:52:46.656] [bbotk]      alpha        s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:46.656] [bbotk]  0.9648723 9.163634 4.053293e-12 <list[2]>              FALSE      0.2074049
+INFO  [17:52:46.656] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:46.656] [bbotk]         0      0            0.302 49718614-5235-444b-bdcf-eb687e90024f
+INFO  [17:52:49.942] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:50.694] [bbotk] Result of batch 70:
+INFO  [17:52:50.714] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:50.714] [bbotk]  0.009776889 -3.946408 9.939489e-06 <list[2]>              FALSE      0.1581982
+INFO  [17:52:50.714] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:50.714] [bbotk]         0      0            0.438 24f8a21c-4b3f-4c57-8a77-ec80f82dab0a
+INFO  [17:52:52.968] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:53.698] [bbotk] Result of batch 71:
+INFO  [17:52:53.712] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:53.712] [bbotk]  0.003504946 -4.059213 9.604616e-06 <list[2]>              FALSE      0.1581971
+INFO  [17:52:53.712] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:53.712] [bbotk]         0      0            0.338 65438edd-60df-4b59-bb71-6dcd0d74b61a
+INFO  [17:52:56.430] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:52:57.240] [bbotk] Result of batch 72:
+INFO  [17:52:57.330] [bbotk]        alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:52:57.330] [bbotk]  0.008685242 -3.909867 8.13589e-06 <list[2]>              FALSE      0.1581997
+INFO  [17:52:57.330] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:52:57.330] [bbotk]         0      0            0.393 b82ed883-be9b-48f0-bb46-a797c1eb7060
+INFO  [17:53:00.191] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:01.529] [bbotk] Result of batch 73:
+INFO  [17:53:01.545] [bbotk]       alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:01.545] [bbotk]  0.01084419 -4.031385 8.340655e-06 <list[2]>              FALSE      0.1581975
+INFO  [17:53:01.545] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:01.545] [bbotk]         0      0            0.935 eb3347dd-1c5a-4507-aba2-2c378a4bf952
+INFO  [17:53:03.906] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:04.772] [bbotk] Result of batch 74:
+INFO  [17:53:04.882] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:04.882] [bbotk]  0.007886924 -7.091728 0.0001048705 <list[2]>              FALSE      0.1584507
+INFO  [17:53:04.882] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:04.882] [bbotk]         0      0            0.549 a5364076-c073-4c89-b2ee-4e6216802ea6
+INFO  [17:53:07.594] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:08.331] [bbotk] Result of batch 75:
+INFO  [17:53:08.351] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:08.351] [bbotk]  0.7716646 -8.464644 0.0001004705 <list[2]>              FALSE        0.15847
+INFO  [17:53:08.351] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:08.351] [bbotk]         0      0            0.436 3d9a60ff-9192-4f66-9876-02f6d6987529
+WARN  [17:53:09.007] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:11.026] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:11.520] [bbotk] Result of batch 76:
+INFO  [17:53:11.564] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:11.564] [bbotk]  0.008138121 -4.041069 7.907213e-06 <list[2]>              FALSE      0.1581973
+INFO  [17:53:11.564] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:11.564] [bbotk]         0      0            0.242 0cef49af-c1e8-463a-a6f5-9196c2bd0bde
+INFO  [17:53:14.466] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:15.134] [bbotk] Result of batch 77:
+INFO  [17:53:15.159] [bbotk]        alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:15.159] [bbotk]  0.006515759 -3.961874 7.87983e-06 <list[2]>              FALSE      0.1581972
+INFO  [17:53:15.159] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:15.159] [bbotk]         0      0            0.338 eb175fe4-481d-4890-bf5d-ab8469b44422
+INFO  [17:53:18.410] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:19.303] [bbotk] Result of batch 78:
+INFO  [17:53:19.323] [bbotk]      alpha        s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:19.323] [bbotk]  0.2637443 -7.31634 0.0003385378 <list[2]>              FALSE      0.1584574
+INFO  [17:53:19.323] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:19.323] [bbotk]         0      0             0.46 03a4e533-102d-4d10-9038-f779c78dc327
+INFO  [17:53:22.394] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:22.945] [bbotk] Result of batch 79:
+INFO  [17:53:22.961] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:22.961] [bbotk]  0.7175129 -7.176447 0.0002227624 <list[2]>              FALSE      0.1584659
+INFO  [17:53:22.961] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:22.961] [bbotk]         0      0              0.3 0dc98027-2562-4ee5-9cfc-c62f6897c196
+WARN  [17:53:23.475] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:26.034] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:26.695] [bbotk] Result of batch 80:
+INFO  [17:53:26.707] [bbotk]        alpha         s      acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:26.707] [bbotk]  0.006549447 -4.036216 8.01588e-06 <list[2]>              FALSE       0.158197
+INFO  [17:53:26.707] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:26.707] [bbotk]         0      0            0.285 8f05e184-43b0-4c21-83f2-0eba6b3c3d3b
+WARN  [17:53:27.502] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:29.774] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:30.477] [bbotk] Result of batch 81:
+INFO  [17:53:30.519] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:30.519] [bbotk]  0.001287509 -3.995675 8.566006e-06 <list[2]>              FALSE      0.1581958
+INFO  [17:53:30.519] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:30.519] [bbotk]         0      0            0.251 a153431f-6088-4d70-a52a-a1deb2ebe0b4
+WARN  [17:53:31.011] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:33.479] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:34.501] [bbotk] Result of batch 82:
+INFO  [17:53:34.545] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:34.545] [bbotk]  0.4657434 -8.640526 0.0004536445 <list[2]>              FALSE       0.158462
+INFO  [17:53:34.545] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:34.545] [bbotk]         0      0            0.387 89bb7299-99a5-47fc-9874-1dfc7cd66fce
+INFO  [17:53:37.740] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:39.009] [bbotk] Result of batch 83:
+INFO  [17:53:39.049] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:39.049] [bbotk]  0.9853205 -6.446107 8.088934e-05 <list[2]>              FALSE      0.1584552
+INFO  [17:53:39.049] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:39.049] [bbotk]         0      0            0.596 7e565763-8dfd-47a8-aa0a-5bb187543e28
+INFO  [17:53:42.304] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:42.921] [bbotk] Result of batch 84:
+INFO  [17:53:42.978] [bbotk]      alpha        s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:42.978] [bbotk]  0.2721749 -5.18323 7.851445e-05 <list[2]>              FALSE      0.1583351
+INFO  [17:53:42.978] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:42.978] [bbotk]         0      0            0.304 5bec7b91-e3c2-42df-b381-d9e8543832e4
+WARN  [17:53:43.730] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:45.810] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:46.938] [bbotk] Result of batch 85:
+INFO  [17:53:46.968] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:46.968] [bbotk]  0.003312474 -4.025789 8.148379e-06 <list[2]>              FALSE      0.1581964
+INFO  [17:53:46.968] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:46.968] [bbotk]         0      0            0.651 6ca682be-357d-45cd-855f-31d57ad07ccc
+WARN  [17:53:47.432] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:49.833] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:50.735] [bbotk] Result of batch 86:
+INFO  [17:53:50.759] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:50.759] [bbotk]  0.1672831 -6.363503 0.0004494797 <list[2]>              FALSE      0.1584545
+INFO  [17:53:50.759] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:50.759] [bbotk]         0      0             0.55 ed840ec4-3c0f-4dc8-bc3b-cba501e17a23
+INFO  [17:53:53.776] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:54.757] [bbotk] Result of batch 87:
+INFO  [17:53:54.857] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:54.857] [bbotk]  0.001002989 -4.001955 9.280218e-06 <list[2]>              FALSE      0.1581957
+INFO  [17:53:54.857] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:54.857] [bbotk]         0      0            0.446 5babc853-992d-434d-ad1c-19cfb32d99c9
+WARN  [17:53:56.247] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:53:58.999] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:53:59.591] [bbotk] Result of batch 88:
+INFO  [17:53:59.604] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:53:59.604] [bbotk]  0.006305822 -4.081246 7.613126e-06 <list[2]>              FALSE      0.1581982
+INFO  [17:53:59.604] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:53:59.604] [bbotk]         0      0             0.31 f7bd8003-a19d-42b6-9b67-d02ed3aa9173
+WARN  [17:54:00.366] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:54:02.668] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:54:03.986] [bbotk] Result of batch 89:
+INFO  [17:54:04.014] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:54:04.014] [bbotk]  0.7863768 -5.935673 4.868577e-05 <list[2]>              FALSE      0.1584104
+INFO  [17:54:04.014] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:54:04.014] [bbotk]         0      0            0.819 18403b04-5957-426c-9659-5aa864a61286
+WARN  [17:54:04.729] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:54:06.599] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:54:08.038] [bbotk] Result of batch 90:
+INFO  [17:54:08.054] [bbotk]        alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:54:08.054] [bbotk]  0.004421907 -3.921869 7.484864e-06 <list[2]>              FALSE      0.1581981
+INFO  [17:54:08.054] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:54:08.054] [bbotk]         0      0            0.953 29737970-c496-4d44-9f9c-9378ef06988f
+WARN  [17:54:08.731] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:54:10.723] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:54:11.698] [bbotk] Result of batch 91:
+INFO  [17:54:11.723] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:54:11.723] [bbotk]  0.0103955 -3.969029 7.588104e-06 <list[2]>              FALSE      0.1581978
+INFO  [17:54:11.723] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:54:11.723] [bbotk]         0      0            0.603 b3afaa3a-972f-440c-b580-b730776b8ce0
+WARN  [17:54:12.463] [mlr3] train: Stopped because hard maximum generation limit was hit.
+INFO  [17:54:15.020] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:54:15.600] [bbotk] Result of batch 92:
+INFO  [17:54:15.645] [bbotk]      alpha         s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:54:15.645] [bbotk]  0.7213605 -7.948722 4.031598e-05 <list[2]>              FALSE      0.1584663
+INFO  [17:54:15.645] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:54:15.645] [bbotk]         0      0            0.254 65e513e8-6aff-4d31-812e-0178d1f9f97f
+INFO  [17:54:18.157] [bbotk] Evaluating 1 configuration(s)
+INFO  [17:54:19.088] [bbotk] Result of batch 93:
+INFO  [17:54:19.136] [bbotk]        alpha        s       acq_ei  x_domain .already_evaluated classif.bbrier
+INFO  [17:54:19.136] [bbotk]  0.008028362 -4.01384 7.095052e-06 <list[2]>              FALSE      0.1581969
+INFO  [17:54:19.136] [bbotk]  warnings errors runtime_learners                                uhash
+INFO  [17:54:19.136] [bbotk]         0      0            0.545 29ab58af-2348-4f07-8caa-e931de1ddd0b
+INFO  [17:54:20.188] [bbotk] Finished optimizing after 100 evaluation(s)
+INFO  [17:54:20.227] [bbotk] Result:
+INFO  [17:54:20.253] [bbotk]         alpha         s learner_param_vals  x_domain classif.bbrier
+INFO  [17:54:20.253] [bbotk]         <num>     <num>             <list>    <list>          <num>
+INFO  [17:54:20.253] [bbotk]  0.0005861502 -3.985207          <list[2]> <list[2]>      0.1581956
+
+### [bt]: Job terminated successfully [batchtools job.id=1462]
+### [bt]: Calculation finished!

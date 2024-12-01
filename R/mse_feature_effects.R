@@ -29,7 +29,6 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
   predictor <- Predictor$new(learner, data = x, y = y)
   
   # Feature effect
-  # ToDo Grid angeben für vergleichbarkeit (0, 0.1,...)
   effect <- FeatureEffect$new(predictor,
                               feature = feature,
                               method = "pdp",
@@ -46,7 +45,7 @@ mse_feature_effect <- function(task, calibrator = "uncalibrated",
   
   # Calculate the ground truth
   if(feature == "x2"){
-    ground_truth <- 1/3 * sin(results$feature)
+    ground_truth <- 1/6 * (sin(results$feature * 2*pi)+1)
   } else if(feature == "x3"){
     ground_truth <- 2/3 * (results$feature - 0.5)^2
   } else if(feature == "x4"){

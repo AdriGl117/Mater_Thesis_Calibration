@@ -3,7 +3,8 @@ library(ggplot2)
 library(ggpubr)
 
 # Initialize the Functions for each feature
-f1 <- function(x) 1/3 * sin(x * pi)
+f1 <- function(x) 1/6 * (sin(x * 2*pi)+1)
+#f1 <- function(x) 1/3 * sin(x * pi)
 f2 <- function(x) 2/3 * (x - 0.5)^2
 f3 <- function(x) 1/3 * x
 f4 <- function(x) 1/6 * x
@@ -62,4 +63,4 @@ plot <- annotate_figure(
 plot
 
 # Save the plot
-ggsave("figures/Exp3_ground_truth.jpg", plot)
+ggsave("figures/Exp3_ground_truth_new.jpg", plot)

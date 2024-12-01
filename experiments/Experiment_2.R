@@ -88,15 +88,28 @@ calibrators <- list("platt", "beta", "isotonic")
 learners_TwP_cal <- list()
 for (learner in base_learners) {
   for (calibrator in calibrators) {
-    assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
-                  "_TwP_", calibrator),
-           auto_tuner(
-             tuner = tnr("mbo"),
-             learner = as_learner(po("calibration", learner = learner,
-                                     rsmp = rsmp_cv5, method = calibrator)),
-             resampling = rsmp("cv", folds = 3),
-             measure = msr("classif.bbrier"),
-             term_evals = 100))
+    if(grepl("svm", learner$id) | grepl("xgboost", learner$id) | grepl("glmnet", learner$id)){
+      assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
+                    "_TwP_", calibrator),
+             as_learner(po("encode", method = "one-hot") %>>%
+              auto_tuner(
+                 tuner = tnr("mbo"),
+                learner = as_learner(po("calibration", learner = learner,
+                                         rsmp = rsmp_cv5, method = calibrator)),
+                resampling = rsmp("cv", folds = 3),
+                measure = msr("classif.bbrier"),
+                term_evals = 100)))
+    }else{
+      assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
+                    "_TwP_", calibrator),
+             auto_tuner(
+               tuner = tnr("mbo"),
+               learner = as_learner(po("calibration", learner = learner,
+                                       rsmp = rsmp_cv5, method = calibrator)),
+               resampling = rsmp("cv", folds = 3),
+              measure = msr("classif.bbrier"),
+              term_evals = 100))
+    }
     learners_TwP_cal[[length(learners_TwP_cal) + 1]] <- get(
       paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
              "_TwP_", calibrator))
@@ -111,17 +124,32 @@ for (learner in base_learners) {
 learners_Tb_cal <- list()
 for (learner in base_learners) {
   for (calibrator in calibrators) {
-    assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
-                  "_TbC_", calibrator),
-           as_learner(po("calibration_tune_before_calibration",
-                         learner = auto_tuner(
-                           tuner = tnr("mbo"),
-                           learner = learner,
-                           resampling = rsmp("cv", folds = 3),
-                           measure = msr("classif.bbrier"),
-                           term_evals = 100),
-                         rsmp = rsmp_cv5, 
-                         method = calibrator)))
+    if(grepl("svm", learner$id) | grepl("xgboost", learner$id) | grepl("glmnet", learner$id)){
+      assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
+                    "_TbC_", calibrator),
+             as_learner(po("encode", method = "one-hot") %>>%
+               po("calibration_tune_before_calibration",
+                           learner = auto_tuner(
+                             tuner = tnr("mbo"),
+                             learner = learner,
+                             resampling = rsmp("cv", folds = 3),
+                             measure = msr("classif.bbrier"),
+                             term_evals = 100),
+                           rsmp = rsmp_cv5, 
+                           method = calibrator)))
+    }else{
+      assign(paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
+                    "_TbC_", calibrator),
+             as_learner(po("calibration_tune_before_calibration",
+                           learner = auto_tuner(
+                             tuner = tnr("mbo"),
+                             learner = learner,
+                             resampling = rsmp("cv", folds = 3),
+                             measure = msr("classif.bbrier"),
+                             term_evals = 100),
+                           rsmp = rsmp_cv5, 
+                           method = calibrator)))
+    }
     learners_Tb_cal[[length(learners_Tb_cal) + 1]] <- get(
       paste0("learner_", substr(learner$id, 9, nchar(learner$id)),
              "_TbC_", calibrator))
@@ -136,16 +164,6 @@ learners <- c(learners_TwP_cal, learners_Tb_cal)
 
 # Sort learners learners alphabetisch sortieren
 learners = learners[order(sapply(learners, function(x) x$id))]
-
-# Feature Encoding for learners that require it
-for (i in seq_along(learners)) {
-  learner <- learners[[i]]
-  if (grepl("svm", learner$id) | grepl("xgboost", learner$id) | grepl("glmnet", learner$id)) {
-    learner <- as_learner(po("encode", method = "one-hot") %>>% learner)
-    learner$id <- substr(learner$id, 8, nchar(learner$id))
-    learners[[i]] <- learner
-  }
-}
 
 #####Run the benchmark#####
 large_design = benchmark_grid(tasks, learners, resamplings,
