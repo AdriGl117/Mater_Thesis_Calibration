@@ -1,5 +1,5 @@
 # General Information
-This repository contains the corresponding code of the master thesis on the topic ‘Calibration in mlr3 - Implementation and Impact on Model Interpretability’. All experimental setups, registries, evaluation scripts and bmr objects are in the [Experiments](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/experiments) order. All other required functions and R6 classes, e.g. those required for calibration or for the experiments or the visualisation of the results, can be found in the [R](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/R) folder. All graphics that were created in R and are embedded in the thesis can be found in the [figures](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/figures) folder.  The [Sandbox](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/Sandbox) folder contains additional code that are either used to test the implementations or contains older versions of the implementations. This folder therefore does not contain any relevant scripts, but is kept for transparency.
+This repository contains the corresponding code of the master thesis on the topic ‘Calibration in mlr3 - Implementation and Impact on Model Interpretability’. All experimental setups, registries, evaluation scripts and bmr objects are in the [Experiments](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/experiments) folder. All other required functions and R6 classes, e.g. those required for calibration or for the experiments or the visualisation of the results, can be found in the [R](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/R) folder. All graphics that were created in R and are embedded in the thesis can be found in the [figures](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/figures) folder.  The [Sandbox](https://github.com/AdriGl117/Mater_Thesis_Calibration/tree/main/Sandbox) folder contains additional code that are either used to test the implementations or contains older versions of the implementations. This folder therefore does not contain any relevant scripts, but is kept for transparency.
 
 # Implementation 
 The implementation of the mlr3 calirbation extension and how to use it can be seen in the following [repository](https://github.com/AdriGl117/mlr3calibration). 
@@ -15,17 +15,18 @@ Three experiments were designed to answer these research questions. The first tw
 
 # Results
 Only a summary of the results regarding the Brier scores is presented here, the detailed presentation including all measuers and sub categories and the discussion of the results can be found in the thesis.
+
 ## Experiment 1
 ![Experiment_1_res](figures/Exp_1_Resampling_classif.bbrier.jpeg)
 This Critical Difference (CD) plot shows the average ranks of all resampling strategies with regard to the Brier score. These show that the cross validation (CV) and union resampling strategies lead to significantly better results than the holdout strategies. In addition, the five-fold CV strategy shows significantly better results than the union and the three-fold CV strategy. There is no significant difference within the union strategies.
 
 ![Experiment_1_cal](figures/Exp_1_Calibrator_classif.bbrier.jpeg)
-This Critical Difference (CD) plot shows the average ranks of the three calibration approaches with regard to the Brier score. This show that all three apporaches achieve significantly lower average ranks. In addition, the isotonic calibration achieves significantly lower ranks than the Platt scaling. Beta calibration can be found between the  other appraches, but shows no significant differences to either of them.
+This CD plot shows the average ranks of the three calibration approaches with regard to the Brier score. This show that all three apporaches achieve significantly lower average ranks. In addition, the isotonic calibration achieves significantly lower ranks than the Platt scaling. Beta calibration can be found between the  other appraches, but shows no significant differences to either of them.
 
 ## Experiment 2
 ![Experiment_2](figures/Exp_2_Tuning_classif.bbrier_all.jpeg)
-This Critical Difference (CD) plot shows the average ranks of the different tuning approaches with regard to the Brier score. This shows that tuning before calibrating not only saves time, but also achieves better performance.
+This CD plot shows the average ranks of the different tuning approaches with regard to the Brier score. This shows that tuning before calibrating not only saves time, but also achieves better performance.
 
 ## Experiment 3
 ![Experiment_3](figures/Exp_3_Calibrator_mse.jpeg)
-This Critical Difference (CD) plot shows the average ranks of the different tuning approaches with regard to the mse between PDP and ground truth of a feature. This show that the flat scaling achieves a significantly lower mse compared to the uncalibrated model, while the isotonic calibration significantly increases it. Beta calibration does not lead to any significant difference to the uncalibrated model, as the CD is not exceeded. 
+This CD plot shows the average ranks of the different calibration approaches with regard to the mse between PDP and ground truth of a feature. This show that the flat scaling achieves a significantly lower mse compared to the uncalibrated model, while the isotonic calibration significantly increases it. Beta calibration does not lead to any significant difference to the uncalibrated model, as the CD is not exceeded. 
