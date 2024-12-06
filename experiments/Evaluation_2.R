@@ -3,7 +3,7 @@ source("sources.R")
 ##### Create Result Object #####
 
 # Read result object
-bmr2 <- readRDS("~/Desktop/bmr_Exp_2.rds")
+bmr2 <- readRDS("experiments/bmr_Exp_2.rds")
 
 # Select measures
 measures <- c(msr("classif.ece"), msr("classif.bbrier"), msr("classif.logloss"))
