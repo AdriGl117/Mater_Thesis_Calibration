@@ -23,7 +23,7 @@ This Critical Difference (CD) plot shows the average ranks of all resampling str
 This Critical Difference (CD) plot shows the average ranks of the three calibration approaches with regard to the Brier score. This show that all three apporaches achieve significantly lower average ranks. In addition, the isotonic calibration achieves significantly lower ranks than the Platt scaling. Beta calibration can be found between the  other appraches, but shows no significant differences to either of them.
 
 ## Experiment 2
-![Experiment_2](figures/Exp_2_Tuning_classif.bbrier.jpeg)
+![Experiment_2](figures/Exp_2_Tuning_classif.bbrier_all.jpeg)
 This Critical Difference (CD) plot shows the average ranks of the different tuning approaches with regard to the Brier score. This shows that tuning before calibrating not only saves time, but also achieves better performance.
 
 ## Experiment 3
