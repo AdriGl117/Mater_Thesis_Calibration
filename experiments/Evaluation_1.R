@@ -3,7 +3,7 @@ source("sources.R")
 ##### Create Result Object #####
 
 # Read result object
-bmr1 <- readRDS("~/Desktop/bmr_Exp_1neu.rds")
+bmr1 <- readRDS("experiments/bmr_Exp_1.rds")
 
 # Select measure
 measures <- c(msr("classif.ece"), msr("classif.bbrier"), msr("classif.logloss"))
@@ -54,10 +54,7 @@ for (measure in measures) {
   )
   res_resamplings_pivot <- res_resamplings_pivot %>%
     select(-starts_with("uncalibrated"), -starts_with("Learner"), -starts_with("Calibrator"), -starts_with("task_id"))
-  nemenyi <- nemenyiTest(res_resamplings_pivot)
-  cd <- nemenyi$statistic[[1]]
   p <- cd_plot(res_resamplings_pivot) 
-  print(p)
   ggsave(paste0("figures/Exp_1_Resampling_", measure, ".jpeg"), dpi = 300)
   res_resamplings_pivot <- res_resamplings_pivot[complete.cases(res_resamplings_pivot)]
   rank_matrix <- t(apply(as.data.frame(res_resamplings_pivot), 1, rank, ties.method = "average"))
@@ -94,9 +91,8 @@ for (measure in measures) {
     res_resamplings_pivot <- res_resamplings_pivot %>%
       select(-starts_with("uncalibrated"), -starts_with("Learner"), -starts_with("Calibrator"), -starts_with("task_id"))
     res_resamplings_pivot <- res_resamplings_pivot[complete.cases(res_resamplings_pivot)]
-    cd_plot(res_resamplings_pivot)
-    
-    #ggsave(paste0("figures/Exp_1_Resampling_", size_value, "_", measure, ".jpeg"), dpi = 300)
+    p <- cd_plot(res_resamplings_pivot)
+    ggsave(paste0("figures/Exp_1_Resampling_", size_value, "_", measure, ".jpeg"), dpi = 300)
     res_resamplings_pivot <- res_resamplings_pivot[complete.cases(res_resamplings_pivot)]
     rank_matrix <- t(apply(as.data.frame(res_resamplings_pivot), 1, rank, ties.method = "average"))
     rank_dt <- as.data.table(rank_matrix)
@@ -146,7 +142,6 @@ for (measure in measures) {
   res_calibrators_pivot <- res_calibrators_pivot %>%
     select(-starts_with("Learner"), -starts_with("task_id"))
   p <- cd_plot(res_calibrators_pivot) 
-  print(p)
   ggsave(paste0("figures/Exp_1_Calibrator_", measure, ".jpeg"), dpi = 300)
   rank_matrix <- t(apply(as.data.frame(res_calibrators_pivot), 1, rank, ties.method = "average"))
   rank_dt <- as.data.table(rank_matrix)
@@ -183,6 +178,8 @@ for (measure in measures) {
     res_calibrator_pivot <- res_calibrator_pivot %>%
       select(-starts_with("Learner"), -starts_with("task_id"))
     res_calibrator_pivot <- res_calibrator_pivot[complete.cases(res_calibrator_pivot)]
+    p <- cd_plot(res_calibrator_pivot)
+    ggsave(paste0("figures/Exp_1_Calibrator_", size_value, "_", measure, ".jpeg"), dpi = 300)
     rank_matrix <- t(apply(as.data.frame(res_calibrator_pivot), 1, rank, ties.method = "average"))
     rank_dt <- as.data.table(rank_matrix)
     setnames(rank_dt, paste0(names(rank_dt), "_rank"))
@@ -230,6 +227,8 @@ for(measure in measures){
     )
     res_calibrator_pivot <- res_calibrator_pivot %>%
       select(-starts_with("Learner"), -starts_with("task_id"), -starts_with("Calibrator"))
+    p <- cd_plot(res_calibrator_pivot)
+    ggsave(paste0("figures/Exp_1_Resamplings_", calibrator_value, "_", measure, ".jpeg"), dpi = 300)
     rank_matrix <- t(apply(as.data.frame(res_calibrator_pivot), 1, rank, ties.method = "average"))
     rank_dt <- as.data.table(rank_matrix)
     setnames(rank_dt, paste0(names(rank_dt), "_rank"))

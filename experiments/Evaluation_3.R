@@ -38,6 +38,8 @@ results_calibrator <- data.table::dcast(
 )
 results_calibrator <- results_calibrator %>%
   select(unique(results_df$calibrator))
+p <- cd_plot(results_calibrator)
+ggsave("figures/Exp_3_Calibrator_mse.jpeg", dpi = 300)
 rank_matrix <- t(apply(as.data.frame(results_calibrator), 1, rank, ties.method = "average"))
 rank_dt <- as.data.table(rank_matrix)
 setnames(rank_dt, paste0(names(rank_dt), "_rank"))
@@ -85,6 +87,11 @@ snr_values = c("1", "10", "20")
 corr_values = c("0", "0.4", "0.8")
 
 for (shape_value in shape_values){
+  data_for_plot <- results_pivot %>%
+    filter(shape == shape_value) %>%
+    select(platt, beta, isotonic, uncalibrated) 
+  p <- cd_plot(data_for_plot)
+  ggsave(paste0("figures/Exp_3_Calibrator_", shape_value, "_mse.jpeg"), dpi = 300)
   results_pivot_shape <- results_pivot %>% 
     filter(shape == shape_value) %>%
     select(shape, platt, platt_rank, beta, beta_rank, isotonic, isotonic_rank, uncalibrated, uncalibrated_rank) %>%
@@ -102,6 +109,11 @@ for (shape_value in shape_values){
 }
 
 for (corr_value in corr_values){
+  data_for_plot <- results_pivot %>%
+    filter(corr == corr_value) %>%
+    select(platt, beta, isotonic, uncalibrated)
+  p <- cd_plot(data_for_plot)
+  ggsave(paste0("figures/Exp_3_Calibrator_", corr_value, "_mse.jpeg"), dpi = 300)
   results_pivot_corr <- results_pivot %>% 
     filter(corr == corr_value) %>%
     select(corr, platt, platt_rank, beta, beta_rank, isotonic, isotonic_rank, uncalibrated, uncalibrated_rank) %>%
@@ -119,6 +131,11 @@ for (corr_value in corr_values){
 }
 
 for (snr_value in snr_values){
+  data_for_plot <- results_pivot %>%
+    filter(snr == snr_value) %>%
+    select(platt, beta, isotonic, uncalibrated)
+  p <- cd_plot(data_for_plot)
+  ggsave(paste0("figures/Exp_3_Calibrator_", snr_value, "_mse.jpeg"), dpi = 300)
   results_pivot_snr <- results_pivot %>% 
     filter(snr == snr_value) %>%
     select(snr, platt, platt_rank, beta, beta_rank, isotonic, isotonic_rank, uncalibrated, uncalibrated_rank) %>%

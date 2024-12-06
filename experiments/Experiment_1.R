@@ -286,7 +286,7 @@ union_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 
 reg = makeExperimentRegistry(
-  file.dir = "./Experiments/Exp_Test",
+  file.dir = "./Experiments/Exp_1",
   seed = seed,
   packages = "mlr3verse",
   source = "sources.R"
