@@ -1,33 +1,41 @@
+###### Evaluation Script for the Tuning Experiment ######
 source("sources.R")
 
 ##### Create Result Object #####
-
-# Read result object
+# Read bmr object
 bmr2 <- readRDS("experiments/bmr_Exp_2.rds")
 
 # Select measures
 measures <- c(msr("classif.ece"), msr("classif.bbrier"), msr("classif.logloss"))
 
+# Aggregate results Object
 res = bmr2$aggregate(measures)
 res = res[, .(task_id, learner_id, classif.ece, classif.bbrier, classif.logloss)]
 
 # Add coloumn Calibrator 
 res[, Calibrator := ifelse(grepl("isotonic", learner_id), "isotonic",
                                   ifelse(grepl("beta", learner_id), "beta",
-                                         ifelse(grepl("platt", learner_id), "platt",
-                                                "ERROR")))]
+                                  ifelse(grepl("platt", learner_id), "platt",
+                                  "ERROR")))]
 
+# Add coloumn Tuning
 res[, Tuning := ifelse(grepl("TbC", learner_id), "TbC", "TwP")]
 
+# Add coloumn Learner
 res[, Learner := gsub("(.*) .* .*", "\\1", learner_id)]
 
-res = res[, .(task_id, Learner, Calibrator, Tuning, classif.ece, classif.bbrier, classif.logloss)]
+# Remove learner_id
+res = res[, .(task_id, Learner, Calibrator, Tuning, classif.ece, 
+              classif.bbrier, classif.logloss)]
 
-##### Group by Calibrator #####
+##### Pivot on Tuning #####
 measures <- c("classif.ece", "classif.bbrier", "classif.logloss")
 calibrator_values <- c("all", "platt", "beta", "isotonic")
 for (measure in measures) {
   for(calibrator_value in calibrator_values){
+    # Creates a pivot table for the two tuning approaches once for all measures  
+    # and calibrators, create average ranks and scores and save the results in a
+    # combined data.table
     if(calibrator_value == "all"){
       res_pivot  <- data.table::dcast(
         data = res,
@@ -44,9 +52,11 @@ for (measure in measures) {
     res_pivot <- res_pivot %>% select(unique(res$Tuning))
     if(calibrator_value == "all"){
       p <- cd_plot(res_pivot)
-      ggsave(paste0("figures/Exp_2_Tuning_", measure, "_", calibrator_value, ".jpeg"), dpi = 300)
+      ggsave(paste0("figures/Exp_2_Tuning_", measure, "_", 
+                    calibrator_value, ".jpeg"), dpi = 300)
     }
-    rank_matrix <- t(apply(as.data.frame(res_pivot), 1, rank, ties.method = "average"))
+    rank_matrix <- t(apply(as.data.frame(res_pivot), 1, rank, 
+                           ties.method = "average"))
     rank_dt <- as.data.table(rank_matrix)
     setnames(rank_dt, paste0(names(rank_dt), "_rank"))
     res_pivot <- cbind(res_pivot, rank_dt)
@@ -59,7 +69,8 @@ for (measure in measures) {
       Mean = round(as.numeric(Means),4),
       Rank = round(as.numeric(Ranks),2)
     )
-    colnames(df) = c("Calibrator", "Tuning", paste0(measure,"_mean"), paste0(measure,"_rank"))
+    colnames(df) = c("Calibrator", "Tuning", paste0(measure,"_mean"), 
+                     paste0(measure,"_rank"))
     if(!exists("res_per_measure")) {
       res_per_measure <- df
     } else {
@@ -76,4 +87,5 @@ for (measure in measures) {
     }
   }
 }
+# Show the results
 res_grouped
