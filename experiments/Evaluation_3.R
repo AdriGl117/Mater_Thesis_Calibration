@@ -207,4 +207,7 @@ for (shape_value in shape_values) {
 }
 # Print the results
 print(results_grouped)
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c1ce281682a9503f33a5bb2df5c63a103ab52ee
