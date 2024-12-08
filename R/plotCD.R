@@ -1,4 +1,62 @@
-library(ggplot2)
+#' @title Plot a Critical Difference (CD) Diagram
+#'
+#' @description This function creates a CD plot to visually compare the 
+#' average ranks of multiple algorithms across multiple problems. It is commonly 
+#' used in conjunction with the Nemenyi post-hoc test following a Friedman test. 
+#' The plot shows the mean ranks of the algorithms along a horizontal axis, 
+#' indicating which groups of algorithms are not significantly different from 
+#' each other at a given significance level. This code was adapted from the
+#' \code{plotCD} function in the \pkg{scmamp} package and adjustet to a
+#' ggplot instead of a base R plot.
+#'
+#' @param results.matrix A numeric matrix of results, where rows represent 
+#'   different problem and columns represent different algorithms. Each cell 
+#'   should contain the performance metric for the corresponding algorithm on 
+#'   the corresponding problem. Lower values are assumed to be better, as the 
+#'   data is ranked internally.
+#' @param alpha Numeric, the significance level for the Nemenyi test. Defaults 
+#'   to 0.05.
+#' @param cex Numeric, character expansion factor controlling the size of text 
+#'   elements in the plot. Defaults to 0.75.
+#'
+#' @references Borja Calvo and Guzman Santafe (2015) scmamp: Statistical Comparison of Multiple Algorithms in Multiple
+#' Problems. The R Journal. 8(1) 248-256.
+#'
+#' @details
+#' The function:
+#' 1. Computes the mean ranks of each algorithm across all problems.
+#' 2. Calculates the CD using the Nemenyi test, which 
+#'    indicates the minimum difference in average ranks required for two 
+#'    algorithms to be considered significantly different at the chosen alpha level.
+#' 3. Produces a CD diagram using \pkg{ggplot2}, displaying:
+#'    - A horizontal axis labeled with rank values.
+#'    - Vertical lines for each algorithm at its mean rank.
+#'    - Algorithm names placed to the left or right to reduce overlap.
+#'    - Horizontal lines for algorithms that are not 
+#'      significantly different from each other.
+#'    - The CD value.
+#'
+#' The resulting plot aids in visually interpreting pairwise comparisons between 
+#' algorithms after a Friedman test, showing which algorithms perform similarly 
+#' and which stand apart statistically.
+#'
+#' @return This function does not return a value; it prints a \pkg{ggplot2}-based 
+#'   plot to the current graphics device.
+#'
+#' @examples
+#' # Example usage:
+#' # Suppose we have 5 algorithms tested on 10 problems:
+#' set.seed(123)
+#' results <- matrix(rnorm(10), nrow=10, ncol=5)
+#' colnames(results) <- paste0("Alg", 1:5)
+#'
+#' # Create a CD plot with default settings:
+#' cd_plot(results)
+#'
+#' @import ggplot2
+#'
+#'
+#' @export
 
 cd_plot <- function(results.matrix, alpha=0.05, cex=0.75, ...) {
   
