@@ -1,3 +1,5 @@
+####### Experiment 2 Setup #######
+
 source("sources.R")
 seed = 123
 set.seed(seed)
@@ -63,14 +65,6 @@ learner_xgboost <- lrn("classif.xgboost",
                        subsample         = to_tune(1e-1, 1),
                        predict_type = "prob")
 
-# Feature Encoding for learners that require it
-#learner_svm = as_learner(po("encode", method = "one-hot") %>>% learner_svm)
-#learner_svm$id = substr(learner_svm$id, 8, nchar(learner_svm$id))
-#learner_glmnet = as_learner(po("encode", method = "one-hot") %>>% learner_glmnet)
-#learner_glmnet$id = substr(learner_glmnet$id, 8, nchar(learner_glmnet$id))
-#learner_xgboost = as_learner(po("encode", method = "one-hot") %>>% learner_xgboost)
-#learner_xgboost$id = substr(learner_xgboost$id, 8, nchar(learner_xgboost$id))
-
 base_learners <- list(learner_svm, 
                       learner_ranger, 
                       learner_kknn, 
@@ -85,6 +79,7 @@ for (learner in base_learners) {
 
 calibrators <- list("platt", "beta", "isotonic")
 
+##### Create TWP learner #####
 learners_TwP_cal <- list()
 for (learner in base_learners) {
   for (calibrator in calibrators) {
@@ -121,6 +116,7 @@ for (learner in base_learners) {
   }
 }
 
+##### Create TbC learner #####
 learners_Tb_cal <- list()
 for (learner in base_learners) {
   for (calibrator in calibrators) {
@@ -160,28 +156,53 @@ for (learner in base_learners) {
   }
 }
 
+# Combine learners
 learners <- c(learners_TwP_cal, learners_Tb_cal)
 
 # Sort learners learners alphabetisch sortieren
 learners = learners[order(sapply(learners, function(x) x$id))]
 
-#####Run the benchmark#####
+#####Run the Experiment####
 large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
+
+# Create Registry
 reg = makeExperimentRegistry(
   file.dir = "./Experiments/Exp_2",
   seed = seed,
   packages = "mlr3verse"
 )
 
+# Batchmark
 batchmark(large_design, reg = reg)
+
+# Get job table
 job_table = getJobTable(reg = reg)
 job_table = unwrap(job_table)
 job_table = job_table[,
                       .(job.id, learner_id, task_id, resampling_id, repl)
 ]
+job_table
 
-job_table[grepl("glmnet", learner_id)]
-
+# Test Job
 result = testJob(1, external = FALSE, reg = reg)
 
+# Socket Cluster 
+cf = makeClusterFunctionsSocket(ncpus = 96)
+reg$cluster.functions = cf
+saveRegistry(reg = reg)
+
+# Get ids
+ids = job_table$job.id
+
+# Define resources
+resources = list(ncpus = 1, walltime = 3600, memory = 16000)
+
+# Submit jobs
+submitJobs(ids = ids, resources = resources, reg = reg)
+
+# Wait for jobs to finish
+waitForJobs(reg = reg)
+
+# Get status of jobs
+getStatus(reg = reg)

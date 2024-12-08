@@ -1,3 +1,5 @@
+####### Experiment 1 Setup #######
+
 source("sources.R")
 seed = 123
 set.seed(seed)
@@ -21,7 +23,8 @@ tasks = as_tasks(otasks)
 #List of the resamplings for each task
 resamplings = as_resamplings(otasks)
 
-######Calibration######
+###### Initialize Calibrators######
+
 #####Resampling#####
 # Resampling strategies for calibration
 rsmp_70 = rsmp("holdout", ratio = 0.7)
@@ -163,11 +166,12 @@ for (learner in base_learners) {
 # Sort learners alphabetically
 learners = learners[order(sapply(learners, function(x) x$id))]
 
-#####Run the benchmark#####
+##### Batchtools Design #####
 large_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 
-######Union Calibration######
+###### Initialize Union Calibration ######
+
 #####Resampling#####
 # Resampling strategies for union calibration
 rsmp_cv5 = rsmp("cv", folds = 5)
@@ -258,6 +262,8 @@ calibrators = list("platt", "beta", "isotonic")
 # Empty list to store all learners
 learners = list()
 
+
+##### Initialize Union Calibrated Learners #####
 for (learner in base_learners) {
   for (calibrator in calibrators) {
     # Creates calibrated the learner
@@ -282,9 +288,13 @@ for (learner in base_learners) {
 # Sort learners alphabetically
 learners = learners[order(sapply(learners, function(x) x$id))]
 
+##### Batchtools Design #####
 union_design = benchmark_grid(tasks, learners, resamplings,
                               paired = TRUE)
 
+###### Run Experiments ######
+
+# Create registry
 reg = makeExperimentRegistry(
   file.dir = "./Experiments/Exp_1",
   seed = seed,
@@ -292,8 +302,11 @@ reg = makeExperimentRegistry(
   source = "sources.R"
 )
 
+# batchmark both designs
 batchmark(large_design, reg = reg)
 batchmark(union_design, reg = reg)
+
+# get job table
 job_table = getJobTable(reg = reg)
 job_table = unwrap(job_table)
 job_table = job_table[,
@@ -301,16 +314,26 @@ job_table = job_table[,
 ]
 
 job_table
+
+# Test Job
 result = testJob(4321, external = TRUE, reg = reg)
 
-cf = makeClusterFunctionsInteractive()
+# Socket Cluster 
+cf = makeClusterFunctionsSocket(ncpus = 96)
 reg$cluster.functions = cf
 saveRegistry(reg = reg)
-ids = job_table$job.id
-chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 4, shuffle = FALSE)
-)
 
+# Get ids
+ids = job_table$job.id
+
+# Define resources
 resources = list(ncpus = 1, walltime = 3600, memory = 16000)
-submitJobs(ids = chunks, resources = resources, reg = reg)
+
+# Submit jobs
+submitJobs(ids = ids, resources = resources, reg = reg)
+
+# Wait for jobs to finish
+waitForJobs(reg = reg)
+
+# Get status of jobs
 getStatus(reg = reg)

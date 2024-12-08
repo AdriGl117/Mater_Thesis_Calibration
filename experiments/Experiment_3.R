@@ -1,9 +1,11 @@
+####### Experiment 3 Setup #######
+
 source("sources.R")
 seed = 123
 set.seed(seed)
 
 #####Load the different Friedman Tasks#####
-# SNR 10 und 20
+
 task_1a <- friedman_tasks(n = 10000, setting = "1", snr = 10)
 task_1a$id <- "Setting 1a: snr = 10"
 task_1b <- friedman_tasks(n = 10000, setting = "1", snr = 20)
@@ -126,6 +128,7 @@ params_list <- list(
 # Generate a data frame with all combinations
 params_grid <- expand.grid(params_list)
 
+# Remove x2 for Setting 1 and Setting 2
 params_grid$task_id <- sapply(params_grid$task, function(x) x$id)
 condition_to_remove <- params_grid$feature == "x2" & grepl("Setting 1|Setting 2", params_grid$task_id)
 params_grid <- params_grid[!condition_to_remove, ]
@@ -139,8 +142,10 @@ reg = makeRegistry(
   source = "sources.R"
 )
 
+# Batchmap
 batchMap(fun = mse_feature_effect, reg = reg, args = params_grid)
 
+# Get job table
 job_table = getJobTable(reg = reg)
 job_table = unwrap(job_table)
 job_table = job_table[,
@@ -148,50 +153,26 @@ job_table = job_table[,
 ]
 
 job_table
+
+# Test run
 result = testJob(1, external = FALSE, reg = reg)
 
-cf = makeClusterFunctionsInteractive()
+# Socket cluster
+cf = makeClusterFunctionsSocket(ncpus = 96)
 reg$cluster.functions = cf
 saveRegistry(reg = reg)
-ids = job_table$job.id
-chunks = data.table(
-  job.id = ids, chunk = chunk(ids, chunk.size = 5, shuffle = FALSE)
-)
 
+# ids
+ids = job_table$job.id
+
+# Resources
 resources = list(ncpus = 1, walltime = 3600, memory = 8000)
 
-submitJobs(ids = ids[2:5], resources = resources, reg = reg)
-getStatus(reg = reg)
+# Submit jobs
+submitJobs(ids = ids, resources = resources, reg = reg)
+
 # wait for all jobs to terminate
 waitForJobs(reg = reg)
 
-results_list <- reduceResultsList(reg = reg, fun = function(res, job) {
-  data.frame(
-    task_id = job$pars$task$id,
-    calibrator = job$pars$calibrator,
-    rsmp_method = job$pars$rsmp$label,
-    learner_id = job$pars$learner$id,
-    feature = job$pars$feature,
-    mse = res
-  )
-})
-
-# Combine all data frames into one
-results_df <- do.call(rbind, results_list)
-
-# View the results
-print(results_df)
-
-# Shape of the feature
-results_df$shape <- ifelse(results_df$feature == "x2", "Sinus", 
-                           ifelse(results_df$feature == "x3", "Quadratic", "Linear"))
-
-# Result per Calibrator
-results_df %>%
-  group_by(calibrator, shape) %>%
-  summarise(mean_mse = mean(mse))
-
-results_df %>%
-  group_by(task_id, calibrator) %>%
-  summarise(mean_mse = mean(mse))
-
+# Get status
+getStatus(reg = reg)
