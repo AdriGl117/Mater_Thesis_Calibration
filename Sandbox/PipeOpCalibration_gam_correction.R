@@ -182,10 +182,10 @@ PipeOpCalibration <- R6Class(
         predictions[[length(predictions) + 1]] = as.data.table(pred_calibrated)
       }
       
-      # Response soll die majority vote aus response aus allen predictions sein
+      
       response = rowMeans(sapply(predictions, function(x) as.numeric(x$response)))
       response = ifelse(response < 1.5, positive, task$negative)
-      # pro.tested_positive soll average aus allen pro.tested_positive sein
+      
       prob = as.matrix(data.frame(
         rowMeans(sapply(predictions, function(x) with(x, get(paste0("prob.", positive))))),
         rowMeans(sapply(predictions, function(x) with(x, get(paste0("prob.", task$negative)))))
