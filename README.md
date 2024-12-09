@@ -18,10 +18,10 @@ Only a summary of the results regarding the Brier scores is presented here, the 
 
 ## Experiment 1
 ![Experiment_1_res](figures/Exp_1_Resampling_classif.bbrier.jpeg)
-This Critical Difference (CD) plot shows the average ranks of all resampling strategies with regard to the Brier score. These show that the cross validation (CV) and union resampling strategies lead to significantly better results than the holdout strategies. In addition, the five-fold CV strategy shows significantly better results than the union and the three-fold CV strategy. There is no significant difference within the union strategies.
+This Critical Difference (CD) plot shows the average ranks of all resampling strategies with regard to the Brier score. These show that the cross validation (CV) and union resampling strategies lead to significantly better results than the holdout strategies. In addition, the five-fold CV strategy shows significantly better results than the union and the three-fold CV strategy. There is no significant difference within the holdout strategies.
 
 ![Experiment_1_cal](figures/Exp_1_Calibrator_classif.bbrier.jpeg)
-This CD plot shows the average ranks of the three calibration approaches with regard to the Brier score. This show that all three apporaches achieve significantly lower average ranks. In addition, the isotonic calibration achieves significantly lower ranks than the Platt scaling. Beta calibration can be found between the  other appraches, but shows no significant differences to either of them.
+This CD plot shows the average ranks of the three calibration approaches with regard to the Brier score. This show that all three apporaches achieve significantly lower average ranks compared to the uncalibrated models. In addition, the isotonic calibration achieves significantly lower ranks than the Platt scaling. Beta calibration can be found between the  other appraches, but shows no significant differences to either of them.
 
 ## Experiment 2
 ![Experiment_2](figures/Exp_2_Tuning_classif.bbrier_all.jpeg)
@@ -29,4 +29,4 @@ This CD plot shows the average ranks of the different tuning approaches with reg
 
 ## Experiment 3
 ![Experiment_3](figures/Exp_3_Calibrator_mse.jpeg)
-This CD plot shows the average ranks of the different calibration approaches with regard to the mse between PDP and ground truth of a feature. This show that the flat scaling achieves a significantly lower mse compared to the uncalibrated model, while the isotonic calibration significantly increases it. Beta calibration does not lead to any significant difference to the uncalibrated model, as the CD is not exceeded. 
+This CD plot shows the average ranks of the different calibration approaches with regard to the mse between PDP and ground truth of a feature. This show that the Platt scaling achieves a significantly lower mse compared to the uncalibrated model, while the isotonic calibration significantly increases it. Beta calibration does not lead to any significant difference to the uncalibrated model, as the CD is not exceeded. 
